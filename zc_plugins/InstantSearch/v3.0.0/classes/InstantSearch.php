@@ -9,8 +9,20 @@
 
 declare(strict_types=1);
 
-abstract class InstantSearch extends base
+namespace Zencart\Plugins\Catalog\InstantSearch;
+
+use Zencart\Plugins\Catalog\InstantSearch\Exceptions\InstantSearchConfigurationException;
+
+abstract class InstantSearch extends \base
 {
+    /**
+     * Array of allowed search fields (keys) for building the sql sequence by calling the
+     * corresponding sql build method with parameters (values).
+     *
+     * @var array
+     */
+    protected const VALID_SEARCH_FIELDS = [];
+
     /**
      * The input query.
      *
@@ -60,7 +72,6 @@ abstract class InstantSearch extends base
      * Sanitizes the input query, runs the search and formats the results.
      *
      * @param string $inputQuery The search query
-     *
      * @return string HTML-formatted results
      */
     protected function performSearch(string $inputQuery): string
@@ -69,7 +80,11 @@ abstract class InstantSearch extends base
         $this->searchQueryArray = explode(' ', $this->searchQueryPreg);
         $this->searchQueryRegexp = str_replace(' ', '|', $this->searchQueryPreg);
 
-        $this->searchDb();
+        try {
+            $this->searchDb();
+        } catch (InstantSearchConfigurationException $e) {
+            return '<strong>' . $e->getMessage() . '</strong>';
+        }
 
         $this->notify('NOTIFY_INSTANT_SEARCH_BEFORE_FORMAT_RESULTS', $this->searchQuery, $this->results);
 
@@ -80,31 +95,77 @@ abstract class InstantSearch extends base
      * Runs the sequence of database queries for the search, until we have enough results.
      *
      * @return void
+     * @throws InstantSearchConfigurationException
      */
     protected function searchDb(): void
     {
-        $queriesSequence = $this->buildSqlSequence();
+        $sqlSequence = $this->buildSqlSequence();
 
-        foreach ($queriesSequence as $query) {
+        foreach ($sqlSequence as $sql) {
             if ($this->calcResultsLimit() <= 0) { // we already have enough results
                 return;
             }
-            $this->execQuery($query);
+            $this->execQuery($sql);
         }
+    }
+
+    /**
+     * Builds the sequence of database queries for the search.
+     *
+     * @return array The sql sequence
+     * @throws InstantSearchConfigurationException
+     */
+    protected function buildSqlSequence(): array
+    {
+        // Load search fields list
+        [$searchFields, $errorMessage] = $this->loadSearchFieldsConfiguration();
+
+        // Check that there are no duplicates
+        if (count(array_unique($searchFields)) < count($searchFields)) {
+            throw new InstantSearchConfigurationException($errorMessage);
+        }
+
+        // Check that there is only one value between name and name-description in the list
+        if (in_array('name', $searchFields) && in_array('name-description', $searchFields)) {
+            throw new InstantSearchConfigurationException($errorMessage);
+        }
+
+        $sqlSequence = [];
+
+        foreach ($searchFields as $searchField) {
+            // Check that $searchField is a valid field name
+            if (!array_key_exists($searchField, static::VALID_SEARCH_FIELDS)) {
+                throw new InstantSearchConfigurationException($errorMessage);
+            }
+
+            foreach (static::VALID_SEARCH_FIELDS[$searchField] as $searchMethod) {
+                $methodName = $searchMethod[0];
+                if (!empty($searchMethod[1])) {
+                    $methodArguments = $searchMethod[1];
+                }
+                if (isset($methodArguments)) {
+                    $sqlSequence[] = $this->$methodName(...$methodArguments);
+                } else {
+                    $sqlSequence[] = $this->$methodName();
+                }
+
+            }
+        }
+
+        return $sqlSequence;
     }
 
     /**
      * Prepares the query, runs it and saves the results in $results.
      *
      * @param string $sql The sql to execute
-     *
      * @return void
      */
     protected function execQuery(string $sql): void
     {
         global $db;
 
-        $foundIds = implode(',', array_column($this->results, 'id'));
+        $foundIds = implode(',', array_column($this->results, 'products_id'));
 
         // Remove all non-word characters and add wildcard operator for boolean mode search
         $searchBooleanQuery = str_replace(' ', '* ', trim(preg_replace('/[^\p{L}\p{N}_]+/u', ' ', $this->searchQuery))) . '*';
@@ -133,17 +194,19 @@ abstract class InstantSearch extends base
      * Builds the sql for product name and description Full-Text search.
      *
      * @param bool $includeDescription Match also against product's description
-     *
+     * @param bool $withQueryExpansion Use Query Expansion
      * @return string Sql
      */
-    protected function buildSqlProductNameDescriptionMatch(bool $includeDescription = true): string
+    protected function buildSqlProductNameDescriptionMatch(bool $includeDescription = true, bool $withQueryExpansion = true): string
     {
+        $queryEpansion = $withQueryExpansion === true ? ' WITH QUERY EXPANSION' : '';
+
         $sql = "SELECT p.products_id, p.products_image, p.products_sort_order, p.manufacturers_id,
                        p.products_price, p.products_tax_class_id, p.products_price_sorter, p.products_quantity,
                        p.products_qty_box_status, p.master_categories_id, p.product_is_call, pd.products_name,
                        MATCH(pd.products_name) AGAINST(:searchBooleanQuery IN BOOLEAN MODE) AS name_relevance_boolean,
-                       MATCH(pd.products_name) AGAINST(:searchQuery WITH QUERY EXPANSION) AS name_relevance_natural" .
-                       ($includeDescription === true ? ", MATCH(pd.products_description) AGAINST(:searchQuery WITH QUERY EXPANSION) AS description_relevance" : "") . "
+                       MATCH(pd.products_name) AGAINST(:searchQuery" . $queryEpansion . ") AS name_relevance_natural" .
+                       ($includeDescription === true ? ", MATCH(pd.products_description) AGAINST(:searchQuery" . $queryEpansion . ") AS description_relevance" : "") . "
                 FROM " . TABLE_PRODUCTS_DESCRIPTION . " pd
                 JOIN " . TABLE_PRODUCTS . " p ON (p.products_id = pd.products_id)
                 WHERE p.products_status <> 0
@@ -154,9 +217,9 @@ abstract class InstantSearch extends base
                           (
                               MATCH(pd.products_name) AGAINST(:searchBooleanQuery IN BOOLEAN MODE)
                               +
-                              MATCH(pd.products_name) AGAINST(:searchQuery WITH QUERY EXPANSION)
+                              MATCH(pd.products_name) AGAINST(:searchQuery" . $queryEpansion . ")
                           ) > 0 " .
-                          ($includeDescription === true ? "OR MATCH(pd.products_description) AGAINST(:searchQuery WITH QUERY EXPANSION) > 0 " : "") . "
+                          ($includeDescription === true ? "OR MATCH(pd.products_description) AGAINST(:searchQuery" . $queryEpansion . ") > 0 " : "") . "
                   )
                 ORDER BY name_relevance_boolean DESC, name_relevance_natural DESC, " .
                          ($includeDescription === true ? "description_relevance DESC, " : "") . "
@@ -170,7 +233,6 @@ abstract class InstantSearch extends base
      * Builds the sql for product name LIKE/REGEXP search.
      *
      * @param bool $beginsWith If true search with LIKE, with REGEXP otherwise
-     *
      * @return string Sql
      */
     protected function buildSqlProductName(bool $beginsWith = true): string
@@ -194,8 +256,7 @@ abstract class InstantSearch extends base
     /**
      * Builds the sql for product model LIKE/REGEXP search.
      *
-     * @param bool $beginsWith If true search with LIKE, with REGEXP otherwise
-     *
+     * @param bool $exactMatch If true exact match, broad match otherwise
      * @return string Sql
      */
     protected function buildSqlProductModel(bool $exactMatch = true): string
@@ -261,11 +322,12 @@ abstract class InstantSearch extends base
     abstract public function instantSearch(): string;
 
     /**
-     * Builds the sequence of database queries for the search.
+     * Returns the exploded fields list setting and the error message to show in case of error while
+     * parsing the list.
      *
-     * @return void
+     * @return array First element: search fields array; second element: error message
      */
-    abstract protected function buildSqlSequence(): array;
+    abstract protected function loadSearchFieldsConfiguration(): array;
 
     /**
      * Returns the search results formatted with the template.
@@ -278,7 +340,7 @@ abstract class InstantSearch extends base
      * Calculates the sql LIMIT value based on the max number of results allowed and the
      * number of results found so far.
      *
-     * @return int
+     * @return int LIMIT value
      */
     abstract protected function calcResultsLimit(): int;
 }
