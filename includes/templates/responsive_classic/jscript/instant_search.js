@@ -69,8 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 signal
                             });
                             const responseData = await response.json();
-                            if (responseData.length > 0 && instantSearchInputCurrent.value === instantSearchQuery) {
-                                createAndPositionResultsDropdown(instantSearchInputCurrent, responseData);
+                            const responseDataJson = JSON.parse(responseData);
+                            if (responseDataJson.results.length > 0 && instantSearchInputCurrent.value === instantSearchQuery) {
+                                createAndPositionResultsDropdown(instantSearchInputCurrent, responseDataJson.results);
                                 await slideDown({
                                     element: document.querySelector(`#${resultsContainerSelector}`),
                                     slideSpeed: 200
