@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=checkout_payment.<br />
  * Displays the allowed payment modules, for selection by customer.
@@ -53,7 +53,7 @@ if (!$payment_modules->in_special_checkout()) {
     if (MAX_ADDRESS_BOOK_ENTRIES >= 2) { 
 ?>
                             <div class="btn-toolbar justify-content-end mt-3" role="toolbar">
-                                <?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?>
+                                <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), BUTTON_CHANGE_ADDRESS_ALT, 'button_change_address'); ?>
                             </div>
 <?php 
     } 
@@ -74,6 +74,13 @@ if (!$payment_modules->in_special_checkout()) {
 <?php
     if (MODULE_ORDER_TOTAL_INSTALLED) {
         $order_totals = $order_total_modules->process();
+
+        // -----
+        // "Unset" the session-based variable that lets tpl_modules_order_totals.php 'know'
+        // how many columns are taken up by the products' display ... since no product
+        // information is displayed on this page.
+        //
+        unset($_SESSION['zca_bootstrap_ot_colspan']);
 ?>
                     <div class="table-responsive">
                         <table class="cartTableDisplay table table-bordered table-striped" role="presentation">
@@ -276,7 +283,7 @@ if (!$payment_modules->in_special_checkout()) {
         </div>
     
         <div id="paymentSubmit" class="btn-toolbar justify-content-between" role="toolbar">
-            <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
+            <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
             <?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT, 'onclick="submitFunction(' . zen_user_has_gv_account($_SESSION['customer_id']) . ',' . $order->info['total'] . ')"'); ?>
         </div>
     <?php echo '</form>'; ?>
@@ -287,5 +294,5 @@ if (!$payment_modules->in_special_checkout()) {
     }
 ?>
 
-    <?php require($template->get_template_dir('tpl_cvv_help.php',DIR_WS_TEMPLATE, $current_page_base,'modalboxes'). '/tpl_cvv_help.php'); ?>
+    <?php require $template->get_template_dir('tpl_cvv_help.php', DIR_WS_TEMPLATE, $current_page_base, 'modalboxes') . '/tpl_cvv_help.php'; ?>
 </div>

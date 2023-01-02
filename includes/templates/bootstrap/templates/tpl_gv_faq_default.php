@@ -1,6 +1,6 @@
 <?php
 /**
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * Displays the FAQ pages for the Gift-Certificate/Voucher system.<br />
  *
@@ -32,7 +32,7 @@ $subHeadingText = (isset($subHeadingText)) ? $subHeadingText : SUB_HEADING_TEXT;
             <h2 id="giftCertificateFaq-subHeading" class="pageSubHeading"><?php echo $subHeadingTitle; ?></h2>
             <div id="giftCertificateFaq-content-two" class="content"><?php echo $subHeadingText; ?></div>
             <div id="giftCertificateFaq-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-                <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+                <?php echo zca_back_link(); ?>
             </div>
         </div>
     </div>

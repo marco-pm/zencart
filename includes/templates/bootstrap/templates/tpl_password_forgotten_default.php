@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2016 Zen Cart Development Team
@@ -31,7 +31,7 @@ if ($messageStack->size('password_forgotten') > 0) {
         </div>
 
         <div id="passwordForgottenDefault-btn-toolbar" class="btn-toolbar justify-content-between" role="toolbar">
-            <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>' . zen_image_submit(BUTTON_IMAGE_SUBMIT, BUTTON_SUBMIT_ALT); ?>
+            <?php echo zca_back_link() . zen_image_submit(BUTTON_IMAGE_SUBMIT, BUTTON_SUBMIT_ALT); ?>
         </div>
 
     <?php echo '</form>'; ?>

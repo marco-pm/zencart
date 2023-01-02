@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=product_info.
  * Displays details of a typical product
@@ -14,7 +14,6 @@
  */
  //require(DIR_WS_MODULES . '/debug_blocks/product_info_prices.php');
 ?>
-
 <div id="productInfo" class="centerColumn">
 
 <!--bof Form start-->
@@ -40,13 +39,13 @@ require($template->get_template_dir('/tpl_modules_category_icon_display.php',DIR
 <!--eof Category Icon -->
 
 <!--bof Prev/Next top position -->
-<?php if (PRODUCT_INFO_PREVIOUS_NEXT == 1 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { ?>
+<?php if (PRODUCT_INFO_PREVIOUS_NEXT === '1' || PRODUCT_INFO_PREVIOUS_NEXT === '3') { ?>
 <div id="productInfo-productPrevNextTop" class="productPrevNextTop">
 <?php
 /**
  * display the product previous/next helper
  */
-require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); ?>
+require $template->get_template_dir('/tpl_products_next_previous.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_products_next_previous.php'; ?>
 </div>
 <?php } ?>
 <!--eof Prev/Next top position-->
@@ -67,7 +66,7 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
 /**
  * display the main product image
  */
-   require($template->get_template_dir('/tpl_modules_main_product_image.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_main_product_image.php'); ?>
+   require $template->get_template_dir('/tpl_modules_main_product_image.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_main_product_image.php'; ?>
 </div>
 <?php
   }
@@ -81,9 +80,9 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
  * display the products additional images in a model carousel
  */
  
-if (PRODUCT_INFO_SHOW_BOOTSTRAP_MODAL_POPUPS == 'Yes' && PRODUCT_INFO_SHOW_BOOTSTRAP_MODAL_SLIDE == '1') {
+if (PRODUCT_INFO_SHOW_BOOTSTRAP_MODAL_POPUPS === 'Yes' && PRODUCT_INFO_SHOW_BOOTSTRAP_MODAL_SLIDE === '1') {
 
-require($template->get_template_dir('tpl_bootstrap_images.php',DIR_WS_TEMPLATE, $current_page_base,'modalboxes'). '/tpl_bootstrap_images.php');
+require $template->get_template_dir('tpl_bootstrap_images.php', DIR_WS_TEMPLATE, $current_page_base, 'modalboxes') . '/tpl_bootstrap_images.php';
 
 if ($num_images > 0) {
 $buttonText = $num_images . TEXT_MULTIPLE_IMAGES; ?>
@@ -103,7 +102,7 @@ $buttonText = $num_images . TEXT_MULTIPLE_IMAGES; ?>
  
 echo '<div class="p-3"></div>'; 
  
-  require($template->get_template_dir('/tpl_modules_additional_images.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_additional_images.php');
+  require $template->get_template_dir('/tpl_modules_additional_images.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_additional_images.php';
   }
   ?>
 </div>
@@ -118,20 +117,26 @@ echo '<div class="p-3"></div>';
 
 <!--bof Reviews button and count-->
 <?php
-  if ($flag_show_product_info_reviews == 1) {
+if ($flag_show_product_info_reviews === '1') {
     // if more than 0 reviews, then show reviews button; otherwise, show the "write review" button
-    if ($reviews->fields['count'] > 0 ) { ?>
-<div id="productInfo-productReviewLink" class="productReviewLink mb-3"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()) . '">' . zen_image_button(BUTTON_IMAGE_REVIEWS, BUTTON_REVIEWS_ALT) . '</a>'; ?>
-</div>
+    if ($reviews->fields['count'] > 0 ) {
+?>
+    <div id="productInfo-productReviewLink" class="productReviewLink mb-3">
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()), BUTTON_REVIEWS_ALT, 'button_reviews'); ?>
+    </div>
 
-<p id="productInfo-productReviewCount" class="productReviewCount"><?php echo ($flag_show_product_info_reviews_count == 1 ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?></p>
-
-<?php } else { ?>
-<div id="productInfo-productReviewLink" class="productReviewLink mb-3"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array())) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?>
-</div>
+    <p id="productInfo-productReviewCount" class="productReviewCount">
+        <?php echo ($flag_show_product_info_reviews_count === '1' ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?>
+    </p>
 
 <?php
-  }
+    } else {
+?>
+    <div id="productInfo-productReviewLink" class="productReviewLink mb-3">
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params()), BUTTON_WRITE_REVIEW_ALT, 'button_write_review'); ?>
+    </div>
+<?php
+    }
 }
 ?>
 <!--eof Reviews button and count -->
@@ -139,10 +144,15 @@ echo '<div class="p-3"></div>';
   <div id="productInfo-displayColRight"  class="col-sm mb-3">
 
 <!--bof Product details list  -->
-<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) ) { ?>
+<?php
+$display_product_model = ($flag_show_product_info_model === '1' && $products_model !== '');
+$display_product_weight = ($flag_show_product_info_weight === '1' && $products_weight != 0);
+$display_product_quantity = ($flag_show_product_info_quantity === '1');
+$display_product_manufacturer = ($flag_show_product_info_manufacturer === '1' && !empty($manufacturers_name));
+if ($display_product_model === true || $display_product_weight === true || $display_product_quantity === true || $display_product_manufacturer === true) { ?>
 
 <ul id="productInfo-productDetailsList" class="productDetailsList list-group mb-3">
-  <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li class="list-group-item">' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
+  <?php echo (($display_product_model === true) ? '<li class="list-group-item">' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li class="list-group-item">' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_quantity == 1) ? '<li class="list-group-item">' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li class="list-group-item">' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
@@ -157,8 +167,8 @@ if ($flag_show_ask_a_question) {
 ?>
 <!-- bof Ask a Question -->
 <br>
-<span id="productQuestions" class="">
-<?php echo '<a href="' . zen_href_link(FILENAME_ASK_A_QUESTION, 'pid=' . $_GET['products_id'], 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_ASK_A_QUESTION, BUTTON_ASK_A_QUESTION_ALT) . '</a>'; ?>
+<span id="productQuestions">
+    <?php echo zca_button_link(zen_href_link(FILENAME_ASK_A_QUESTION, 'pid=' . $_GET['products_id'], 'SSL'), BUTTON_ASK_A_QUESTION_ALT, 'button_ask_a_question'); ?>
 </span>
 <br class="clearBoth">
 <br>

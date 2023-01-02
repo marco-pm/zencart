@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -88,8 +88,8 @@ if (USE_SPLIT_LOGIN_MODE === 'True' || $ec_button_enabled) {
 ?>
     <nav class="pt-3">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab" tabindex="1" aria-controls="nav-home" aria-selected="true"><?php echo HEADING_RETURNING_CUSTOMER; ?></a>
-            <a class="nav-item nav-link" id="nav-create-tab" data-toggle="tab" href="#nav-create" role="tab" tabindex="1" aria-controls="nav-profile" aria-selected="false"><?php echo HEADING_NEW_CUSTOMER; ?></a>
+            <a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab" tabindex="1" aria-controls="nav-login" aria-selected="true"><?php echo HEADING_RETURNING_CUSTOMER; ?></a>
+            <a class="nav-item nav-link" id="nav-create-tab" data-toggle="tab" href="#nav-create" role="tab" tabindex="1" aria-controls="nav-create" aria-selected="false"><?php echo HEADING_NEW_CUSTOMER; ?></a>
         </div>
     </nav>
 
@@ -119,7 +119,7 @@ if (USE_SPLIT_LOGIN_MODE === 'True' || $ec_button_enabled) {
 
                 <?php require $template->get_template_dir('tpl_modules_create_account.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_create_account.php'; ?>
 
-                <div id="loginDefault-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
+                <div id="loginDefault-btn-toolbar2" class="btn-toolbar justify-content-end my-3" role="toolbar">
                     <?php echo zen_image_submit(BUTTON_IMAGE_SUBMIT, BUTTON_SUBMIT_ALT); ?>
                 </div>
             <?php echo '</form>'; ?>

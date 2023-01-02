@@ -2,7 +2,7 @@
 /**
  * new_products.php module
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.4.2
  *
  * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -75,7 +75,10 @@ if ($num_products_count > 0) {
 
         $new_products_image = '';
         if (!($new_products->fields['products_image'] === '' && PRODUCTS_IMAGE_NO_IMAGE_STATUS === '0')) {
-            $new_products_image = '<a href="' . $new_products_link . '">' . zen_image(DIR_WS_IMAGES . $new_products->fields['products_image'], $new_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '</a><br>';
+            $new_products_image =
+                '<a href="' . $new_products_link . '" title="' . zen_output_string_protected($new_products_name) . '">' .
+                    zen_image(DIR_WS_IMAGES . $new_products->fields['products_image'], $new_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) .
+                '</a><br>';
         }
 
         $zco_notifier->notify('NOTIFY_MODULES_NEW_PRODUCTS_B4_LIST_BOX', [], $new_products->fields, $products_price);

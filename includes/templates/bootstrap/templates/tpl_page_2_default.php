@@ -2,7 +2,7 @@
 /**
  * tpl_page_2_default.php
  * 
- * BOOTSTRAP v1.0.BETA
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -12,22 +12,23 @@
  */
 ?>
 <div id="page2Default" class="centerColumn">
-    
-<h1 id="page2Default-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
+    <h1 id="page2Default-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
 
-<?php if (DEFINE_PAGE_2_STATUS >= 1 and DEFINE_PAGE_2_STATUS <= 2) { ?>
-<div id="page2Default-defineContent" class="defineContent">
+<?php
+if (DEFINE_PAGE_2_STATUS === '1' || DEFINE_PAGE_2_STATUS === '2') {
+?>
+    <div id="page2Default-defineContent" class="defineContent">
 <?php
 /**
  * load the html_define for the page_2 default
  */
-  require($define_page);
+    require $define_page;
 ?>
-</div>
-<?php } ?>
-
-<div id="page2Default-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-<?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
-</div>
-
+    </div>
+<?php
+}
+?>
+    <div id="page2Default-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
+        <?php echo zca_back_link(); ?>
+    </div>
 </div>

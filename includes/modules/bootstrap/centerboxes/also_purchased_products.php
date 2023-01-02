@@ -2,7 +2,7 @@
 /**
  * also_purchased_products module
  * 
- * BOOTSTRAP v3.1.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -32,7 +32,7 @@ if (isset($_GET['products_id']) && SHOW_PRODUCT_INFO_COLUMNS_ALSO_PURCHASED_PROD
 
         while (!$also_purchased_products->EOF) {
             $app_products_id = $also_purchased_products->fields['products_id'];
-      
+
             /** bof products price */
             $products_price = zen_get_products_display_price($app_products_id);
             $also_purchased_products_price = '<div class="centerBoxContentsItem-price text-center">' . $products_price . '</div>';
@@ -46,17 +46,20 @@ if (isset($_GET['products_id']) && SHOW_PRODUCT_INFO_COLUMNS_ALSO_PURCHASED_PROD
             /** eof products name */
 
             /** bof products image */
-            if (empty($also_purchased_products->fields['products_image']) && (int)PRODUCTS_IMAGE_NO_IMAGE_STATUS === 0) {
+            if (empty($also_purchased_products->fields['products_image']) && PRODUCTS_IMAGE_NO_IMAGE_STATUS === '0') {
                 $also_purchased_products_image = '';
             } else {
-                $also_purchased_products_image = '<div class="centerBoxContentsItem-image text-center"><a href="' . $app_products_link . '">' . zen_image(DIR_WS_IMAGES . $also_purchased_products->fields['products_image'], $app_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '</a></div>';
+                $also_purchased_products_image =
+                    '<div class="centerBoxContentsItem-image text-center"><a href="' . $app_products_link . '" title="' . zen_output_string_protected($app_products_name) . '">' .
+                        zen_image(DIR_WS_IMAGES . $also_purchased_products->fields['products_image'], $app_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) .
+                    '</a></div>';
             }
             /** eof products image */
       
-            $list_box_contents[$row][$col] = array(
+            $list_box_contents[$row][$col] = [
                 'params' => 'class="centerBoxContents card mb-3 p-3 text-center"',
                 'text' => $also_purchased_products_image . $also_purchased_products_name . $also_purchased_products_price
-            );
+            ];
 
             $col++;
             if ($col >= (int)SHOW_PRODUCT_INFO_COLUMNS_ALSO_PURCHASED_PRODUCTS) {

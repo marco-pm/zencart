@@ -2,7 +2,7 @@
 /**
  * Module Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2016 Zen Cart Development Team
@@ -67,12 +67,12 @@
     </tr>
 
     <tr>
-      <td class="text-center"><?php echo $show_qty . '<br />' . $currencies->display_price($show_price, zen_get_tax_rate($products_tax_class_id)); ?></td>
+      <td class="text-center"><?php echo $show_qty . '<br>' . $currencies->display_price($show_price, zen_get_tax_rate($products_tax_class_id)); ?></td>
 
 <?php
   foreach($quantityDiscounts as $key=>$quantityDiscount) {
 ?>
-<td class="text-center"><?php echo $quantityDiscount['show_qty'] . '<br />' . $currencies->display_price($quantityDiscount['discounted_price'], zen_get_tax_rate($products_tax_class_id)); ?></td>
+<td class="text-center"><?php echo $quantityDiscount['show_qty'] . '<br>' . $currencies->display_price($quantityDiscount['discounted_price'], zen_get_tax_rate($products_tax_class_id)); ?></td>
 <?php
     $disc_cnt++;
     if ($discount_col_cnt == $disc_cnt && !($key == sizeof($quantityDiscount))) {

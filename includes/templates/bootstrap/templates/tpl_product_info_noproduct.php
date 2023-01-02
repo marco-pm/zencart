@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
  * Displays simple "product not found" message if the selected product's details cannot be located in the database
  *
@@ -14,12 +14,11 @@
  */
 ?>
 <div id="productInfoNoproduct" class="centerColumn">
+    <div id="productInfoNoproduct-content" class="content"><?php echo TEXT_PRODUCT_NOT_FOUND; ?></div>
 
-<div id="productInfoNoproduct-content" class="content"><?php echo TEXT_PRODUCT_NOT_FOUND; ?></div>
-
-<div id="productInfoNoproduct-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-<?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT) . '</a>'; ?>
-</div>
+    <div id="productInfoNoproduct-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
+        <?php echo zca_back_link('button_continue', '', BUTTON_CONTINUE_ALT); ?>
+    </div>
 
 <?php
 //// bof: missing

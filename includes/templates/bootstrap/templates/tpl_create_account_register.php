@@ -19,6 +19,7 @@ if ($messageStack->size('create_account') > 0) {
 }
 ?>
     <div class="alert forward"><?php echo FORM_REQUIRED_INFORMATION; ?></div>
+    <div class="clearfix"></div>
 <?php
 if (DISPLAY_PRIVACY_CONDITIONS === 'true') {
 ?>

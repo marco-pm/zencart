@@ -2,9 +2,9 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.1.0
+ * BOOTSTRAP v3.5.0
  *
- * Loaded automatically by index.php?main_page=checkout_confirmation.<br />
+ * Loaded automatically by index.php?main_page=checkout_confirmation.
  * Displays final checkout details, cart, payment and shipping info details.
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
@@ -39,11 +39,11 @@
 <!--bof bill to address card-->
   <div id="billToAddress-card" class="card">
           <div id="billToAddress-card-body" class="card-body">
-<address><?php echo zen_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br />'); ?></address>
+<address><?php echo zen_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br>'); ?></address>
 
 <div id="billToAddress-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
 <?php if (!$flagDisablePaymentAddressChange) { ?>
-<?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?>
+    <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'), BUTTON_EDIT_SMALL_ALT, 'small_edit'); ?>
 <?php } ?>
 </div>
 
@@ -109,10 +109,10 @@
 <!--bof ship to address card-->    
   <div id="shipToAddress-card" class="card">
           <div id="shipToAddress-card-body" class="card-body">    
-<address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>    
+<address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br>'); ?></address>
     
 <div id="shipToAddress-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
-<?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?>
+    <?php echo zca_button_link($editShippingButtonLink, BUTTON_EDIT_SMALL_ALT, 'small_edit'); ?>
 </div>
 
     </div>
@@ -153,7 +153,7 @@
 <?php echo (empty($order->info['comments']) ? NO_COMMENTS_TEXT : nl2br(zen_output_string_protected($order->info['comments'])) . zen_draw_hidden_field('comments', $order->info['comments'])); ?>
 
 <div id="orderComment-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
-<?php echo  '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?>
+    <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'), BUTTON_EDIT_SMALL_ALT, 'small_edit'); ?>
 </div>
 
 </div>
@@ -230,7 +230,7 @@ $products_colspan = ($tax_column_present) ? '' : ' colspan="2"';
 <?php    }  // endif tax info display  ?>
         <td class="totalCell">
           <?php echo $currencies->display_price($order->products[$i]['final_price'], $order->products[$i]['tax'], $order->products[$i]['qty']);
-          if ($order->products[$i]['onetime_charges'] != 0 ) echo '<br /> ' . $currencies->display_price($order->products[$i]['onetime_charges'], $order->products[$i]['tax'], 1);
+          if ($order->products[$i]['onetime_charges'] != 0 ) echo '<br> ' . $currencies->display_price($order->products[$i]['onetime_charges'], $order->products[$i]['tax'], 1);
 ?>
         </td>
       </tr>
@@ -249,7 +249,7 @@ $products_colspan = ($tax_column_present) ? '' : ' colspan="2"';
 </div>
 
 <div id="cartContents-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
-<?php echo '<a href="' . zen_href_link(FILENAME_SHOPPING_CART, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?>
+    <?php echo zca_button_link(zen_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), BUTTON_EDIT_SMALL_ALT, 'small_edit'); ?>
 </div>
 
 
@@ -311,12 +311,10 @@ if (isset ($_SESSION['shipping']['extras']) && is_array ($_SESSION['shipping']['
 ?>
 
 <div id="checkoutConfirmationDefault-btn-toolbar" class="btn-toolbar justify-content-between confirm-order" role="toolbar">
-<?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
+<?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
 <?php echo zen_image_submit(BUTTON_IMAGE_CONFIRM_ORDER, BUTTON_CONFIRM_ORDER_ALT, 'name="btn_submit" id="btn_submit"') ;?>
 </div>
 
-
 </form>
-
 
 </div>

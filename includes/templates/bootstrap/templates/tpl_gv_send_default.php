@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * Template used to collect/display details of sending a GV to a friend from own GV balance. <br />
  *
@@ -16,7 +16,7 @@
     <h1 id="gvSendDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
     <div id="giftCertificateAccount-card" class="card mb-3">
         <h4 id="giftCertificateAccount-card-header" class="card-header"><?php echo TEXT_AVAILABLE_BALANCE;?></h4>
-        <div id="giftCertificateAccount-card-body" class="card-body p-3">   
+        <div id="giftCertificateAccount-card-body" class="card-body p-3">
             <?php echo TEXT_BALANCE_IS . $gv_current_balance; ?>
 <?php
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -26,12 +26,12 @@ if ($gv_result->fields['amount'] > 0 && $action === 'doneprocess') {
 ?>
             <div id="giftCertificateAccount-content" class="content"><?php echo TEXT_SEND_ANOTHER; ?></div>
             <div id="giftCertificateAccount-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
-                <a href="<?php echo zen_href_link(FILENAME_GV_SEND, '', 'SSL', false); ?>"><?php echo zen_image_button(BUTTON_IMAGE_SEND_ANOTHER, BUTTON_SEND_ANOTHER_ALT); ?></a>
+                <?php echo zca_button_link(zen_href_link(FILENAME_GV_SEND, '', 'SSL'), BUTTON_SEND_ANOTHER_ALT, 'button_send_another'); ?>
             </div>
 <?php
 }
 ?>
-        </div>  
+        </div>
     </div>
 <?php
 if ($action === 'doneprocess') {
@@ -41,7 +41,7 @@ if ($action === 'doneprocess') {
         <div id="giftCertificateSent-card-body" class="card-body p-3">   
             <div id="giftCertificateSent-content" class="content"><?php echo TEXT_SUCCESS; ?></div>
             <div id="giftCertificateSent-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
-                <a href="<?php echo zen_href_link(FILENAME_DEFAULT, '', 'SSL', false); ?>"><?php echo zen_image_button(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?></a>
+                <?php echo zca_button_link(zen_href_link(FILENAME_DEFAULT, '', 'SSL', false), BUTTON_CONTINUE_ALT, 'button_continue'); ?>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@ if ($action === 'doneprocess') {
                 <div class="p-2"></div>
 
                 <label class="inputLabel" for="amount"><?php echo ENTRY_AMOUNT; ?></label>
-                <?php echo zen_draw_input_field('amount', (!empty($_POST['amount']) ? $_POST['amount'] : ''), 'id="amount" placeholder="' . ENTRY_REQUIRED_SYMBOL . '"' . 'text', false); ?>
+                <?php echo zen_draw_input_field('amount', (!empty($_POST['amount']) ? $_POST['amount'] : ''), 'id="amount" placeholder="' . ENTRY_REQUIRED_SYMBOL . '"' . ' required', 'text', false); ?>
                 <div class="p-2"></div>
 
                 <label for="message-area"><?php echo ENTRY_MESSAGE; ?></label>
@@ -126,7 +126,7 @@ if ($action === 'doneprocess') {
                 <div class="p-2"></div>
 
                 <div id="sendGiftCertificate-btn-toolbar3" class="btn-toolbar justify-content-between" role="toolbar">
-                    <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>' . zen_image_submit(BUTTON_IMAGE_SEND, BUTTON_SEND_ALT); ?>
+                    <?php echo zca_back_link() . zen_image_submit(BUTTON_IMAGE_SEND, BUTTON_SEND_ALT); ?>
                 </div>
             <?php echo '</form>'; ?>
         </div>  

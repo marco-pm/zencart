@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v1.0.BETA
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=conditions.<br />
  * Displays conditions page.
@@ -15,22 +15,22 @@
  */
 ?>
 <div id="conditionsDefault" class="centerColumn">
-    
-<h1 id="conditionsDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
-
-<?php if (DEFINE_CONDITIONS_STATUS >= 1 and DEFINE_CONDITIONS_STATUS <= 2) { ?>
-<div id="conditionsDefault-defineContent" class="defineContent">
+    <h1 id="conditionsDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
 <?php
-/**
- * require the html_define for the conditions page
- */
-  require($define_page);
+if (DEFINE_CONDITIONS_STATUS === '1' || DEFINE_CONDITIONS_STATUS === '2') {
 ?>
-</div>
-<?php } ?>
-
-<div id="conditionsDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-<?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
-</div>
-
+    <div id="conditionsDefault-defineContent" class="defineContent">
+<?php
+    /**
+     * require the html_define for the conditions page
+     */
+    require $define_page;
+?>
+    </div>
+<?php
+}
+?>
+    <div id="conditionsDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
+        <?php echo zca_back_link(); ?>
+    </div>
 </div>

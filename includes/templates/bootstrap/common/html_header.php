@@ -2,7 +2,7 @@
 /**
  * Common Template
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * outputs the html header. i,e, everything that comes before the \</head\> tag <br />
  *
@@ -36,16 +36,16 @@ $preloads = [
         'integrity' => 'sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=',
     ],
     'bscss' => [
-        'link' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css',
-        'integrity' => 'sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l',
+        'link' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
+        'integrity' => 'sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N',
     ],
     'bsjs' => [
-        'link' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
-        'integrity' => 'sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns',
+        'link' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js',
+        'integrity' => 'sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct',
     ],
     'fa' => [
-        'link' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css',
-        'integrity' => 'sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==',
+        'link' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css',
+        'integrity' => 'sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==',
     ],
 ];
 ?>
@@ -54,16 +54,21 @@ $preloads = [
   <head>
 <?php
 // -----
+// Provide a notification that the <head> tag has been rendered for the current page.
+//
+$zco_notifier->notify('NOTIFY_HTML_HEAD_TAG_START', $current_page_base);
+
+// -----
 // Provide an easy way for a site to disable the preload, if they want to ensure
 // that it's working properly.  Just create a .php file in either /extra_configures or
 // /extra_datafiles that sets $bs4_no_preloading to a 'truthy' value.
 //
 if (!empty($bs4_no_preloading)) {
 ?>
-    <link rel="preload" href="<?php echo $preloads['bscss']['link']; ?>" integrity="<?php echo $preloads['bscss']['integrity']; ?>" crossorigin="anonymous" as="style" />
-    <link rel="preload" href="<?php echo $preloads['fa']['link']; ?>" integrity="<?php echo $preloads['fa']['integrity']; ?>" crossorigin="anonymous" as="style" />
-    <link rel="preload" href="<?php echo $preloads['jquery']['link']; ?>" integrity="<?php echo $preloads['jquery']['integrity']; ?>" crossorigin="anonymous" as="script" />
-    <link rel="preload" href="<?php echo $preloads['bsjs']['link']; ?>" integrity="<?php echo $preloads['bsjs']['integrity']; ?>" crossorigin="anonymous" as="script" />
+    <link rel="preload" href="<?php echo $preloads['bscss']['link']; ?>" integrity="<?php echo $preloads['bscss']['integrity']; ?>" crossorigin="anonymous" as="style">
+    <link rel="preload" href="<?php echo $preloads['fa']['link']; ?>" integrity="<?php echo $preloads['fa']['integrity']; ?>" crossorigin="anonymous" referrerpolicy="no-referrer" as="style">
+    <link rel="preload" href="<?php echo $preloads['jquery']['link']; ?>" integrity="<?php echo $preloads['jquery']['integrity']; ?>" crossorigin="anonymous" as="script">
+    <link rel="preload" href="<?php echo $preloads['bsjs']['link']; ?>" integrity="<?php echo $preloads['bsjs']['integrity']; ?>" crossorigin="anonymous" as="script">
 <?php
 }
 ?>
@@ -82,7 +87,7 @@ if (!empty($bs4_no_preloading)) {
       <link href="<?php echo FAVICON; ?>" type="image/x-icon" rel="shortcut icon">
     <?php } //endif FAVICON  ?>
 
-    <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER . DIR_WS_HTTPS_CATALOG : HTTP_SERVER . DIR_WS_CATALOG ); ?>" />
+    <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER . DIR_WS_HTTPS_CATALOG : HTTP_SERVER . DIR_WS_CATALOG ); ?>">
     <?php if (isset($canonicalLink) && $canonicalLink != '') { ?>
       <link href="<?php echo $canonicalLink; ?>" rel="canonical">
     <?php } ?>
@@ -102,7 +107,7 @@ if (!empty($bs4_no_preloading)) {
     ?>
     <link rel="stylesheet" href="<?php echo $preloads['bscss']['link']; ?>" integrity="<?php echo $preloads['bscss']['integrity']; ?>" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="<?php echo $preloads['fa']['link']; ?>" integrity="<?php echo $preloads['fa']['integrity']; ?>" crossorigin="anonymous" />
+    <link rel="stylesheet" href="<?php echo $preloads['fa']['link']; ?>" integrity="<?php echo $preloads['fa']['integrity']; ?>" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <?php
     /**
@@ -175,15 +180,9 @@ if (!empty($bs4_no_preloading)) {
     }
 
     /** CDN for jQuery core * */
-    ?>
-    <script src="<?php echo $preloads['jquery']['link']; ?>" integrity="<?php echo $preloads['jquery']['integrity']; ?>" crossorigin="anonymous"></script>
-<?php
-/*
-    <script>window.jQuery || document.write(unescape('%3Cscript src="<?php echo $template->get_template_dir('.js', DIR_WS_TEMPLATE, $current_page_base, 'jscript'); ?>/jquery.min.js"%3E%3C/script%3E'));</script>
-*/
 ?>
+    <script src="<?php echo $preloads['jquery']['link']; ?>" integrity="<?php echo $preloads['jquery']['integrity']; ?>" crossorigin="anonymous"></script>
     <script src="<?php echo $preloads['bsjs']['link']; ?>" integrity="<?php echo $preloads['bsjs']['integrity']; ?>" crossorigin="anonymous"></script>
-
 <?php
     /**
      * load all site-wide jscript_*.js files from includes/templates/YOURTEMPLATE/jscript, alphabetically

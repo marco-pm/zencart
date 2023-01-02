@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=account.<br />
  * Displays previous orders and options to change various Customer Account settings
@@ -25,15 +25,21 @@
             <h4 id="myAccount-card-header" class="card-header"><?php echo MY_ACCOUNT_TITLE; ?></h4>
             <div id="myAccount-card-body" class="card-body p-3">
                 <ul id="myAccount-list-group" class="list-group list-group-flush">
-                    <li class="list-group-item"><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_EDIT, '', 'SSL') . '"><button class="btn btn-primary">' . MY_ACCOUNT_INFORMATION . '</button></a>'; ?></li>
-                    <li class="list-group-item"><?php echo ' <a href="' . zen_href_link(FILENAME_ADDRESS_BOOK, '', 'SSL') . '"><button class="btn btn-primary">' . MY_ACCOUNT_ADDRESS_BOOK . '</button></a>'; ?></li>
-                    <li class="list-group-item"><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_PASSWORD, '', 'SSL') . '"><button class="btn btn-primary">' . MY_ACCOUNT_PASSWORD . '</button></a>'; ?></li>
+                    <li class="list-group-item">
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT_EDIT, '', 'SSL'), MY_ACCOUNT_INFORMATION); ?>
+                    </li>
+                    <li class="list-group-item">
+                       <?php echo zca_button_link(zen_href_link(FILENAME_ADDRESS_BOOK, '', 'SSL'), MY_ACCOUNT_ADDRESS_BOOK); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT_PASSWORD, '', 'SSL'), MY_ACCOUNT_PASSWORD); ?>
+                    </li>
                 </ul>
             </div>
         </div>
 <!--eof my account card links-->  
 <?php
-if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 || CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0') {
+if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 || CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !== '0') {
 ?>
 <!--bof email notifications card links-->
         <div id="emailNotifications-card" class="card">
@@ -43,13 +49,17 @@ if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 || CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS
 <?php
     if ((int)ACCOUNT_NEWSLETTER_STATUS > 0) {
 ?>
-                    <li class="list-group-item"><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL') . '"><button class="btn btn-primary">' . EMAIL_NOTIFICATIONS_NEWSLETTERS . '</button></a>'; ?></li>
+                    <li class="list-group-item">
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL'), EMAIL_NOTIFICATIONS_NEWSLETTERS); ?>
+                    </li>
 <?php 
     } //endif newsletter unsubscribe
 
     if (CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS == '1') {
 ?>
-                    <li class="list-group-item"><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_NOTIFICATIONS, '', 'SSL') . '"><button class="btn btn-primary">' . EMAIL_NOTIFICATIONS_PRODUCTS . '</button></a>'; ?></li>
+                    <li class="list-group-item">
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT_NOTIFICATIONS, '', 'SSL'), EMAIL_NOTIFICATIONS_PRODUCTS); ?>
+                    </li>
 <?php 
     } //endif product notification 
 ?>
@@ -94,7 +104,7 @@ if (zen_count_customer_orders() > 0) {
                         </ul>
                     </div>
                     <div class="card-footer text-center">
-                        <a class="buttonCell" href="<?php echo $order_link; ?>"><?php echo zen_image_button(BUTTON_IMAGE_VIEW_SMALL, BUTTON_VIEW_SMALL_ALT); ?></a>
+                        <?php echo zca_button_link($order_link, BUTTON_VIEW_SMALL_ALT, 'button_view'); ?>
                     </div>
                 </div>
 <?php

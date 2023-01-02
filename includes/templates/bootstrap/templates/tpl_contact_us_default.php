@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=contact_us.<br />
  * Displays contact us page form.
@@ -21,12 +21,12 @@ if (CONTACT_US_STORE_NAME_ADDRESS === '1') {
 <?php
 }
 
-if (isset($_GET['action']) && ($_GET['action'] === 'success')) {
+if (isset($_GET['action']) && $_GET['action'] === 'success') {
 ?>
     <div id="contactUsDefault-content" class="content"><?php echo TEXT_SUCCESS; ?></div>
 
     <div id="contactUsDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_back_link(); ?>
     </div>
 <?php
 } else {
@@ -96,7 +96,7 @@ if (isset($_GET['action']) && ($_GET['action'] === 'success')) {
     </div>
 
     <div id="contactUsDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_back_link(); ?>
     </div>
     <?php echo '</form>'; ?>
 <?php

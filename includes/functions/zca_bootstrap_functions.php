@@ -2,7 +2,7 @@
 /**
  * @author ZCAdditions.com, ZCA Bootstrap Template
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
 */
  
@@ -116,3 +116,25 @@ function zca_get_translated_month_name()
     }
     return $month_name;
 }
+
+// -----
+// A function to return a button-styled anchor link, used in the majority of the
+// templates.  Added in v3.5.0.
+//
+function zca_button_link($link, $text, $extra_classes = '', $parameters = '') {
+    $extra_classes = ($extra_classes !== '') ? ' ' . trim($extra_classes) : '';
+    $parameters = ($parameters !== '') ? ' ' . trim($parameters) : '';
+    return '<a class="p-2 btn' . $extra_classes . '" href="' . $link . '"' . $parameters . '>' . $text . '</a>';
+}
+
+// -----
+// A function to return a button-styled 'back-link', used in many of the
+// templates.  Added in v3.5.0.
+//
+function zca_back_link($extra_classes = '', $parameters = '', $button_name = '') {
+    $extra_classes = ($extra_classes !== '') ? ' ' . trim($extra_classes) : '';
+    $parameters = ($parameters !== '') ? ' ' . trim($parameters) : '';
+    $button_name = ($button_name === '') ? BUTTON_BACK_ALT : $button_name;
+    return '<a class="p-2 btn button_back' . $extra_classes . '" href="' . zen_back_link(true) . '"' . $parameters . '>' . $button_name . '</a>';
+}
+

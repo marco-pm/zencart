@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded by index.php?main_page=site_map
  * Displays site-map and some hard-coded navigation components
@@ -183,6 +183,6 @@ if (!$pages_query->EOF) {
 ?>
     </ul>
     <div id="siteMapDefault-btn-toolbar" class="btn-toolbar mt-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_back_link(); ?>
     </div>
 </div>

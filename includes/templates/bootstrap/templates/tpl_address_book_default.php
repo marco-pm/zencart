@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP 3.4.0
+ * BOOTSTRAP 3.5.0
  *
  * Loaded automatically by index.php?main_page=address_book.
  * Allows customer to manage entries in their address book
@@ -62,12 +62,8 @@ foreach ($addressArray as $addresses) {
                 <div id="addressBookSingleEntryId<?php echo $addresses['address_book_id']; ?>-card-body" class="card-body p-3">
                     <address><?php echo zen_address_format($addresses['format_id'], $addresses['address'], true, ' ', '<br>'); ?></address>
                     <div class="btn-toolbar justify-content-between" role="toolbar">
-                        <a href="<?php echo zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, 'edit=' . $addresses['address_book_id'], 'SSL'); ?>">
-                            <?php echo zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT); ?>
-                        </a>
-                        <a href="<?php echo zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, 'delete=' . $addresses['address_book_id'], 'SSL'); ?>">
-                            <?php echo zen_image_button(BUTTON_IMAGE_DELETE_SMALL, BUTTON_DELETE_SMALL_ALT); ?>
-                        </a>
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, 'edit=' . $addresses['address_book_id'], 'SSL'), BUTTON_EDIT_SMALL_ALT, 'small_edit'); ?>
+                        <?php echo zca_button_link(zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, 'delete=' . $addresses['address_book_id'], 'SSL'), BUTTON_DELETE_SMALL_ALT, 'button_delete_small'); ?>
                     </div>
                 </div>
             </div>
@@ -78,16 +74,10 @@ foreach ($addressArray as $addresses) {
     </div>
 
     <div id="addressBookDefault-btn-toolbar" class="btn-toolbar justify-content-between" role="toolbar">
-        <a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
-            <?php echo zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT); ?>
-        </a>
+        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT, '', 'SSL'), BUTTON_BACK_ALT, 'button_back'); ?>
 <?php
 if (count($addressArray) < MAX_ADDRESS_BOOK_ENTRIES) {
-?>
-        <a href="<?php echo zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, '', 'SSL'); ?>">
-            <?php echo zen_image_button(BUTTON_IMAGE_ADD_ADDRESS, BUTTON_ADD_ADDRESS_ALT); ?>
-        </a>
-<?php
+    echo zca_button_link(zen_href_link(FILENAME_ADDRESS_BOOK_PROCESS, '', 'SSL'), BUTTON_BACK_ALT, 'button_add_address');
 }
 ?>
     </div>

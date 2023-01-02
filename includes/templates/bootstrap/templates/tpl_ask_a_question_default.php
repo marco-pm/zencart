@@ -1,6 +1,6 @@
 <?php
 /**
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
@@ -22,7 +22,7 @@ if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
     <div class="content"><?php echo TEXT_SUCCESS; ?></div>
 
     <div class="btn-toolbar my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo '<a class="p-2 btn button_back" href="' . zen_back_link(true) . '">' . BUTTON_BACK_ALT . '</a>'; ?>
     </div>
 
 <?php
@@ -71,7 +71,7 @@ require $define_page;
             <div class="p-2"></div>
 
             <label class="inputLabel" for="telephone"><?php echo $telephone_label; ?></label>
-            <?php echo zen_draw_input_field('telephone', ($telephone), ' size="20" id="telephone" autocomplete="off" placeholder="' . ENTRY_REQUIRED_SYMBOL . '" required', 'telephone'); ?>
+            <?php echo zen_draw_input_field('telephone', ($telephone), ' size="20" id="telephone" autocomplete="off" placeholder="' . ENTRY_REQUIRED_SYMBOL . '" required', 'tel'); ?>
             <div class="p-2"></div>
 
             <label for="enquiry"><?php echo ENTRY_ENQUIRY; ?></label>
@@ -86,7 +86,7 @@ require $define_page;
     </div>
 
     <div class="btn-toolbar my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_back_link(); ?>
     </div>
 <?php
 }

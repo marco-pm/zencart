@@ -2,9 +2,9 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
- * Loaded automatically by index.php?main_page=checkout_shipping_adresss.<br />
+ * Loaded automatically by index.php?main_page=checkout_shipping_adresss.
  * Allows customer to change the shipping address.
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
@@ -50,7 +50,7 @@ if ($process == false || $error == true) {
 <?php 
         require $template->get_template_dir('tpl_modules_common_address_format.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_common_address_format.php'; 
 ?>
-                    <div id="addressBookEntries-btn-toolbar" class="btn-toolbar justify-content-between mt-3" role="toolbar">
+                    <div class="btn-toolbar justify-content-between mt-3" role="toolbar">
                         <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
                         <?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?>
                     </div>
@@ -70,8 +70,8 @@ if ($process == false || $error == true) {
 <?php
     require $template->get_template_dir('tpl_modules_checkout_address_book.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_checkout_address_book.php';
 ?>
-                    <div id="addressBookEntries-btn-toolbar" class="btn-toolbar justify-content-between" role="toolbar">
-                        <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
+                    <div class="btn-toolbar justify-content-between" role="toolbar">
+                        <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
                         <?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ if ($process == false || $error == true) {
 if ($process == true) {
 ?>
     <div id="checkoutShippingAddressDefault-back-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
-        <?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL'), BUTTON_BACK_ALT, 'button_back'); ?>
     </div>
 <?php
 }

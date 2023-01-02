@@ -34,14 +34,13 @@ foreach ($addresses as $address) {
     }
 ?>
 <!--bof address book single entries card-->
-<div id="addressBookSingleEntryId<?php echo $address_book_id; ?>-card" class="card mb-3 <?php echo $primary_border; ?>">
-    <h4 id="addressBookSingleEntryId<?php echo $address_book_id; ?>-card-header" class="card-header <?php echo $primary_background ; ?>">
+<div id="cab-card-<?php echo $address_book_id; ?>" class="card mb-3 <?php echo $primary_border; ?>">
+    <div class="card-header <?php echo $primary_background ; ?>">
         <div class="custom-control custom-radio custom-control-inline">
             <?php echo zen_draw_radio_field('address', $address_book_id, $selected, 'id="name-' . $address_book_id . '"'); ?>
-
             <label for="name-<?php echo $address_book_id; ?>" class="custom-control-label"><?php echo zen_output_string_protected($address['firstname'] . ' ' . $address['lastname']) . $primary_address; ?></label>
         </div>
-    </h4>
+    </div>
 <?php
     // -----
     // The zc158 version of the checkout_new_address module now returns an
@@ -51,7 +50,7 @@ foreach ($addresses as $address) {
     //
     $address_details = (zen_get_zcversion() >= '1.5.8') ? $address['address'] : $address->fields;
 ?>
-    <div id="addressBookSingleEntryId<?php echo $address_book_id; ?>-card-body" class="card-body p-3">
+    <div class="card-body p-3">
         <address><?php echo zen_address_format(zen_get_address_format_id($address['country_id']), $address_details, true, ' ', '<br>'); ?></address>
     </div>
 </div>

@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.1.0
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -55,31 +55,29 @@
 
 <!--bof product links card--> 
 <div id="productLinks-card" class="card mb-3">
-<div id="productLinks-card-body" class="card-body">
+    <div id="productLinks-card-body" class="card-body">
 <?php
-        // more info in place of buy now
-        if (zen_has_product_attributes($review_info->fields['products_id'] )) {
-          //   $link = '<p>' . '<a href="' . zen_href_link(zen_get_info_page($review_info->fields['products_id']), 'products_id=' . $review_info->fields['products_id'] ) . '">' . MORE_INFO_TEXT . '</a>' . '</p>';
-          $link = '';
-        } else {
-          $link= '<a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action', 'reviews_id')) . 'action=buy_now') . '">' . zen_image_button(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) . '</a>';
-        }
+// more info in place of buy now
+if (!zen_has_product_attributes($review_info->fields['products_id'])) {
+    $the_button = '<a class="p-2 btn button_in_cart" href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(['action', 'reviews_id']) . 'action=buy_now') . '">' . BUTTON_IN_CART_ALT . '</a>';
+    echo zen_get_buy_now_button($review_info->fields['products_id'], $the_button, '') . '<br>' . zen_get_products_quantity_min_units_display($review_info->fields['products_id']);
+}
 
-        $the_button = $link;
-        $products_link = '';
-        echo zen_get_buy_now_button($review_info->fields['products_id'], $the_button, $products_link) . '<br />' . zen_get_products_quantity_min_units_display($review_info->fields['products_id']);
-      ?>
-
-<div class="p-1"></div>
-
-<?php echo '<a href="' . zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('reviews_id'))) . '">' . zen_image_button(BUTTON_IMAGE_GOTO_PROD_DETAILS , BUTTON_GOTO_PROD_DETAILS_ALT) . '</a>'; ?>
-
-<?php echo ($reviews_counter > 1 ? '<div class="p-1"></div><a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params(array('reviews_id'))) . '">' . zen_image_button(BUTTON_IMAGE_MORE_REVIEWS , BUTTON_MORE_REVIEWS_ALT) . '</a>' : ''); ?>
-
-<div class="p-1"></div>
-
-<?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array('reviews_id'))) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?>
-</div>
+$get_params = zen_get_all_get_params(['reviews_id']);
+?>
+        <div class="p-1"></div>
+        <?php echo zca_button_link(zen_href_link(zen_get_info_page($_GET['products_id']), $get_params), BUTTON_GOTO_PROD_DETAILS_ALT, 'button_goto_prod_details'); ?>
+<?php
+if ($reviews_counter > 1) {
+?>
+        <div class="p-1"></div>
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS, $get_params), BUTTON_MORE_REVIEWS_ALT, 'button_more_reviews'); ?>
+<?php
+}
+?>
+        <div class="p-1"></div>
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, $get_params), BUTTON_WRITE_REVIEW_ALT, 'button_write_review'); ?>
+    </div>
 </div>
 <!--eof product links card--> 
 
@@ -96,7 +94,7 @@
 <h3 class="rating"><?php echo zca_get_rating_stars($review_info->fields['reviews_rating'], 'xs'); ?></h3>
   </div>      
     <blockquote class="blockquote mb-0">
-<div id="productReviewsInfoDefault-content" class="content"><?php echo zen_break_string(nl2br(zen_output_string_protected(stripslashes($review_info->fields['reviews_text']))), 60, '-<br />'); ?></div>
+<div id="productReviewsInfoDefault-content" class="content"><?php echo zen_break_string(nl2br(zen_output_string_protected(stripslashes($review_info->fields['reviews_text']))), 60, '-<br>'); ?></div>
       <footer class="blockquote-footer"><cite title="Source Title"><?php echo sprintf(TEXT_REVIEW_BY, zen_output_string_protected($review_info->fields['customers_name'])); ?></cite></footer>
     </blockquote>
   </div>

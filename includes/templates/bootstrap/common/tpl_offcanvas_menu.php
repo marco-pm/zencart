@@ -2,7 +2,7 @@
 /**
  * Template for Mobile Header Drop Down
  * 
- * BOOTSTRAP v3.2.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -41,8 +41,8 @@ foreach ($categories_tab as $category_tab) {
         </ul>
 <?php
 if (SHOW_CATEGORIES_BOX_SPECIALS === 'true') {
-   $show_this = $db->Execute("SELECT s.products_id FROM " . TABLE_SPECIALS . " s WHERE s.status = 1 LIMIT 1");
-   if (!$show_this->EOF) {
+    $show_this = $db->Execute("SELECT s.products_id FROM " . TABLE_SPECIALS . " s WHERE s.status = 1 LIMIT 1");
+    if (!$show_this->EOF) {
 ?>
         <div class="dropdown-divider"></div><a class="dropdown-item" href="<?php echo zen_href_link(FILENAME_SPECIALS); ?>'"><?php echo CATEGORIES_BOX_HEADING_SPECIALS; ?></a>
 <?php
@@ -106,9 +106,9 @@ if (!$information_sidebox->EOF) {
     <div class="dropdown-menu" aria-labelledby="infoDropdown">
         <ul class="m-0 p-0">
 <?php
-            foreach ($information as $next_link) {
+            foreach ($information as $next_information_link) {
 ?>
-            <li><?php echo $next_link; ?></li>
+            <li><?php echo $next_information_link; ?></li>
 <?php
             }
 ?>
@@ -148,9 +148,9 @@ if (!$more_information_sidebox->EOF) {
     <div class="dropdown-menu" aria-labelledby="moreInfoDropdown">
         <ul class="m-0 p-0">
 <?php
-            foreach ($more_information as $next_link) {
+            foreach ($more_information as $next_information_link) {
 ?>
-            <li><?php echo $next_link; ?></li>
+            <li><?php echo $next_information_link; ?></li>
 <?php
             }
 ?>
@@ -177,7 +177,7 @@ if (EZPAGES_STATUS_SIDEBOX === '1' || (EZPAGES_STATUS_SIDEBOX === '2' && zen_is_
           WHERE e.status_sidebox = 1
             AND e.sidebox_sort_order > 0
           ORDER BY e.sidebox_sort_order, ec.pages_title"
-    );   
+    );
 
     if (!$page_query->EOF) {
         $page_query_list_sidebox = [];
@@ -205,7 +205,7 @@ if (EZPAGES_STATUS_SIDEBOX === '1' || (EZPAGES_STATUS_SIDEBOX === '2' && zen_is_
                     $offcanvasAltURL = '';
                     break;
             }
-            
+
             // if altURL is specified, use it; otherwise, use EZPage ID to create link
             if ($offcanvasAltURL === '') {
                 $toc_chapter = ($next_page['toc_chapter'] > 0) ? ('&chapter=' . $next_page['toc_chapter']) : '';

@@ -1,16 +1,18 @@
 <?php
 // -----
 // Part of the One-Page Checkout plugin, provided under GPL 2.0 license by lat9 (cindy@vinosdefrutastropicales.com).
-// Copyright (C) 2013-2019, Vinos de Frutas Tropicales.  All rights reserved.
+// Copyright (C) 2013-2022, Vinos de Frutas Tropicales.  All rights reserved.
 //
 // The following definition is used in multiple pages and will in the main language file, e.g. english.php, for
 // Zen Cart versions 1.5.7 and later.
 //
 // Provide an in-script override for the case it's not defined.
 //
-// Last updated: OPC v2.4.2/Bootstrap v3.4.0
+// Last updated: OPC v2.4.2/Bootstrap v3.5.0
 //
-if (!defined('TEXT_OPTION_DIVIDER')) define('TEXT_OPTION_DIVIDER', '&nbsp;-&nbsp;');
+if (!defined('TEXT_OPTION_DIVIDER')) {
+    define('TEXT_OPTION_DIVIDER', '&nbsp;-&nbsp;');
+}
 
 $display_tax_column = (count($order->info['tax_groups']) > 1);
 
@@ -23,7 +25,7 @@ $_SESSION['zca_bootstrap_ot_colspan'] = ($display_tax_column) ? '3' : '2';
     <h4 class="card-header"><?php echo HEADING_PRODUCTS; ?></h4>
     <div class="card-body">
         <div class="text-right mb-2">
-            <?php echo '<a href="' . zen_href_link(FILENAME_SHOPPING_CART) . '" class="d-block">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?>
+            <?php echo zca_button_link(zen_href_link(FILENAME_SHOPPING_CART), BUTTON_EDIT_SMALL_ALT, 'small_edit d-block'); ?>
         </div>
         <table class="cartTableDisplay table table-bordered table-striped">
             <thead>

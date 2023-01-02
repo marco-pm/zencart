@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -19,7 +19,7 @@ if (!isset($_GET['action']) || ($_GET['action'] !== 'unsubscribe')) {
     <?php echo ($unsubscribe_address === '') ? UNSUBSCRIBE_TEXT_NO_ADDRESS_GIVEN : UNSUBSCRIBE_TEXT_INFORMATION; ?>
 
     <div id="unsubscribeDefault-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
-        <?php echo '<a href="' . zen_href_link(FILENAME_UNSUBSCRIBE, 'addr=' . $unsubscribe_address . '&action=unsubscribe', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_UNSUBSCRIBE, BUTTON_UNSUBSCRIBE) . '</a>'; ?>
+        <?php echo zca_button_link(zen_href_link(FILENAME_UNSUBSCRIBE, 'addr=' . $unsubscribe_address . '&action=unsubscribe', 'SSL'), BUTTON_UNSUBSCRIBE, 'button_unsubscribe'); ?>
     </div>
 <?php
 } else {
@@ -29,7 +29,7 @@ if (!isset($_GET['action']) || ($_GET['action'] !== 'unsubscribe')) {
     <?php echo $status_display; ?>
 
     <div id="unsubscribeDefault-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
-        <?php echo '<a href="' . zen_href_link(FILENAME_DEFAULT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?>
+        <?php echo zca_button_link(zen_href_link(FILENAME_DEFAULT, '', 'SSL'), BUTTON_CONTINUE_SHOPPING_ALT, 'button_continue_shopping'); ?>
     </div>
 <?php
 }

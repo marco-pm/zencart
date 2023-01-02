@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
  * Display information related to GV redemption (could be redemption details, or an error message)
  *
@@ -13,19 +13,18 @@
  */
 ?>
 <div id="gvRedeemDefault" class="centerColumn">
-    
-<h1 id="gvRedeemDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
+    <h1 id="gvRedeemDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
 
-<div id="gvRedeemDefault-content" class="content"><?php echo sprintf($message, $_GET['gv_no']); ?></div>
+    <div id="gvRedeemDefault-content" class="content"><?php echo sprintf($message, $_GET['gv_no']); ?></div>
 
-<div id="gvRedeemDefault-content-one" class="content"><?php echo TEXT_INFORMATION; ?></div>
-
+    <div id="gvRedeemDefault-content-one" class="content"><?php echo TEXT_INFORMATION; ?></div>
 <?php
 $link = zen_href_link(FILENAME_DEFAULT);
-if (isset($_GET['goback']) && $_GET['goback'] == 'true') $link = zen_href_link(FILENAME_GV_FAQ);
+if (isset($_GET['goback']) && $_GET['goback'] === 'true') {
+    $link = zen_href_link(FILENAME_GV_FAQ);
+}
 ?>
-<div id="gvFaqDefault-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
-<?php echo '<a href="' . $link . '">' . zen_image_button(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT) . '</a>'; ?>
-</div>
-
+    <div id="gvFaqDefault-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">
+        <?php echo zca_button_link($link, BUTTON_CONTINUE_ALT, 'button_continue'); ?>
+    </div>
 </div>

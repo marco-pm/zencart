@@ -1,6 +1,6 @@
 <?php
 /*
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.4.2
  */
 // -----
 // Part of the Bootstrap template, defining commonly-used phrases and phrases unique to the bootstrap template.
@@ -82,3 +82,9 @@ define('TEXT_AJAX_SEARCH_TITLE', 'What can we help you find?');
 define('TEXT_AJAX_SEARCH_PLACEHOLDER', 'Search here...');
 define('TEXT_AJAX_SEARCH_RESULTS', 'Total %u results found.');
 define('TEXT_AJAX_SEARCH_VIEW_ALL', 'View All');
+
+// -----
+// ARIA label text, used in the common header.
+//
+define('TEXT_HEADER_ARIA_LABEL_NAVBAR', 'Navigation Bar');
+define('TEXT_HEADER_ARIA_LABEL_LOGO', 'Site Logo');

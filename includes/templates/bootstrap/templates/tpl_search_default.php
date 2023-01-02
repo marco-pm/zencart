@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=advanced_search.<br />
  * Displays options fields upon which a product search will be run
@@ -93,7 +93,7 @@ if (empty($skip_manufacturers)) {
         </div>
 
         <div id="advancedSearchDefault-btnToolbar" class="btn-toolbar justify-content-between" role="toolbar">
-            <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+            <?php echo zca_back_link(); ?>
             <?php echo zen_image_submit(BUTTON_IMAGE_SEARCH, BUTTON_SEARCH_ALT); ?>
         </div>
     <?php echo '</form>'; ?>

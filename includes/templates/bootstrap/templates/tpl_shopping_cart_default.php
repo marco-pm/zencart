@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.3.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=shopping_cart.<br />
  * Displays shopping-cart contents
@@ -131,7 +131,7 @@ if ($flagHasCartContents) {
 
 <?php
     // show update cart button
-    if (SHOW_SHOPPING_CART_UPDATE == 2 || SHOW_SHOPPING_CART_UPDATE == 3) {
+    if (SHOW_SHOPPING_CART_UPDATE === '2' || SHOW_SHOPPING_CART_UPDATE === '3') {
 ?>
                     <div id="cartUpdate" class="text-center">
                         <button type="submit" class="btn" aria-label="<?php echo BUTTON_UPDATE_ALT; ?>"><i class="fas fa-sync-alt"></i></button>
@@ -149,8 +149,8 @@ if ($flagHasCartContents) {
 
 <!--bof shopping cart buttons-->
     <div id="shoppingCartDefault-btn-toolbar" class="btn-toolbar justify-content-between my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?>
-        <?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?>
+        <?php echo zca_back_link('button_continue_shopping', '', BUTTON_CONTINUE_SHOPPING_ALT); ?>
+        <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'), BUTTON_CHECKOUT_ALT, 'button_checkout'); ?>
     </div>
 <!--eof shopping cart buttons-->
 

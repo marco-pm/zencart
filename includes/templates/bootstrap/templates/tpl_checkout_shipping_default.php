@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=checkout_shipping.<br>
  * Displays allowed shipping modules for selection by customer.
@@ -41,7 +41,7 @@ if ($messageStack->size('checkout_shipping') > 0) {
 if ($displayAddressEdit) {
 ?>
                         <div class="btn-toolbar justify-content-end mt-3" role="toolbar">
-                            <?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?>
+                            <?php echo zca_button_link($editShippingButtonLink, BUTTON_CHANGE_ADDRESS_ALT, 'button_change_address'); ?>
                         </div>
 <?php
 }
@@ -105,7 +105,7 @@ if (zen_count_shipping_modules() > 0) {
                         <div><?php echo $quotes[$i]['error']; ?></div>
 <?php
                 } else {
-                    for ($j = 0, $n2 = sizeof($quotes[$i]['methods']); $j < $n2; $j++) {
+                    for ($j = 0, $n2 = count($quotes[$i]['methods']); $j < $n2; $j++) {
 // set the radio button to be checked if it is the method chosen
                         $checked = false;
                         if (isset($_SESSION['shipping']) && isset($_SESSION['shipping']['id'])) {

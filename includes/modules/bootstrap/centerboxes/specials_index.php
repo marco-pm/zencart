@@ -7,7 +7,7 @@
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: lat9 2019 Jan 06 Modified in v1.5.6b $
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.4.2
  */
 if (!defined('IS_ADMIN_FLAG')) {
     die('Illegal Access');
@@ -69,7 +69,6 @@ $title = '';
 
 // show only when 1 or more
 if ($num_products_count > 0) {
-    $list_box_contents = [];
     while (!$special_products->EOF) {
         $special_products_id = $special_products->fields['products_id'];
         $products_price = zen_get_products_display_price($special_products_id);
@@ -84,7 +83,10 @@ if ($num_products_count > 0) {
 
         $special_products_image = '';
         if (!($special_products->fields['products_image'] === '' && PRODUCTS_IMAGE_NO_IMAGE_STATUS === '0')) {
-            $special_products_image = '<a href="' . $special_products_link . '">' . zen_image(DIR_WS_IMAGES . $special_products->fields['products_image'], $special_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '</a><br>';
+            $special_products_image =
+                '<a href="' . $special_products_link . '" title="' . zen_output_string_protected($special_products_name) . '">' .
+                    zen_image(DIR_WS_IMAGES . $special_products->fields['products_image'], $special_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) .
+                '</a><br>';
         }
 
         $list_box_contents[$row][$col] = [

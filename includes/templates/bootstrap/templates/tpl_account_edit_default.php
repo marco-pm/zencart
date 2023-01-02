@@ -2,9 +2,9 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v1.0.BETA
+ * BOOTSTRAP v3.5.0
  *
- * Loaded automatically by index.php?main_page=account_edit.<br />
+ * Loaded automatically by index.php?main_page=account_edit.
  * View or change Customer Account Information
  *
  * @package templateSystem
@@ -68,7 +68,7 @@
 
 <label class="inputLabel" for="telephone"><?php echo ENTRY_TELEPHONE_NUMBER; ?></label>
 <?php echo zen_draw_input_field('telephone', $account->fields['customers_telephone'], 'id="telephone" placeholder="' . ENTRY_TELEPHONE_NUMBER_TEXT . '"' . ((int)ENTRY_TELEPHONE_MIN_LENGTH > 0 ? ' required' : ''), 'tel'); ?>
-<br class="clearBoth" />
+<br class="clearBoth">
 
 <?php
 if (ACCOUNT_FAX_NUMBER == 'true' ) {
@@ -117,8 +117,8 @@ if (ACCOUNT_FAX_NUMBER == 'true' ) {
 <!--eof newsletter and email details card-->
 
 <div id="accountEditDefault-btn-toolbar" class="btn-toolbar justify-content-between" role="toolbar">
-<?php echo '<a href="' . zen_href_link(FILENAME_ACCOUNT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_BACK , BUTTON_BACK_ALT) . '</a>'; ?>
-<?php echo zen_image_submit(BUTTON_IMAGE_UPDATE , BUTTON_UPDATE_ALT); ?>
+    <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT, '', 'SSL'), BUTTON_BACK_ALT, 'button_back'); ?>
+    <?php echo zen_image_submit(BUTTON_IMAGE_UPDATE , BUTTON_UPDATE_ALT); ?>
 </div>
 
 

@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Displays page-not-found message and site-map (if configured)
  *
@@ -129,6 +129,6 @@ if (DEFINE_PAGE_4_STATUS <= '1') {
     </ul>
 
     <div id="pageNotFoundDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-        <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+        <?php echo zca_back_link(); ?>
     </div>
 </div>

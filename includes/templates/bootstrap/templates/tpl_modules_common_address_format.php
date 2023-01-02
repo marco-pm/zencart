@@ -2,7 +2,7 @@
 /**
  * Module Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Displays address-book details/selection
  *
@@ -112,7 +112,7 @@ $onchange_for_zc158 = ($flag_show_pulldown_states === true && zen_get_zcversion(
 $state_field_label = (zen_get_zcversion() >= '1.5.8') ? $state_field_label : ENTRY_STATE;
 ?>
 <label class="inputLabel" for="country"><?php echo ENTRY_COUNTRY; ?></label>
-<?php echo zen_get_country_list('zone_country_id', $entry->fields['entry_country_id'], 'id="country" placeholder="' . ENTRY_COUNTRY_TEXT . '"' . $onchange_for_zc158); ?>
+<?php echo zen_get_country_list('zone_country_id', $entry->fields['entry_country_id'], 'id="country"' . $onchange_for_zc158); ?>
 <div class="p-2"></div>
 
 <?php

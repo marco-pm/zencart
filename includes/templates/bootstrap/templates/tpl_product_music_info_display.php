@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=product_music_info
  * Displays details of a music product
@@ -115,22 +115,29 @@ echo '<div class="p-3"></div>';
 <?php } ?>
 <!--eof Product description -->
 
+
 <!--bof Reviews button and count-->
 <?php
-  if ($flag_show_product_info_reviews == 1) {
+if ($flag_show_product_info_reviews === '1') {
     // if more than 0 reviews, then show reviews button; otherwise, show the "write review" button
-    if ($reviews->fields['count'] > 0 ) { ?>
-<div id="productMusicInfo-productReviewLink" class="productReviewLink mb-3"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()) . '">' . zen_image_button(BUTTON_IMAGE_REVIEWS, BUTTON_REVIEWS_ALT) . '</a>'; ?>
-</div>
+    if ($reviews->fields['count'] > 0 ) {
+?>
+    <div id="productInfo-productReviewLink" class="productReviewLink mb-3">
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()), BUTTON_REVIEWS_ALT, 'button_reviews'); ?>
+    </div>
 
-<p id="productMusicInfo-productReviewCount" class="productReviewCount"><?php echo ($flag_show_product_info_reviews_count == 1 ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?></p>
-
-<?php } else { ?>
-<div id="productMusicInfo-productReviewLink" class="productReviewLink mb-3"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array())) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?>
-</div>
+    <p id="productInfo-productReviewCount" class="productReviewCount">
+        <?php echo ($flag_show_product_info_reviews_count === '1' ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?>
+    </p>
 
 <?php
-  }
+    } else {
+?>
+    <div id="productInfo-productReviewLink" class="productReviewLink mb-3">
+        <?php echo zca_button_link(zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params()), BUTTON_WRITE_REVIEW_ALT, 'button_write_review'); ?>
+    </div>
+<?php
+    }
 }
 ?>
 <!--eof Reviews button and count -->
@@ -157,8 +164,8 @@ if ($flag_show_ask_a_question) {
 ?>
 <!-- bof Ask a Question -->
 <br>
-<span id="productQuestions" class="">
-<?php echo '<a href="' . zen_href_link(FILENAME_ASK_A_QUESTION, 'pid=' . $_GET['products_id'], 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_ASK_A_QUESTION, BUTTON_ASK_A_QUESTION_ALT) . '</a>'; ?>
+<span id="productQuestions">
+    <?php echo zca_button_link(zen_href_link(FILENAME_ASK_A_QUESTION, 'pid=' . $_GET['products_id'], 'SSL'), BUTTON_ASK_A_QUESTION_ALT, 'button_ask_a_question'); ?>
 </span>
 <br class="clearBoth">
 <br>
@@ -177,6 +184,7 @@ if ($flag_show_ask_a_question) {
 
 <!--bof Attributes Module -->
 <?php
+$one_time = '';
   if ($pr_attr->fields['total'] > 0) {
 ?>
 

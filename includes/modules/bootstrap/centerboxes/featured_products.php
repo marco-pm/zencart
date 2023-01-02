@@ -7,7 +7,7 @@
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: Pan2020 2019 Mar 27 Modified in v1.5.6b $
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.4.2
  */
 if (!defined('IS_ADMIN_FLAG')) {
     die('Illegal Access');
@@ -78,7 +78,10 @@ if ($num_products_count > 0) {
 
         $featured_products_image = '';
         if (!($featured_products->fields['products_image'] === '' && PRODUCTS_IMAGE_NO_IMAGE_STATUS === '0')) {
-            $featured_products_image = '<a href="' . $featured_products_link . '">' . zen_image(DIR_WS_IMAGES . $featured_products->fields['products_image'], $featured_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '</a><br>';
+            $featured_products_image =
+                '<a href="' . $featured_products_link . '" title="' . zen_output_string_protected($featured_products_name) . '">' .
+                    zen_image(DIR_WS_IMAGES . $featured_products->fields['products_image'], $featured_products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) .
+                '</a><br>';
         }
         $list_box_contents[$row][$col] = [
             'params' => ' class="centerBoxContentsFeatured centerBoxContents card mb-3 p-3 text-center"',

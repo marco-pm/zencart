@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * Loaded automatically by index.php?main_page=account_password.<br />
  * Allows customer to change their password
@@ -44,7 +44,7 @@ if ($messageStack->size('account_password') > 0) {
         </div>
 
         <div id="accountPasswordDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-            <?php echo '<a href="' . zen_href_link(FILENAME_ACCOUNT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+             <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT, '', 'SSL'), BUTTON_BACK_ALT, 'button_back'); ?>
         </div>
 
     <?php echo '</form>'; ?>

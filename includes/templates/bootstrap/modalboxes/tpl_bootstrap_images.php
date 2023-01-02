@@ -2,13 +2,16 @@
 /**
  * New Modal for popup_image_additional carousel
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  */
+if (!defined('IMAGE_ADDITIONAL_DISPLAY_LINK_EVEN_WHEN_NO_LARGE')) {
+    define('IMAGE_ADDITIONAL_DISPLAY_LINK_EVEN_WHEN_NO_LARGE', 'Yes');
+}
 ?>
 <!-- Modal -->
 <!-- BOOTSTRAP -->
@@ -34,8 +37,8 @@ require DIR_WS_MODULES . zen_get_module_directory('main_product_image.php');
 <?php
 require DIR_WS_MODULES . zen_get_module_directory('bootstrap_slide_additional_images.php');
 
-if ($flag_show_product_info_additional_images != 0 && $num_images > 0) {
-    if (is_array($list_box_contents) > 0 ) {
+if ($flag_show_product_info_additional_images !== '0' && $num_images > 0) {
+    if (is_array($list_box_contents)) {
         for ($row = 0, $rn = count($list_box_contents); $row < $rn; $row++) {
             $params = '';
 
@@ -71,12 +74,12 @@ require DIR_WS_MODULES . zen_get_module_directory('main_product_image.php');
 <?php
 require DIR_WS_MODULES . zen_get_module_directory('bootstrap_additional_images.php');
 
-if ($flag_show_product_info_additional_images != 0 && $num_images > 0) {
+if ($flag_show_product_info_additional_images !== '0' && $num_images > 0) {
     if (is_array($list_box_contents) > 0 ) {
-        for ($row=0;$row<sizeof($list_box_contents);$row++) {
+        for ($row = 0, $rn = count($list_box_contents); $row < $rn; $row++) {
             $params = '';
 
-            for ($col=0;$col<sizeof($list_box_contents[$row]);$col++) {
+            for ($col = 0, $cn = count($list_box_contents[$row]); $col < $cn; $col++) {
                 $r_params = '';
                 if (isset($list_box_contents[$row][$col]['params'])) {
                     $r_params .= ' ' . (string)$list_box_contents[$row][$col]['params'];

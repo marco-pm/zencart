@@ -2,7 +2,7 @@
 /**
  * Side Box Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -50,7 +50,7 @@ if (zen_is_logged_in() && !zen_in_guest_checkout()) {
     $gv_result = $db->Execute($gv_query);
 
     if (!$gv_result->EOF && $gv_result->fields['amount'] > 0 ) {
-        $content .= '<div id="cartBoxGVButton" class="text-center p-2"><a href="' . zen_href_link(FILENAME_GV_SEND, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_SEND_A_GIFT_CERT, BUTTON_SEND_A_GIFT_CERT_ALT) . '</a></div>';
+        $content .= '<div id="cartBoxGVButton" class="text-center p-2">' . zca_button_link(zen_href_link(FILENAME_GV_SEND, '', 'SSL'), BUTTON_SEND_A_GIFT_CERT_ALT, 'button_send_a_gift_cert') . '</div>';
         $content .= '<div id="cartBoxVoucherBalance" class="text-center p-2">' . VOUCHER_BALANCE . $currencies->format($gv_result->fields['amount']) . '</div>';
     }
 }

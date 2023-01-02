@@ -2,9 +2,9 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.0
  *
- * Loaded automatically by index.php?main_page=checkout_success.<br />
+ * Loaded automatically by index.php?main_page=checkout_success.
  * Displays confirmation details after order has been successfully processed.
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
@@ -59,8 +59,8 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 ?>
 
     <div id="logOff-btn-toolbar" class="btn-toolbar justify-content-between mt-3" role="toolbar">
-    <a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" name="linkMyAccount"><?php echo zen_image_button(BUTTON_IMAGE_MY_ORDERS , BUTTON_MY_ORDERS_TEXT); ?></a>
-    <a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" name="linkLogoff"><?php echo zen_image_button(BUTTON_IMAGE_LOG_OFF , BUTTON_LOG_OFF_ALT); ?></a>
+        <?php echo zca_button_link(zen_href_link(FILENAME_ACCOUNT, '', 'SSL'), BUTTON_MY_ORDERS_TEXT, 'button_my_orders', 'id="linkMyAccount"'); ?>
+        <?php echo zca_button_link(zen_href_link(FILENAME_LOGOFF, '', 'SSL'), BUTTON_LOG_OFF_ALT, 'button_logoff', 'id="linkLogoff"'); ?>
     </div>
 
         </div>
@@ -73,7 +73,7 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 <?php echo TEXT_CONTACT_STORE_OWNER;?>
 
     <div id="cust-btn-toolbar" class="btn-toolbar justify-content-center mt-3" role="toolbar">
-    <a href="<?php echo zen_href_link(FILENAME_CONTACT_US, '', 'SSL'); ?>" name="linkContactUs"><?php echo zen_image_button(BUTTON_IMAGE_CONTACT_US , BUTTON_CONTACT_US_TEXT); ?></a>
+        <?php echo zca_button_link(zen_href_link(FILENAME_CONTACT_US, '', 'SSL'), BUTTON_CONTACT_US_TEXT, 'button_contact_us'); ?>
     </div>
 
         </div>
@@ -86,7 +86,7 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 <!--bof customer service card--> 
     <div id="customerService-card" class="card mb-3">
         <div id="customerService-card-body" class="card-body p-3">
-<?php echo TEXT_CONTACT_STORE_OWNER;?>
+            <?php echo TEXT_CONTACT_STORE_OWNER;?>
         </div>
     </div>
 <!--eof customer service card-->
@@ -94,14 +94,14 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 <!--bof order number card--> 
     <div id="orderNumber-card" class="card mb-3">
         <div id="orderNumber-card-body" class="card-body p-3">
-<?php echo TEXT_YOUR_ORDER_NUMBER . $zv_orders_id; ?>
+            <?php echo TEXT_YOUR_ORDER_NUMBER . $zv_orders_id; ?>
         </div>
     </div>
 <!--eof order number card--> 
 
 <!-- bof order details -->
 <?php
- require($template->get_template_dir('tpl_account_history_info_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_account_history_info_default.php');
+ require $template->get_template_dir('tpl_account_history_info_default.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_account_history_info_default.php';
 ?>
 <!-- eof order details -->
 
@@ -111,14 +111,12 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
   if ($customer_has_gv_balance ) {
 ?>
 
-<?php require($template->get_template_dir('tpl_modules_send_or_spend.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_send_or_spend.php'); ?>
+<?php require $template->get_template_dir('tpl_modules_send_or_spend.php', DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/tpl_modules_send_or_spend.php'; ?>
 
 <?php
   }
 ?>
 <!--eof -gift certificate- send or spend box-->
-
-
 <?php
 /**
  * The following creates a list of checkboxes for the customer to select if they wish to be included in product-notification
@@ -139,7 +137,8 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 <div class="custom-control custom-checkbox">
 <?php echo zen_draw_checkbox_field('notify[]', $notifications['products_id'], true, 'id="notify-' . $notifications['counter'] . '"') ;?>
 <label class="custom-control-label checkboxLabel" for="<?php echo 'notify-' . $notifications['counter']; ?>"><?php echo $notifications['products_name']; ?></label>
-</div><br />
+</div>
+<br>
   <?php } ?>
 <div id="productNotifications-btn-toolbar" class="btn-toolbar justify-content-end mt-3" role="toolbar">
 <?php echo zen_image_submit(BUTTON_IMAGE_UPDATE, BUTTON_UPDATE_ALT); ?>
@@ -152,8 +151,6 @@ if (isset($additional_payment_messages) && $additional_payment_messages != '') {
 <?php
     }
 ?>
-
-
 <div id="checkoutSuccessDefault-content-one" class="content text-center">
 <h3><?php echo TEXT_THANKS_FOR_SHOPPING; ?></h3>
 </div>

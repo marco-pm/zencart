@@ -2,7 +2,7 @@
 /**
  * attributes module
  *
- * BOOTSTRAP v3.1.0
+ * BOOTSTRAP v3.5.0
  *
  * Prepares attributes content for rendering in the template system
  * Prepares HTML for input fields with required uniqueness so template can display them as needed and keep collected data in proper fields
@@ -443,7 +443,7 @@ while (!$products_options_names->EOF) {
                     if (!empty($products_options->fields['attributes_image'])) {
                         $tmp_attributes_image .= '<div class="custom-control custom-checkbox attribImg">' . zen_draw_checkbox_field('id[' . $products_options_id . ']['.$products_options_value_id.']', $products_options_value_id, $selected_attribute, 'id="' . $inputFieldId . '" ' . $data_properties . $field_disabled) . '<br>' . zen_image(DIR_WS_IMAGES . $products_options->fields['attributes_image']) . '<label class="custom-control-label attribsCheckbox" for="' . $inputFieldId . '">' . (PRODUCT_IMAGES_ATTRIBUTES_NAMES == '1' ? '<br>' . $products_options->fields['products_options_values_name'] : '') . (!empty($products_options_details_noname) ? '<br>' . $products_options_details_noname : '') . '</label></div>' . "\n";
                     } else {
-                        $tmp_attributes_image .= '<div class="custom-control custom-checkbox attribImg">' . zen_draw_checkbox_field('id[' . $products_options_id . ']['.$products_options_value_id.']', $products_options_value_id, $selected_attribute, 'id="' . $inputFieldId . '" ' . $data_properties . $field_disabled) . '<br />' . '<label class="custom-control-label attribsCheckbox" for="' . $inputFieldId . '">' . $products_options->fields['products_options_values_name'] . (!empty($products_options_details_noname) ? '<br>' . $products_options_details_noname : '') . '</label></div>' . "\n";
+                        $tmp_attributes_image .= '<div class="custom-control custom-checkbox attribImg">' . zen_draw_checkbox_field('id[' . $products_options_id . ']['.$products_options_value_id.']', $products_options_value_id, $selected_attribute, 'id="' . $inputFieldId . '" ' . $data_properties . $field_disabled) . '<br>' . '<label class="custom-control-label attribsCheckbox" for="' . $inputFieldId . '">' . $products_options->fields['products_options_values_name'] . (!empty($products_options_details_noname) ? '<br>' . $products_options_details_noname : '') . '</label></div>' . "\n";
                     }
                     break;
             }

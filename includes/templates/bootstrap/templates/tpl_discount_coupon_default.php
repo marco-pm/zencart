@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.0
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -45,7 +45,7 @@ if ($text_coupon_help === '') {
         </div>
 
         <div id="discountCouponDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-            <?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
+            <?php echo zca_back_link(); ?>
         </div>
 
     <?php echo '</form>'; ?>

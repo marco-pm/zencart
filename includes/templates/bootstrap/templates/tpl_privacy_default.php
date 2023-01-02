@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v1.0.BETA
+ * BOOTSTRAP v3.5.0
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -12,22 +12,22 @@
  */
 ?>
 <div id="privacyDefault" class="centerColumn">
-    
-<h1 id="privacyDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
-
-<?php if (DEFINE_PRIVACY_STATUS >= 1 and DEFINE_PRIVACY_STATUS <= 2) { ?>
-<div id="privacyDefault-defineContent" class="defineContent">
+    <h1 id="privacyDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
+<?php
+if (DEFINE_PRIVACY_STATUS === '1' || DEFINE_PRIVACY_STATUS === '2') {
+?>
+    <div id="privacyDefault-defineContent" class="defineContent">
 <?php
 /**
  * require the html_define for the privacy page
  */
-  require($define_page);
+    require $define_page;
 ?>
-</div>
-<?php } ?>
-
-<div id="privacyDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
-<?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>'; ?>
-</div>
-
+    </div>
+<?php
+}
+?>
+    <div id="privacyDefault-btn-toolbar" class="btn-toolbar my-3" role="toolbar">
+        <?php echo zca_back_link(); ?>
+    </div>
 </div>
