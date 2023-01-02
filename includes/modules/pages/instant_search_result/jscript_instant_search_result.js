@@ -8,10 +8,12 @@
 
 const instantSearchParams                    = new URLSearchParams(window.location.search)
 const instantSearchKeyword                   = instantSearchParams.get('keyword') ?? '';
+const instantSearchAlphaFilterId             = instantSearchParams.get('alpha_filter_id') ?? '';
+const instantSearchSort                      = instantSearchParams.get('sort') ?? '20a';
 const instantSearchEndResultsSelector        = '#instantSearchResults__end';
 const instantSearchListingDivSelector        = '#productListing';
 const instantSearchLoadingDivSelector        = '#instantSearchResults__loadingWrapper';
-const instantSearchFormFilterSelector        = '#instantSearchResultsDefault form[name=filter]';
+const instantSearchFilterWrapperSelector     = '#filter-wrapper';
 const instantSearchNoResultsFoundDivSelector = '#instantSearchResults__noResultsFoundWrapper';
 let instantSearchResultPage                  = instantSearchParams.get('page') ?? 1;
 let instantSearchIsLoadingResults            = false;
@@ -42,6 +44,8 @@ async function loadResults() {
     const data = new FormData();
     data.append('keyword', instantSearchKeyword);
     data.append('resultPage', instantSearchResultPage);
+    data.append('alpha_filter_id', instantSearchAlphaFilterId);
+    data.append('sort', instantSearchSort);
 
     const response = await fetch('ajax.php?act=ajaxInstantSearchPage&method=instantSearch', {
         method: 'POST',
@@ -51,8 +55,8 @@ async function loadResults() {
         body: data,
     });
     const responseData = await response.json();
+    document.querySelector(instantSearchFilterWrapperSelector).style.display = 'block';
     if (responseData.length > 0 && responseData !== instantSearchPreviousResult) {
-        document.querySelector(instantSearchFormFilterSelector).style.display = 'block';
         document.querySelector(instantSearchListingDivSelector).innerHTML = responseData;
         instantSearchPreviousResult = responseData;
 
