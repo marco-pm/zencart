@@ -1,9 +1,10 @@
 /**
- * @package  Instant Search Plugin for Zen Cart
- * @author   marco-pm
- * @version  3.0.0
- * @see      https://github.com/marco-pm/zencart_instantsearch
- * @license  GNU Public License V2.0
+ * @package   Instant Search Plugin for Zen Cart
+ * @author    marco-pm
+ * @version   3.0.0
+ * @see       https://github.com/marco-pm/zencart_instantsearch
+ * @license   GNU Public License V2.0
+ * @copyright Copyright Ayoob G 2009-2011
  */
 
 const {slideDown, slideUp, slideToggle} = window.domSlider
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const instantSearchFormSearchDescrInputs = document.querySelectorAll(`${instantSearchFormSelector} input[name="search_in_description"]`);
         instantSearchFormSearchDescrInputs.forEach(input => input.remove());
-        
+
         const instantSearchForms = document.querySelectorAll(instantSearchFormSelector);
         instantSearchForms.forEach(form => form.action = form.action.replace(instantSearchZcSearchResultPageName, instantSearchResultPageName));
     }
