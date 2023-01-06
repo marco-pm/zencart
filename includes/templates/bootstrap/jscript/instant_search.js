@@ -9,7 +9,7 @@
 
 const {slideDown, slideUp, slideToggle} = window.domSlider
 const resultsContainerSelector  = 'instantSearchResultsDropdownContainer';
-const instantSearchFormSelector = `form[action*=${instantSearchZcSearchResultPageName}]:not([name=${instantSearchZcSearchPageName}])`;
+const instantSearchFormSelector = `form[action*=${instantSearchZcSearchResultPageName}]:not([name=search]):not([name=advanced_search])`;
 let controller;
 let instantSearchInputCurrent;
 let inputTimer;
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (instantSearchDropdownEnabled) {
-        // Add search suggestions on search inputs
+        // Add autocomplete dropdown on search inputs
         const instantSearchInputs = document.querySelectorAll(instantSearchDropdownInputSelector);
 
         for (let i = 0; i < instantSearchInputs.length; i++) {
