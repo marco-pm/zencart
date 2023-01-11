@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package  Instant Search Plugin for Zen Cart
+ * @author   marco-pm
+ * @version  3.0.0
+ * @see      https://github.com/marco-pm/zencart_instantsearch
+ * @license  GNU Public License V2.0
+ */
+
 declare(strict_types=1);
 
 namespace Tests\InstantSearch\Unit;
@@ -33,23 +41,11 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         define('PRODUCT_LIST_WEIGHT', '5');
         define('PRODUCT_LIST_IMAGE', '6');
         define('TEXT_INSTANT_SEARCH_CONFIGURATION_ERROR', 'Configuration error');
-
-        define('INSTANT_SEARCH_DROPDOWN_MIN_WORDSEARCH_LENGTH', '3');
-        define('INSTANT_SEARCH_DROPDOWN_MAX_WORDSEARCH_LENGTH', '30');
-        define('INSTANT_SEARCH_DROPDOWN_MAX_RESULTS', '5');
-        define('INSTANT_SEARCH_DROPDOWN_USE_QUERY_EXPANSION', 'true');
-        define('INSTANT_SEARCH_DROPDOWN_ADD_LOG_ENTRY', 'true');
-        define('TEXT_SEARCH_LOG_ENTRY_DROPDOWN_PREFIX', '');
     }
-
-    // Note: test methods use the PHPUnit Annotations `@runInSeparateProcess` and `@preserveGlobalState disabled` in order
-    // to run each test in a separate process, thus making it possible to override constants in the same test class.
 
     abstract public function keywordProvider(): array;
 
     /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      * @dataProvider keywordProvider
      */
     public function testKeywordReturnsEmpty(string $keyword, string $expectedOutput): void
@@ -66,10 +62,6 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         $this->assertEquals($expectedOutput, $htmlOutput);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testInvalidFieldNameSettingReturnsError(): void
     {
         define('INSTANT_SEARCH_DROPDOWN_FIELDS_LIST', 'gibberish,name-description,model-broad');
@@ -84,10 +76,6 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         $this->assertStringContainsString(TEXT_INSTANT_SEARCH_CONFIGURATION_ERROR, $htmlOutput);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testCommonFieldsValuesCallCorrespondingSql(bool $useQueryExpansion = true): void
     {
         define('INSTANT_SEARCH_DROPDOWN_FIELDS_LIST', 'name,model-exact,model-broad');
@@ -117,10 +105,6 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         $instantSearchMock->instantSearch();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testNameWithDescriptionFieldCallsCorrespondingSql(bool $useQueryExpansion = true): void
     {
         define('INSTANT_SEARCH_DROPDOWN_FIELDS_LIST', 'name-description');
@@ -139,10 +123,6 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         $instantSearchMock->instantSearch();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testSaveSearchLogIfEnabled(): void
     {
         define('INSTANT_SEARCH_DROPDOWN_FIELDS_LIST', 'name-description');
@@ -160,10 +140,6 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         $instantSearchMock->instantSearch();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
     public function testEmptyOutputAndZeroCountWhenNoResults(): void
     {
         define('INSTANT_SEARCH_DROPDOWN_FIELDS_LIST', 'name-description');
