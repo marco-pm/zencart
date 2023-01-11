@@ -42,7 +42,7 @@ function zen_product_set_header_response($product_id, $product_info = null)
         $product_info = zen_get_product_details($product_id);
     }
     // make sure it's for the current product
-    if (!isset($product_info->fields['products_id'], $product_info->fields['products_status']) || $product_info->fields['products_id'] !== $product_id) {
+    if (!isset($product_info->fields['products_id'], $product_info->fields['products_status']) || (int)$product_info->fields['products_id'] !== $product_id) {
         $product_info = zen_get_product_details($product_id);
     }
 
@@ -129,7 +129,7 @@ function zen_enable_disabled_upcoming($datetime = null)
             FROM " . TABLE_PRODUCTS . "
             WHERE products_status = 0
             AND products_date_available <= " . $zc_disabled_upcoming_date . "
-            AND products_date_available >= '0001-01-01'
+            AND products_date_available != '0001-01-01'
             AND products_date_available IS NOT NULL
             ";
 
