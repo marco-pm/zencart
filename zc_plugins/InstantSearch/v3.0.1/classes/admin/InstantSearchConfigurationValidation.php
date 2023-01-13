@@ -2,7 +2,7 @@
 /**
  * @package  Instant Search Plugin for Zen Cart
  * @author   marco-pm
- * @version  3.0.0
+ * @version  3.0.1
  * @see      https://github.com/marco-pm/zencart_instantsearch
  * @license  GNU Public License V2.0
  */
@@ -21,6 +21,7 @@ class InstantSearchConfigurationValidation extends \base
     protected const VALID_SEARCH_FIELDS_DROPDOWN = [
         'category',
         'manufacturer',
+        'meta-keywords',
         'model-broad',
         'model-exact',
         'name',
@@ -33,6 +34,7 @@ class InstantSearchConfigurationValidation extends \base
      * @var array
      */
     protected const VALID_SEARCH_FIELDS_PAGE = [
+        'meta-keywords',
         'model-broad',
         'model-exact',
         'name',
