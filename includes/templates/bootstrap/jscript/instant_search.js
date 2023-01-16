@@ -59,10 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         const signal = controller.signal;
                         const data = new FormData();
                         data.append('keyword', instantSearchQueryParsed);
+                        data.append('scope', 'dropdown');
                         data.append('securityToken', instantSearchSecurityToken);
 
                         try {
-                            const response = await fetch('ajax.php?act=ajaxInstantSearchDropdown&method=instantSearch', {
+                            const response = await fetch('ajax.php?act=ajaxInstantSearch&method=instantSearch', {
                                 method: 'POST',
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest',
