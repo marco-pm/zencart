@@ -7,15 +7,11 @@
  * @license  GNU Public License V2.0
  */
 
-if (defined('INSTANT_SEARCH_DROPDOWN_ENABLED') && defined('INSTANT_SEARCH_PAGE_ENABLED')) { ?>
+if (defined('INSTANT_SEARCH_DROPDOWN_ENABLED') && INSTANT_SEARCH_DROPDOWN_ENABLED === 'true') { ?>
     <script>
         const instantSearchSecurityToken          = '<?php echo $_SESSION['securityToken']; ?>';
-        const instantSearchPageEnabled            = <?php echo INSTANT_SEARCH_PAGE_ENABLED === 'true' ? 1 : 0; ?>;
         const instantSearchDropdownInputWaitTime  = parseInt(<?php echo INSTANT_SEARCH_DROPDOWN_INPUT_WAIT_TIME; ?>);
         const instantSearchDropdownInputMinLength = parseInt(<?php echo INSTANT_SEARCH_DROPDOWN_MIN_WORDSEARCH_LENGTH; ?>);
-        const instantSearchDropdownInputSelector  = '<?php echo str_replace("'", "\'", INSTANT_SEARCH_DROPDOWN_INPUT_BOX_SELECTOR); ?>';
-        const instantSearchZcSearchPageName       = '<?php echo zen_get_zcversion() >= '1.5.8' ? FILENAME_SEARCH : FILENAME_ADVANCED_SEARCH; ?>';
-        const instantSearchZcSearchResultPageName = '<?php echo zen_get_zcversion() >= '1.5.8' ? FILENAME_SEARCH_RESULT : FILENAME_ADVANCED_SEARCH_RESULT; ?>';
-        const instantSearchResultPageName         = '<?php echo FILENAME_INSTANT_SEARCH_RESULT; ?>';
+        const instantSearchDropdownInputSelector  = '<?php echo str_replace("'", "\'", INSTANT_SEARCH_DROPDOWN_INPUT_BOX_SELECTOR); ?>:not([type=hidden])';
     </script>
 <?php }

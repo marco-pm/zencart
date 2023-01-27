@@ -11,6 +11,10 @@
     display: inline;
 }
 
+.instantSearchInputWrapper input {
+    margin-bottom: 0;
+}
+
 .instantSearchResultsDropdownContainer {
     box-sizing: border-box;
     position: absolute;

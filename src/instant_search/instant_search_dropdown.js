@@ -43,7 +43,7 @@ function ResultsContainer({ queryTextParsed, containerIndex }) {
         const div = document.querySelector(`#${resultsContainerId}`);
         if (div) {
             if (div.clientWidth > 250) {
-                setAdditionalClass('instantSearchResultsDropdownContainer--lg');
+                setAdditionalClass(' instantSearchResultsDropdownContainer--lg');
             } else {
                 setAdditionalClass('');
             }
@@ -56,7 +56,7 @@ function ResultsContainer({ queryTextParsed, containerIndex }) {
                 setIsSlideDownRendered(true);
             }
             return (
-                <div id={resultsContainerId} className={`${resultsContainerSelector} ${additionalClass}`}>
+                <div id={resultsContainerId} className={`${resultsContainerSelector}${additionalClass}`}>
                     {parse(previousData.results)}
                 </div>
             );
@@ -85,7 +85,7 @@ function ResultsContainer({ queryTextParsed, containerIndex }) {
     }
 
     return (
-        <div id={resultsContainerId} className={`${resultsContainerSelector} ${additionalClass}`}>
+        <div id={resultsContainerId} className={`${resultsContainerSelector}${additionalClass}`}>
             {results}
         </div>
     );
@@ -115,13 +115,13 @@ function InstantSearchDropdown({ inputTextAttributes, containerIndex }) {
                     value={queryText}
                     onInput={handleInput()}
                     onFocus={() => setShowResults(true)}
-                    onBlur={() => setShowResults(false)}
+                    /*onBlur={() => setShowResults(false)}*/
                     {...inputTextAttributes}
                 />
                 {
                     showResults &&
                     queryTextParsed.length >= instantSearchDropdownInputMinLength &&
-                    <ResultsContainer queryTextParsed={debouncedQueryText} />
+                    <ResultsContainer queryTextParsed={debouncedQueryText} containerIndex={containerIndex} />
                 }
             </QueryClientProvider>
         </React.StrictMode>
