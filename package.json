@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build-instant_search": "npx webpack --config ./webpack.config.js --config-name instant_search",
+    "build-instant_search": "npx webpack --config ./webpack.config.js --config-name instant_search_dropdown --config-name instant_search_results",
     "build-dashboard": "npx webpack --config ./webpack.config.js --config-name typesense_dashboard"
   },
   "author": "",
