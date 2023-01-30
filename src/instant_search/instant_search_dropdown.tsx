@@ -1,11 +1,24 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * @package  Instant Search Plugin for Zen Cart
+ * @author   marco-pm
+ * @version  3.0.1
+ * @see      https://github.com/marco-pm/zencart_instantsearch
+ * @license  GNU Public License V2.0
+ */
+
+import React, {useState, useEffect, useRef} from 'react';
 import { createRoot } from 'react-dom/client';
 import { useDebounce } from 'use-debounce';
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import parse from 'html-react-parser';
 import { SlideDown } from 'react-slidedown';
 
-async function fetchResults(queryTextParsed) {
+declare const instantSearchSecurityToken: string;
+declare const instantSearchDropdownInputSelector: string;
+declare const instantSearchDropdownInputMinLength: number;
+declare const instantSearchDropdownInputWaitTime: number;
+
+async function fetchResults(queryTextParsed: string): Promise<string> {
     const data = new FormData();
     data.append('keyword', queryTextParsed);
     data.append('scope', 'dropdown');
@@ -18,15 +31,25 @@ async function fetchResults(queryTextParsed) {
         },
         body: data
     });
-    return await response.json();
+    return await response.json() as string;
 }
 
-function ResultsContainer({ queryTextParsed, containerIndex }) {
-    const {isLoading, isError, data, error} = useQuery({
+interface ResultsContainerProps {
+    queryTextParsed: string;
+    containerIndex: number;
+}
+
+const ResultsContainer = ({ queryTextParsed, containerIndex }: ResultsContainerProps) => {
+    interface Data {
+        results: string;
+        count: number;
+    }
+
+    const {isLoading, isError, data, error} = useQuery<Data, Error>({
         queryKey: ['results', queryTextParsed],
-        queryFn: async () => fetchResults(queryTextParsed).then(data => JSON.parse(data)),
+        queryFn: async () => fetchResults(queryTextParsed).then(data => JSON.parse(data) as Data)
     });
-    const [previousData, setPreviousData] = useState(null);
+    const [previousData, setPreviousData] = useState<Data | null>(null);
     const [isSlideDownRendered, setIsSlideDownRendered] = useState(false);
     const [additionalClass, setAdditionalClass] = useState('');
 
@@ -91,21 +114,40 @@ function ResultsContainer({ queryTextParsed, containerIndex }) {
     );
 }
 
-function InstantSearchDropdown({ inputTextAttributes, containerIndex }) {
+interface InstantSearchDropdownProps {
+    inputTextAttributes: NamedNodeMap;
+    containerIndex: number;
+}
+
+const InstantSearchDropdown = ({ inputTextAttributes, containerIndex }: InstantSearchDropdownProps) => {
     const [queryText, setQueryText] = useState('');
     const [debouncedQueryText] = useDebounce(queryText, instantSearchDropdownInputWaitTime);
     const [showResults, setShowResults] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const queryClient = new QueryClient();
 
     const queryTextParsed = debouncedQueryText.replace(/^\s+/, "").replace(/  +/g, ' ');
 
-    function handleInput() {
-        return e => {
-            queryClient.cancelQueries({queryKey: ['results']});
-            setQueryText(e.target.value);
-        };
-    }
+    useEffect(() => {
+        const cancelQuery = async () => {
+            await queryClient.cancelQueries({queryKey: ['results']});
+        }
+
+        cancelQuery().catch(console.error);
+    }, [queryText]);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            for (let i = 0; i < inputTextAttributes.length; i++) {
+                // Exclude attributes that are already set
+                if (inputRef.current.hasAttribute(inputTextAttributes[i].name) || inputTextAttributes[i].name.startsWith('on')) {
+                    continue;
+                }
+                inputRef.current.setAttribute(inputTextAttributes[i].name, inputTextAttributes[i].value);
+            }
+        }
+    }, []);
 
     return (
         <React.StrictMode>
@@ -113,10 +155,10 @@ function InstantSearchDropdown({ inputTextAttributes, containerIndex }) {
                 <input
                     type="text"
                     value={queryText}
-                    onInput={handleInput()}
+                    onChange={e => setQueryText(e.currentTarget.value)}
                     onFocus={() => setShowResults(true)}
-                    /*onBlur={() => setShowResults(false)}*/
-                    {...inputTextAttributes}
+                    onBlur={() => setShowResults(false)}
+                    ref={inputRef}
                 />
                 {
                     showResults &&
@@ -132,29 +174,16 @@ function InstantSearchDropdown({ inputTextAttributes, containerIndex }) {
 const instantSearchInputs = document.querySelectorAll(instantSearchDropdownInputSelector);
 
 for (let i = 0; i < instantSearchInputs.length; i++) {
-    const input = instantSearchInputs[i];
-
-    const inputTextAttributes = {
-        name: input.name,
-        className: input.class,
-        size: input.size,
-        maxLength: input.maxLength,
-        placeholder: input.placeholder,
-        'aria-label': input.getAttribute('aria-label'),
-    };
-
-    // Trasform inline style to JSX format
-    inputTextAttributes.style = {};
-    for (let i = 0; i < input.style.length; i++) {
-        const styleName = input.style[i];
-        inputTextAttributes.style[styleName] = input.style[styleName];
-    }
+    const input = instantSearchInputs[i] as HTMLInputElement;
+    const inputTextAttributes = input.attributes;
 
     const container = document.createElement('div');
     container.className = 'instantSearchInputWrapper';
-    input.parentNode.insertBefore(container, input);
-    input.remove();
+    if (input.parentNode) {
+        input.parentNode.insertBefore(container, input);
+        input.remove();
 
-    const root = createRoot(container);
-    root.render(<InstantSearchDropdown inputTextAttributes={inputTextAttributes} containerIndex={i} />);
+        const root = createRoot(container);
+        root.render(<InstantSearchDropdown inputTextAttributes={inputTextAttributes} containerIndex={i}/>);
+    }
 }
