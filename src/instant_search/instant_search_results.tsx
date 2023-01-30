@@ -1,13 +1,23 @@
+/**
+ * @package  Instant Search Plugin for Zen Cart
+ * @author   marco-pm
+ * @version  3.0.1
+ * @see      https://github.com/marco-pm/zencart_instantsearch
+ * @license  GNU Public License V2.0
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import parse from 'html-react-parser';
-import {useDebounce} from "use-debounce";
-import {SlideDown} from "react-slidedown";
+
+declare const instantSearchResultSecurityToken: string;
+declare const loadingResultsText: string;
+declare const noProductsFoundText: string;
 
 const queryClient = new QueryClient();
 
-async function fetchResults(queryText, resultPage, alphaFilterId, sort) {
+async function fetchResults(queryText: string, resultPage: string, alphaFilterId: string, sort: string): Promise<string> {
     const data = new FormData();
     data.append('keyword', queryText);
     data.append('scope', 'page');
@@ -23,17 +33,29 @@ async function fetchResults(queryText, resultPage, alphaFilterId, sort) {
         },
         body: data
     });
-    return await response.json();
+    return await response.json() as string;
 }
 
-function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort }) {
+interface ResultsContainerProps {
+    queryText: string;
+    initialResultPage: string;
+    alphaFilterId: string;
+    sort: string;
+}
+
+const ResultsContainer = ({ queryText, initialResultPage, alphaFilterId, sort }: ResultsContainerProps) => {
+    interface Data {
+        results: string;
+        count: number;
+    }
+
     const [resultPage, setResultPage] = useState(initialResultPage);
-    const [previousData, setPreviousData] = useState(null);
+    const [previousData, setPreviousData] = useState<Data|null>(null);
     const endResultsRef = useRef(null);
 
-    const {isLoading, isError, data, error} = useQuery({
+    const {isLoading, isError, data, error} = useQuery<Data, Error>({
         queryKey: ['results', queryText, resultPage, alphaFilterId, sort],
-        queryFn: async () => fetchResults(queryText, resultPage, alphaFilterId, sort).then(data => JSON.parse(data)),
+        queryFn: async () => fetchResults(queryText, resultPage, alphaFilterId, sort).then(data => JSON.parse(data) as Data),
     });
 
     useEffect(() => {
@@ -52,7 +74,7 @@ function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort })
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         // Load more results
-                        setResultPage(parseInt(resultPage) + 1);
+                        setResultPage((parseInt(resultPage) + 1).toString());
                     }
                 });
             });
@@ -63,9 +85,9 @@ function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort })
                 observer.disconnect();
             };
         }
-    }, [data]);
 
-    const instantSearchFilterDivSelector = '.instantSearchResults__sorterRow';
+        return;
+    }, [data]);
 
     if (isLoading) {
         return (
@@ -84,8 +106,12 @@ function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort })
         return <></>;
     }
 
+    const instantSearchFilterDiv = document.querySelector('.instantSearchResults__sorterRow') as HTMLElement;
+
     if (!data || !data.results || data.count === 0) {
-        document.querySelector(instantSearchFilterDivSelector).style.display = 'none';
+        if (instantSearchFilterDiv) {
+            instantSearchFilterDiv.style.display = 'none';
+        }
         return (
             <div id="instantSearchResults__noResultsFoundWrapper">
                 {noProductsFoundText}
@@ -93,7 +119,9 @@ function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort })
         )
     }
 
-    document.querySelector(instantSearchFilterDivSelector).style.display = 'block';
+    if (instantSearchFilterDiv) {
+        instantSearchFilterDiv.style.display = 'block';
+    }
 
     // Update URL page parameter (if we are not past the last page)
     if (previousData && previousData.count && previousData.count !== data.count) {
@@ -110,10 +138,10 @@ function ResultsContainer({ queryText, initialResultPage, alphaFilterId, sort })
     )
 }
 
-function InstantSearchResults() {
+const InstantSearchResults = () => {
     const params         = new URLSearchParams(window.location.search)
     const keyword        = params.get('keyword') ?? '';
-    const page           = params.get('page') ?? 1;
+    const page           = params.get('page') ?? '1';
     const alphaFilterId  = params.get('alpha_filter_id') ?? '';
     const sort           = params.get('sort') ?? '20a';
 
@@ -127,5 +155,7 @@ function InstantSearchResults() {
 }
 
 const container = document.querySelector('#productListing');
-const root = createRoot(container);
-root.render(<InstantSearchResults />);
+if (container) {
+    const root = createRoot(container);
+    root.render(<InstantSearchResults />);
+}

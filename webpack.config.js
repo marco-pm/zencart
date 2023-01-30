@@ -19,7 +19,7 @@ module.exports = [
         },
     },
     {
-        name: 'instant_search_dropdown',
+        name: 'instant_search_results',
         entry: path.resolve(__dirname, './src/instant_search/instant_search_results.tsx'),
         output: {
             path: path.resolve(__dirname, './includes/templates/responsive_classic/jscript/'),

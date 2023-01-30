@@ -5,6 +5,8 @@
   "scripts": {
     "build-instant_search_dropdown-dev": "npx webpack --config-name instant_search_dropdown --mode=development",
     "build-instant_search_dropdown": "npx webpack --config-name instant_search_dropdown --mode=production",
+    "build-instant_search_results-dev": "npx webpack --config-name instant_search_results --mode=development",
+    "build-instant_search_results": "npx webpack --config-name instant_search_results --mode=production",
     "build-dashboard": "npx webpack --config-name typesense_dashboard"
   },
   "author": "",
