@@ -184,6 +184,10 @@ class zcAjaxInstantSearch extends base
     {
         global $template;
 
+        if (empty($results)) {
+            return '';
+        }
+
         $dropdownResults = [];
         $categoriesReached = false;
         $manufacturersReached = false;
