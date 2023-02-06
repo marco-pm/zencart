@@ -37,16 +37,17 @@ module.exports = [
     },
     {
         name: 'typesense_dashboard',
-        mode: 'development',
-        entry: path.resolve(__dirname, './src/typesense_dashboard/typesense_dashboard.js'),
+        entry: path.resolve(__dirname, './src/typesense_dashboard/typesense_dashboard.tsx'),
         output: {
-            path: path.resolve(__dirname, './includes/templates/responsive_classic/jscript/'),
-            filename: './zc_plugins/InstantSearch/v3.0.1/admin/typesense_dashboard.min.js',
+            path: path.resolve(__dirname, './zc_plugins/InstantSearch/v3.0.1/admin/'),
+            filename: 'typesense_dashboard.min.js',
         },
         module: {
             rules: [
                 {
-                    use: ['babel-loader', 'ts-loader'],
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
                 },
             ],
         },
