@@ -51,7 +51,7 @@ class zcAjaxAdminTypesenseDashboard extends base
     }
 
     /**
-     * Get the Typesense server health.
+     * Gets the Typesense server health.
      *
      * @return array
      */
@@ -67,7 +67,7 @@ class zcAjaxAdminTypesenseDashboard extends base
     }
 
     /**
-     * Get the Typesense server metrics.
+     * Gets the Typesense server metrics.
      *
      * @return array
      */
