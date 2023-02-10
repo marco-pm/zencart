@@ -250,7 +250,7 @@ if (!empty($action)) {
             <?php echo '</form>'; ?>
           </div>
           <div class="col-sm-4">
-            <?php include DIR_WS_MODULES . 'search_box.php'; ?>
+            <?php require DIR_WS_MODULES . 'search_box.php'; ?>
           </div>
         </div>
         <div class="row">
@@ -407,7 +407,7 @@ if (!empty($action)) {
                   $contents[] = array('text' => TEXT_INFO_REVIEW_RATING . ' ' . zen_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $rInfo->reviews_rating . '.gif'));
                   $contents[] = array('text' => TEXT_INFO_REVIEW_READ . ' ' . $rInfo->reviews_read);
                   $contents[] = array('text' => TEXT_INFO_REVIEW_SIZE . ' ' . $rInfo->reviews_text_size . ' bytes');
-                  $contents[] = array('text' => TEXT_INFO_PRODUCTS_AVERAGE_RATING . ' ' . number_format($rInfo->average_rating, 2) . '%');
+                  $contents[] = array('text' => TEXT_INFO_PRODUCTS_AVERAGE_RATING . ' ' . number_format((float)$rInfo->average_rating, 2) . '%');
                 }
                 break;
             }
