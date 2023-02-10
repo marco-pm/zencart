@@ -34,7 +34,7 @@ class TypesenseIntegrationTest extends zcUnitTestCase
         $classLoader->addPsr4("Zencart\\Plugins\\Catalog\\Typesense\\", "zc_plugins/Typesense/v1.0.0/classes/", true);
         $classLoader->register();
 
-        //define('TABLE_TYPESENSE_SYNC', 'typesense_sync_status');
+        define('TABLE_TYPESENSE_SYNC', 'typesense_sync_status');
 
         define('TYPESENSE_FULL_SYNC_FREQUENCY_HOURS', '12');
         define('TYPESENSE_FULL_SYNC_AFTER_CATEGORY_BRAND_CHANGE', 'true');
