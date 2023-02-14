@@ -1,7 +1,5 @@
 {
-  "name": "instant-search-plugin-zen-cart",
-  "version": "3.0.1",
-  "description": "Instant Search plugin for Zen Cart",
+  "name": "zencart-instantsearch-typesense-dev",
   "scripts": {
     "build-instant_search_dropdown-dev": "npx webpack --config-name instant_search_dropdown --mode=development",
     "build-instant_search_dropdown": "npx webpack --config-name instant_search_dropdown --mode=production",
@@ -10,11 +8,11 @@
     "build-typesense_dashboard-dev": "npx webpack --config-name typesense_dashboard --mode=development",
     "build-typesense_dashboard": "npx webpack --config-name typesense_dashboard --mode=production"
   },
-  "author": "",
   "devDependencies": {
-    "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.8",
     "@tanstack/react-query": "^4.22.4",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
@@ -26,7 +24,6 @@
     "html-react-parser": "^3.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.7.1",
     "react-slidedown": "^2.4.7",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",

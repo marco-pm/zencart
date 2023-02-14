@@ -17,6 +17,9 @@ module.exports = [
                 },
             ],
         },
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', '.jsx']
+        }
     },
     {
         name: 'instant_search_results',
@@ -34,12 +37,15 @@ module.exports = [
                 },
             ],
         },
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', '.jsx']
+        }
     },
     {
         name: 'typesense_dashboard',
         entry: path.resolve(__dirname, './src/typesense_dashboard/typesense_dashboard.tsx'),
         output: {
-            path: path.resolve(__dirname, './zc_plugins/InstantSearch/v3.0.1/admin/'),
+            path: path.resolve(__dirname, './zc_plugins/Typesense/v1.0.0/admin/'),
             filename: 'typesense_dashboard.min.js',
         },
         module: {
@@ -51,5 +57,8 @@ module.exports = [
                 },
             ],
         },
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', '.jsx']
+        }
     },
 ];
