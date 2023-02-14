@@ -81,4 +81,20 @@ class zcAjaxAdminTypesenseDashboard extends base
             exit();
         }
     }
+
+    /**
+     * Gets the Typesense collections.
+     *
+     * @return array
+     */
+    public function getCollections(): array
+    {
+        try {
+            return $this->client->collections->retrieve();
+        } catch (Exception|\Http\Client\Exception $e) {
+            $this->logger->writeErrorLog("Error while retrieving Typesense collections", $e);
+            http_response_code(500);
+            exit();
+        }
+    }
 }
