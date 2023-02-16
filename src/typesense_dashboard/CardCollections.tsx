@@ -1,100 +1,105 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "./dashboard_utils";
-import { HealthResponse } from "typesense/lib/Typesense/Health";
-import { MetricsResponse } from "typesense/lib/Typesense/Metrics";
-import { amber, grey, lightGreen, red } from "@mui/material/colors";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Stack from "@mui/material/Stack";
-import LinearProgress from "@mui/material/LinearProgress";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import StorageIcon from "@mui/icons-material/Storage";
-import CardContent from "@mui/material/CardContent";
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchData, ErrorMessageBox, CardStatus } from './dashboard_utils';
+import DashboardCard from './DashboardCard';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import LayersIcon from '@mui/icons-material/Layers';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 declare const typesenseI18n: { [key: string]: string };
 
+interface CollectionNoOfDocuments {
+    alias_name: string;
+    num_documents: number;
+}
+
 export default function CardCollections () {
     const collectionsQuery = useQuery({
-        queryKey: ['health'],
-        queryFn: async () => fetchData<HealthResponse>('getCollections', false),
+        queryKey: ['collections'],
+        queryFn: async () => fetchData<CollectionNoOfDocuments[]>('getCollectionsNoOfDocuments', false),
         retry: false,
+        refetchOnWindowFocus: false
     });
 
     let cardContent: JSX.Element =
-        <Box textAlign="center">
-            <CircularProgress sx={{my: 2}}/>
+        <Box textAlign='center'>
+            <CircularProgress sx={{ my: 2 }}/>
         </Box>;
-    let headerBgColor = grey[300] as string;
+    let cardStatus = CardStatus.LOADING;
 
     if (!collectionsQuery.isLoading) {
         if (collectionsQuery.isError || !collectionsQuery.data) {
             console.log(collectionsQuery.error);
-            headerBgColor = amber[300];
-            cardContent =
-                <Box textAlign="center">
-                    <p><strong>{typesenseI18n['TYPESENSE_DASHBOARD_AJAX_ERROR_TEXT_1']}</strong></p>
-                    <p>{typesenseI18n['TYPESENSE_DASHBOARD_AJAX_ERROR_TEXT_2']}</p>
-                </Box>
+            cardStatus = CardStatus.WARNING;
+            cardContent = <ErrorMessageBox
+                messageLine1={typesenseI18n['TYPESENSE_DASHBOARD_AJAX_ERROR_TEXT_1']}
+                messageLine2={typesenseI18n['TYPESENSE_DASHBOARD_AJAX_ERROR_TEXT_2']}
+            />;
+        } else if (collectionsQuery.data.length === 0) {
+            cardStatus = CardStatus.ERROR;
+            cardContent = <ErrorMessageBox
+                messageLine1={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_NO_COLLECTIONS_1']}
+                messageLine2={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_NO_COLLECTIONS_2']}
+            />;
+        } else if (collectionsQuery.data.length < 3) {
+            cardStatus = CardStatus.ERROR;
+            cardContent = <ErrorMessageBox
+                messageLine1={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_COLLECTIONS_MISSING_1']}
+                messageLine2={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_COLLECTIONS_MISSING_2']}
+            />;
         } else {
-            console.log(metricsQuery.data);
-            headerBgColor = collectionsQuery.data.ok ? lightGreen[300] : red[300];
-            const diskUsedGb = convertToGB(metricsQuery.data.system_disk_used_bytes);
-            const diskTotalGb = convertToGB(metricsQuery.data.system_disk_total_bytes);
-            const diskUsedPercent = Math.round(diskUsedGb / diskTotalGb * 100);
-            const memoryUsedGb = convertToGB(metricsQuery.data.system_memory_used_bytes);
-            const memoryTotalGb = convertToGB(metricsQuery.data.system_memory_total_bytes);
-            const memoryUsedPercent = Math.round(memoryUsedGb / memoryTotalGb * 100);
-
-            cardContent =
-                <Stack>
-                    <Box pb={1}>
-                        <strong>{collectionsQuery.data.ok
-                            ? typesenseI18n['TYPESENSE_DASHBOARD_CARD_STATUS_OK']
-                            : typesenseI18n['TYPESENSE_DASHBOARD_CARD_STATUS_ERROR']
-                        }</strong>
-                    </Box>
-                    <Box mt={2} fontSize='0.8em'>
-                        Memory usage: {memoryUsedPercent}%
-                    </Box>
-                    <Box sx={{display: 'flex', alignItems: 'center', columnGap: 2, marginTop: '0.1em'}}>
-                        <Box sx={{width: '75%'}}>
-                            <LinearProgress variant="determinate" value={memoryUsedPercent} sx={{height: 12}}/>
-                        </Box>
-                        <Box sx={{fontSize: '0.8em'}}>
-                            {memoryUsedGb.toFixed(2)} / {memoryTotalGb.toFixed(2)} GB
-                        </Box>
-                    </Box>
-                    <Box mt={1} fontSize='0.8em'>
-                        Disk usage: {diskUsedPercent}%
-                    </Box>
-                    <Box sx={{display: 'flex', alignItems: 'center', columnGap: 2, marginTop: '0.1em'}}>
-                        <Box sx={{width: '75%'}}>
-                            <LinearProgress variant="determinate" value={diskUsedPercent} sx={{height: 12}}/>
-                        </Box>
-                        <Box sx={{fontSize: '0.8em'}}>
-                            {diskUsedGb.toFixed(2)} / {diskTotalGb.toFixed(2)} GB
-                        </Box>
-                    </Box>
-                </Stack>;
+            const productsCollection = collectionsQuery.data.find(collection => collection.alias_name === 'products');
+            if (productsCollection && productsCollection.num_documents === 0) {
+                cardStatus = CardStatus.ERROR;
+                cardContent = <ErrorMessageBox
+                    messageLine1={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_PRODUCTS_COLLECTION_EMPTY_1']}
+                    messageLine2={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_ERROR_PRODUCTS_COLLECTION_EMPTY_2']}
+                />;
+            } else {
+                cardStatus = CardStatus.OK;
+                cardContent =
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>
+                                        {typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_HEADING_COLLECTION']}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_HEADING_NO_DOCUMENTS']}
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {collectionsQuery.data.map(collection => (
+                                    <TableRow key={collection.alias_name}>
+                                        <TableCell component='th' scope='row'>
+                                            {collection.alias_name}
+                                        </TableCell>
+                                        <TableCell align='right'>
+                                            {collection.num_documents}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+            }
         }
     }
 
     return (
-        <Card>
-            <CardHeader
-                title={
-                    <Stack direction="row" alignItems="center" gap={1}>
-                        <StorageIcon/> {typesenseI18n['TYPESENSE_DASHBOARD_CARD_STATUS_TITLE']}
-                    </Stack>
-                }
-                titleTypographyProps={{align: 'center'}}
-                sx={{backgroundColor: headerBgColor}}
-            />
-            <CardContent>
-                {cardContent}
-            </CardContent>
-        </Card>
+        <DashboardCard
+            cardIcon={<LayersIcon sx={{ fontSize:'1.2rem' }} />}
+            cardTitle={typesenseI18n['TYPESENSE_DASHBOARD_CARD_COLLECTIONS_TITLE']}
+            cardContent={cardContent}
+            cardStatus={cardStatus}
+        />
     );
 }
