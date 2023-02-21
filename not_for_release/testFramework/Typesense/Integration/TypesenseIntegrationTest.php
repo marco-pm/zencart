@@ -37,7 +37,7 @@ class TypesenseIntegrationTest extends zcUnitTestCase
         define('TABLE_TYPESENSE_SYNC', 'typesense_sync_status');
 
         define('TYPESENSE_FULL_SYNC_FREQUENCY_HOURS', '12');
-        define('TYPESENSE_FULL_SYNC_AFTER_CATEGORY_BRAND_CHANGE', 'true');
+        define('TYPESENSE_FULL_SYNC_AFTER_CATEGORY_CHANGE', 'true');
         define('TYPESENSE_SYNC_TIMEOUT_MINUTES', '30');
         define('TYPESENSE_ENABLE_SYNC_LOG', 'false');
 
