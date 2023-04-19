@@ -290,7 +290,7 @@ const InstantSearchDropdown = ({ inputTextAttributes, containerIndex }: InstantS
         <React.StrictMode>
             <QueryClientProvider client={queryClient}>
                 <input
-                    type='text'
+                    type='search' // NOTE: in the instantsearch repo set it to 'text', as it has specific template styling
                     value={queryText}
                     onChange={e => setQueryText(e.currentTarget.value)}
                     onFocus={() => checkQueryLength()}
