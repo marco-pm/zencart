@@ -701,7 +701,9 @@ class TypesenseZencart
             $categoriesToImport[] = $categoryData;
         }
 
-        $this->client->collections[$categoriesCollectionName]->documents->import($categoriesToImport, ['action' => 'create']);
+        if (!empty($categoriesToImport)) {
+            $this->client->collections[$categoriesCollectionName]->documents->import($categoriesToImport, ['action' => 'create']);
+        }
     }
 
     /**
@@ -745,7 +747,9 @@ class TypesenseZencart
             $brandsToImport[] = $brandData;
         }
 
-        $this->client->collections[$brandsCollectionName]->documents->import($brandsToImport, ['action' => 'upsert']);
+        if (!empty($brandsToImport)) {
+            $this->client->collections[$brandsCollectionName]->documents->import($brandsToImport, ['action' => 'upsert']);
+        }
     }
 
     /**
