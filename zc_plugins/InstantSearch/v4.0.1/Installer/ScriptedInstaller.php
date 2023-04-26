@@ -2,7 +2,7 @@
 /**
  * @package  Instant Search Plugin for Zen Cart
  * @author   marco-pm
- * @version  4.0.0
+ * @version  4.0.1
  * @see      https://github.com/marco-pm/zencart_instantsearch
  * @license  GNU Public License V2.0
  */
@@ -132,6 +132,7 @@ class ScriptedInstaller extends ScriptedInstallBase
                 " . TABLE_CONFIGURATION . "
             WHERE
                 configuration_key LIKE 'INSTANT_SEARCH_%'
+                AND configuration_key != 'INSTANT_SEARCH_ENGINE'
         ";
         $this->executeInstallerSql($sql);
 
@@ -239,6 +240,7 @@ class ScriptedInstaller extends ScriptedInstallBase
                 " . TABLE_CONFIGURATION . "
             WHERE
                 configuration_key LIKE 'INSTANT_SEARCH_%'
+                AND configuration_key != 'INSTANT_SEARCH_ENGINE'
         ";
         $this->executeInstallerSql($sql);
 
@@ -251,7 +253,7 @@ class ScriptedInstaller extends ScriptedInstallBase
                 ('[MySQL] Include Related Products in the Results (Query Expansion)', 'INSTANT_SEARCH_MYSQL_USE_QUERY_EXPANSION', 'true', 'Show also products with related name and/or description (Query Expansion function of MySQL Full-Text Search).<br><br>Example: one product has name <em>Logitech Wired Keyboard</em> and another product has name <em>Microsoft Keyboard and Mouse, wireless set</em>. The user searches for <em>logitech</em>. Without query expansion, only the first product will be shown. With query expansion, the second product will also be shown because it contains the word <em>keyboard</em>, which is present in the matched product (and could therefore be relevant to the user).<br><br>Note: this option is not equivalent to a typo-tolerance or synonym support feature (e.g. <em>Did you mean...?</em>).<br>', $configurationGroupId, now(), 300, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
                 ('Dropdown - Enable','INSTANT_SEARCH_DROPDOWN_ENABLED', 'true', 'When the user types into an input search box, display a dropdown with autocomplete search results.', $configurationGroupId, now(), 400, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
                 ('Dropdown - Search Delay', 'INSTANT_SEARCH_DROPDOWN_INPUT_WAIT_TIME', '50', 'Delay the execution of the instant search by this time period (in milliseconds), after a character is entered, to prevent unnecessary queries to the database while the user is typing.', $configurationGroupId, now(), 500, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
-                ('Dropdown - Maximum Number of Results', 'INSTANT_SEARCH_DROPDOWN_MAX_PRODUCTS', '5', 'Maximum number of products displayed in the dropdown.', $configurationGroupId, now(), 600, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
+                ('Dropdown - Maximum Number of Products', 'INSTANT_SEARCH_DROPDOWN_MAX_PRODUCTS', '5', 'Maximum number of products displayed in the dropdown.', $configurationGroupId, now(), 600, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
                 ('Dropdown - Minimum Length of Search Query', 'INSTANT_SEARCH_DROPDOWN_MIN_WORDSEARCH_LENGTH', '3', 'Minimum number of characters requested for the dropdown to be displayed.', $configurationGroupId, now(), 700, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
                 ('Dropdown - Maximum Length of Search Query', 'INSTANT_SEARCH_DROPDOWN_MAX_WORDSEARCH_LENGTH', '100', 'Maximum number of characters allowed for the dropdown to be displayed.', $configurationGroupId, now(), 800, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
                 ('Dropdown - Display Images', 'INSTANT_SEARCH_DROPDOWN_DISPLAY_IMAGE', 'true', 'Display the product/category/manufacturer\'s image.', $configurationGroupId, now(), 900, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
@@ -261,8 +263,8 @@ class ScriptedInstaller extends ScriptedInstallBase
                 ('Dropdown - Display Category Count', 'INSTANT_SEARCH_DROPDOWN_DISPLAY_CATEGORIES_COUNT', 'true', 'Display the number of products for the matched categories.', $configurationGroupId, now(), 1200, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
                 ('Dropdown - Maximum Number of Manufacturers', 'INSTANT_SEARCH_DROPDOWN_MAX_MANUFACTURERS', '2', 'Maximum number of manufacturers (matched by name) displayed in the dropdown. Set to 0 if you don\'t want to include manufacturers in the results.', $configurationGroupId, now(), 1290, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
                 ('Dropdown - Display Manufacturer Count', 'INSTANT_SEARCH_DROPDOWN_DISPLAY_MANUFACTURERS_COUNT', 'true', 'Display the number of products for the matched manufacturers.', $configurationGroupId, now(), 1300, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
-                ('Dropdown - Image Width', 'INSTANT_SEARCH_DROPDOWN_IMAGE_WIDTH', '100', 'Width of the product/category/manufacturer\'s image.', $configurationGroupId, now(), 1400, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
-                ('Dropdown - Image Height', 'INSTANT_SEARCH_DROPDOWN_IMAGE_HEIGHT', '80', 'Height of the product/category/manufacturer\'s image.', $configurationGroupId, now(), 1500, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_INT_VALIDATE\",\"id\":\"FILTER_VALIDATE_INT\",\"options\":{\"options\":{\"min_range\":0}}}'),
+                ('Dropdown - Image Width', 'INSTANT_SEARCH_DROPDOWN_IMAGE_WIDTH', '100', 'Width of the product/category/manufacturer\'s image.', $configurationGroupId, now(), 1400, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_IMG_SIZE_VALIDATE\",\"id\":\"FILTER_VALIDATE_REGEXP\",\"options\":{\"options\":{\"regexp\":\"/^\\\\\\\d+!?$/\"}}}'),
+                ('Dropdown - Image Height', 'INSTANT_SEARCH_DROPDOWN_IMAGE_HEIGHT', '80', 'Height of the product/category/manufacturer\'s image.', $configurationGroupId, now(), 1500, NULL, NULL, '{\"error\":\"TEXT_INSTANT_SEARCH_CONFIGURATION_IMG_SIZE_VALIDATE\",\"id\":\"FILTER_VALIDATE_REGEXP\",\"options\":{\"options\":{\"regexp\":\"/^\\\\\\\d+!?$/\"}}}'),
                 ('Dropdown - Highlight Search Terms in Bold', 'INSTANT_SEARCH_DROPDOWN_HIGHLIGHT_TEXT', 'autocomplete', '<strong>none</strong>: no highlight<br><strong>query</strong>: highlight the user search terms<br><strong>autocomplete</strong>: highlight the autocompleted text', $configurationGroupId, now(), 1600, NULL, 'zen_cfg_select_option(array(\'none\', \'query\', \'autocomplete\'),', NULL),
                 ('Dropdown - Input Box Selector', 'INSTANT_SEARCH_DROPDOWN_INPUT_BOX_SELECTOR', 'input[name=\"keyword\"]', 'CSS selector of the search input box(es). You might need to change it if you\'re using a custom template and the results dropdown is not showing. Default: <code>input[name=\"keyword\"]</code>', $configurationGroupId, now(), 1700, NULL, NULL, '{\"error\":\"ERROR\",\"id\":\"FILTER_SANITIZE_URL\",\"options\":{\"options\":{}}}'),
                 ('Dropdown - Add Entry to Search Log', 'INSTANT_SEARCH_DROPDOWN_ADD_LOG_ENTRY', 'false', 'Add the searched terms to the Search Log report (if <em>Search Log</em> plugin is installed).', $configurationGroupId, now(), 1800, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', NULL),
