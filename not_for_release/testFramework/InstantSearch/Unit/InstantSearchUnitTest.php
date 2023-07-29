@@ -23,7 +23,7 @@ abstract class InstantSearchUnitTest extends zcUnitTestCase
         parent::setUp();
 
         $classLoader = new ClassLoader();
-        $classLoader->addPsr4("Zencart\\Plugins\\Catalog\\InstantSearch\\", "zc_plugins/InstantSearch/v4.0.0/classes/", true);
+        $classLoader->addPsr4("Zencart\\Plugins\\Catalog\\InstantSearch\\", "zc_plugins/InstantSearch/v4.0.1/classes/", true);
         $classLoader->register();
 
         require DIR_FS_CATALOG . DIR_WS_CLASSES . 'ajax/zcAjaxInstantSearch.php';
