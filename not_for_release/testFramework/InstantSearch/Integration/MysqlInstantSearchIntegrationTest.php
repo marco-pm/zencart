@@ -2,7 +2,7 @@
 /**
  * @package  Instant Search Plugin for Zen Cart
  * @author   marco-pm
- * @version  4.0.0
+ * @version  4.0.2
  * @see      https://github.com/marco-pm/zencart_instantsearch
  * @license  GNU Public License V2.0
  */
@@ -35,10 +35,10 @@ abstract class MysqlInstantSearchIntegrationTest extends zcUnitTestCase
     {
         parent::setUp();
 
-        $this->pdoConnection->query("SET GLOBAL sql_mode = ''");
+        $this->pdoConnection->query("SET GLOBAL sql_mode = 'ONLY_FULL_GROUP_BY'");
 
         $classLoader = new ClassLoader();
-        $classLoader->addPsr4("Zencart\\Plugins\\Catalog\\InstantSearch\\", "zc_plugins/InstantSearch/v4.0.1/classes/", true);
+        $classLoader->addPsr4("Zencart\\Plugins\\Catalog\\InstantSearch\\", "zc_plugins/InstantSearch/v4.0.2/classes/", true);
         $classLoader->register();
 
         require DIR_FS_CATALOG . DIR_WS_CLASSES . 'ajax/zcAjaxInstantSearch.php';
