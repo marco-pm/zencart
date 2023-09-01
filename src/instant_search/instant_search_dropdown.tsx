@@ -193,7 +193,7 @@ const ResultsContainer = ({ queryTextParsed, containerIndex, setIsResultsContain
     }, [data]);
 
     if (isLoading) {
-        if (previousData && previousData.results) {
+        if (previousData && previousData.results && previousData.count) {
             if (!isSlideDownRendered) {
                 setIsSlideDownRendered(true);
             }
@@ -215,7 +215,7 @@ const ResultsContainer = ({ queryTextParsed, containerIndex, setIsResultsContain
         return <></>;
     }
 
-    if (!data || !data.results) {
+    if (!data || !data.results || !data.count) {
         return <></>;
     }
 
@@ -316,7 +316,7 @@ const InstantSearchDropdown = ({ inputTextAttributes, containerIndex }: InstantS
                     autoComplete='off'
                     role='combobox'
                     aria-autocomplete='list'
-                    aria-owns={showResults ? `#${resultsContainerSelector}-${containerIndex}` : ''}
+                    {...(showResults ? { 'aria-owns': `${resultsContainerSelector}-${containerIndex}` } : {})}
                     ref={inputRef}
                 />
                 {
