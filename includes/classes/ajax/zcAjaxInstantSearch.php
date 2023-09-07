@@ -279,7 +279,7 @@ class zcAjaxInstantSearch extends base
             $dropdownResult['id']   = (int)$id;
             $dropdownResult['name'] = $this->highlightSearchWords(strip_tags($name));
             $dropdownResult['img'] = INSTANT_SEARCH_DROPDOWN_DISPLAY_IMAGE === 'true' && !empty($img)
-                ? zen_image(DIR_WS_IMAGES . strip_tags($img), strip_tags($img), INSTANT_SEARCH_DROPDOWN_IMAGE_WIDTH, INSTANT_SEARCH_DROPDOWN_IMAGE_HEIGHT)
+                ? zen_image(DIR_WS_IMAGES . strip_tags($img), strip_tags($name), INSTANT_SEARCH_DROPDOWN_IMAGE_WIDTH, INSTANT_SEARCH_DROPDOWN_IMAGE_HEIGHT)
                 : '';
 
             $this->notify('NOTIFY_INSTANT_SEARCH_DROPDOWN_ADD_DROPDOWN_RESULT', $result, $dropdownResult);
@@ -307,7 +307,7 @@ class zcAjaxInstantSearch extends base
         }
 
         // ------
-        // Begin of constant and variables used by the product_listing module and the listing template
+        // Begin of constants and variables used by the product_listing module and the listing template
         // ------
 
         // Association between displayed fields and their column position in the listing
@@ -370,7 +370,7 @@ class zcAjaxInstantSearch extends base
         }
 
         // ------
-        // End of variables used by the product_listing module and the listing template
+        // End of constants and variables used by the product_listing module and the listing template
         // ------
 
 
