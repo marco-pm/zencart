@@ -2,9 +2,9 @@
 /**
  * Common Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.3
  *
- * outputs the html header. i,e, everything that comes before the \</head\> tag <br />
+ * outputs the html header. i,e, everything that comes before the </head> tag.
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -32,8 +32,8 @@ require DIR_WS_MODULES . zen_get_module_directory('meta_tags.php');
 //
 $preloads = [
     'jquery' => [
-        'link' => 'https://code.jquery.com/jquery-3.5.1.min.js',
-        'integrity' => 'sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=',
+        'link' => 'https://code.jquery.com/jquery-3.7.1.min.js',
+        'integrity' => 'sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=',
     ],
     'bscss' => [
         'link' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
@@ -74,7 +74,7 @@ if (!empty($bs4_no_preloading)) {
 ?>
     <meta charset="<?php echo CHARSET; ?>">
     <title><?php echo META_TAG_TITLE; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="<?php echo META_TAG_KEYWORDS; ?>">
     <meta name="description" content="<?php echo META_TAG_DESCRIPTION; ?>">
     <meta name="author" content="<?php echo STORE_NAME ?>">

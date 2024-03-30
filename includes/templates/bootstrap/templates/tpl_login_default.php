@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.5.2
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -23,7 +23,7 @@ if (USE_SPLIT_LOGIN_MODE === 'True' || $ec_button_enabled) {
 
 <!--bof new customers card-->
     <div id="newCustomers-card" class="card mb-3">
-        <h4 id="newCustomers-card-header" class="card-header"><?php echo HEADING_NEW_CUSTOMER_SPLIT; ?></h4>
+        <h2 id="newCustomers-card-header" class="card-header"><?php echo HEADING_NEW_CUSTOMER_SPLIT; ?></h2>
         <div id="newCustomers-card-body" class="card-body">
 
 <?php
@@ -53,7 +53,7 @@ if (USE_SPLIT_LOGIN_MODE === 'True' || $ec_button_enabled) {
 
 <!--bof returning customers card-->
     <div id="returningCustomers-card" class="card mb-3">
-        <h4 id="returningCustomers-card-header" class="card-header"><?php echo HEADING_RETURNING_CUSTOMER_SPLIT; ?></h4>
+        <h2 id="returningCustomers-card-header" class="card-header"><?php echo HEADING_RETURNING_CUSTOMER_SPLIT; ?></h2>
         <div id="returningCustomers-card-body" class="card-body">
             <div id="returningCustomers-content" class="content pb-3"><?php echo TEXT_RETURNING_CUSTOMER_SPLIT; ?></div>
 

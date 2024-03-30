@@ -2,7 +2,7 @@
 /**
  * @author ZCAdditions.com, ZCA Bootstrap Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.0
  *
 */
  
@@ -26,26 +26,28 @@ function zca_js_zone_list($varname = 'c2z')
                 INNER JOIN " . TABLE_COUNTRIES . "
                     ON countries_id = zone_country_id
                    AND status = 1
-       ORDER BY zone_country_id"
+           ORDER BY zone_country_id"
     );
 
     $c2z = [];
+    $use_zone_code = !empty($GLOBALS['zca_js_zone_list_use_zone_code']);
     foreach ($countries as $country) {
         $current_country_id = $country['zone_country_id'];
         $c2z[$current_country_id] = [];
 
         $states = $db->Execute(
-            "SELECT zone_name, zone_id
+            "SELECT zone_name, zone_id, zone_code
                FROM " . TABLE_ZONES . "
               WHERE zone_country_id = $current_country_id
            ORDER BY zone_name"
         );
         foreach ($states as $state) {
-            $c2z[$current_country_id][$state['zone_id']] = $state['zone_name'];
+            $zone_key = ($use_zone_code === true) ? $state['zone_code'] : $state['zone_id'];
+            $c2z[$current_country_id][$zone_key] = $state['zone_name'];
         }
     }
 
-    if (count($c2z) === 0) {
+    if ($c2z === []) {
         $output_string = '';
     } else {
         $output_string = 'var ' . $varname . ' = \'' . addslashes(json_encode($c2z)) . '\';' . PHP_EOL;
@@ -137,4 +139,3 @@ function zca_back_link($extra_classes = '', $parameters = '', $button_name = '')
     $button_name = ($button_name === '') ? BUTTON_BACK_ALT : $button_name;
     return '<a class="p-2 btn button_back' . $extra_classes . '" href="' . zen_back_link(true) . '"' . $parameters . '>' . $button_name . '</a>';
 }
-

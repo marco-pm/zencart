@@ -2,36 +2,36 @@
 /**
  * Common Template - tpl_main_page.php
  * 
- * BOOTSTRAP v3.3.0
+ * BOOTSTRAP v3.6.0
  *
- * Governs the overall layout of an entire page<br />
- * Normally consisting of a header, left side column. center column. right side column and footer<br />
- * For customizing, this file can be copied to /templates/your_template_dir/pagename<br />
- * example: to override the privacy page<br />
- * - make a directory /templates/my_template/privacy<br />
- * - copy /templates/templates_defaults/common/tpl_main_page.php to /templates/my_template/privacy/tpl_main_page.php<br />
- * <br />
- * to override the global settings and turn off columns un-comment the lines below for the correct column to turn off<br />
- * to turn off the header and/or footer uncomment the lines below<br />
- * Note: header can be disabled in the tpl_header.php<br />
- * Note: footer can be disabled in the tpl_footer.php<br />
- * <br />
- * $flag_disable_header = true;<br />
- * $flag_disable_left = true;<br />
- * $flag_disable_right = true;<br />
- * $flag_disable_footer = true;<br />
- * <br />
- * // example to not display right column on main page when Always Show Categories is OFF<br />
- * <br />
- * if ($current_page_base == 'index' and $cPath == '') {<br />
- *  $flag_disable_right = true;<br />
- * }<br />
- * <br />
- * example to not display right column on main page when Always Show Categories is ON and set to categories_id 3<br />
- * <br />
- * if ($current_page_base == 'index' and $cPath == '' or $cPath == '3') {<br />
- *  $flag_disable_right = true;<br />
- * }<br />
+ * Governs the overall layout of an entire page
+ * Normally consisting of a header, left side column. center column. right side column and footer
+ * For customizing, this file can be copied to /templates/your_template_dir/pagename
+ * example: to override the privacy page
+ * - make a directory /templates/my_template/privacy
+ * - copy /templates/templates_defaults/common/tpl_main_page.php to /templates/my_template/privacy/tpl_main_page.php
+ * 
+ * to override the global settings and turn off columns un-comment the lines below for the correct column to turn off
+ * to turn off the header and/or footer uncomment the lines below
+ * Note: header can be disabled in the tpl_header.php
+ * Note: footer can be disabled in the tpl_footer.php
+ * 
+ * $flag_disable_header = true;
+ * $flag_disable_left = true;
+ * $flag_disable_right = true;
+ * $flag_disable_footer = true;
+ * 
+ * // example to not display right column on main page when Always Show Categories is OFF
+ * 
+ * if ($current_page_base == 'index' and $cPath == '') {
+ *  $flag_disable_right = true;
+ * }
+ * 
+ * example to not display right column on main page when Always Show Categories is ON and set to categories_id 3
+ * 
+ * if ($current_page_base == 'index' and $cPath == '' or $cPath == '3') {
+ *  $flag_disable_right = true;
+ * }
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -91,12 +91,26 @@ if (defined('BS4_AJAX_SEARCH_ENABLE') && BS4_AJAX_SEARCH_ENABLE === 'true') {
     require $template->get_template_dir('tpl_ajax_search.php', DIR_WS_TEMPLATE, $current_page_base, 'modalboxes') . '/tpl_ajax_search.php';
 }
 ?>
-<div class="container-fluid" id="mainWrapper"> 
+<div class="container-fluid" id="mainWrapper">
+  <main>
 <?php
+// -----
+// Define the spacer-div that pushes either the "Header Position 1" banner or
+// the logoWrapper in the header down under the navigation bar .. whichever comes first!
+//
+$navbar_spacer = '<div id="navbar-spacer" class="mt-5 pt-4"></div>';
+
 if (SHOW_BANNERS_GROUP_SET1 !== '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET1)) {
     if ($banner->RecordCount() > 0) {
         $find_banners = zen_build_banners_group(SHOW_BANNERS_GROUP_SET1);
         $banner_group = 1;
+
+        // -----
+        // Output the navbar's spacer div and then set it to an empty string so that
+        // it won't be output a second time by tpl_header.php.
+        //
+        echo $navbar_spacer;
+        $navbar_spacer = '';
 ?>
     <div class="zca-banner bannerOne rounded">
 <?php 
@@ -285,7 +299,18 @@ if (SHOW_BANNERS_GROUP_SET6 !== '' && $banner = zen_banner_exists('dynamic', SHO
 <!--eof- banner #6 display -->
 <?php /* add any end-of-page code via an observer class */
 $zco_notifier->notify('NOTIFY_FOOTER_END', $current_page);
+
+// -----
+// Don't display the back-to-top control if it's been disabled via a 'soft'
+// setting.  See /includes/extra_datafiles/dist.site-specific-bootstrap-settings.php
+// for additional information.
+//
+if (empty($zca_disable_back_to_top)) {
 ?>
     <a href="#" id="back-to-top" class="btn" title="<?php echo BUTTON_BACK_TO_TOP_TITLE ?>" aria-label="<?php echo BUTTON_BACK_TO_TOP_TITLE ?>" role="button"><i aria-hidden="true" class="fas fa-chevron-circle-up"></i></a>
+<?php
+}
+?>
+  </main>
 </div>
 </body>

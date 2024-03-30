@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.6.1
  *
  * Main index page<br />
  * Displays greetings, welcome text (define-page content), and various centerboxes depending on switch settings in Admin<br />
@@ -15,11 +15,22 @@
  */
 ?>
 <div id="indexDefault" class="centerColumn">
-
-<h1 id="indexDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
+<?php
+// -----
+// For accessibility, an <h1> tag can't contain an empty string.  If that's the case, use
+// generic wording for the title and render the <h1> tag for screen-readers only.
+//
+$screen_reader_only = '';
+$heading_title = HEADING_TITLE;
+if ($heading_title === '') {
+    $heading_title = HEADING_TITLE_SCREENREADER;
+    $screen_reader_only = ' sr-only';
+}
+?>
+<h1 id="indexDefault-pageHeading" class="pageHeading<?php echo $screen_reader_only; ?>"><?php echo $heading_title; ?></h1>
 
 <?php if (SHOW_CUSTOMER_GREETING == 1) { ?>
-<h3 id="indexDefault-greeting" class="greeting"><?php echo zen_customer_greeting(); ?></h3>
+<h2 id="indexDefault-greeting" class="greeting"><?php echo zen_customer_greeting(); ?></h2>
 <?php } ?>
 
 <?php if (DEFINE_MAIN_PAGE_STATUS >= 1 and DEFINE_MAIN_PAGE_STATUS <= 2) { ?>

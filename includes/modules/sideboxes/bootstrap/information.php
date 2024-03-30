@@ -2,7 +2,7 @@
 /**
  * information sidebox - displays list of general info links, as defined in this file
  *
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.6.4
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -59,6 +59,9 @@ if (DEFINE_PRIVACY_STATUS <= 1) {
 }
 if (DEFINE_CONDITIONS_STATUS <= 1) {
     $information[] = '<a class="' . $information_classes . '" href="' . zen_href_link(FILENAME_CONDITIONS) . '">' . BOX_INFORMATION_CONDITIONS . '</a>';
+}
+if (defined('FILENAME_ACCESSIBILITY') && (!empty($flag_show_accessibility_sidebox_link))) {
+    $information[] = '<a class="' . $information_classes . '" href="' . zen_href_link(FILENAME_ACCESSIBILITY) . '">' . BOX_INFORMATION_ACCESSIBILITY . '</a>';
 }
 if (DEFINE_CONTACT_US_STATUS <= 1) {
     $information[] = '<a class="' . $information_classes . '" href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' . BOX_INFORMATION_CONTACT . '</a>';

@@ -1,9 +1,9 @@
 <?php
 // -----
 // Part of the One-Page Checkout plugin, provided under GPL 2.0 license by lat9 (cindy@vinosdefrutastropicales.com).
-// Copyright (C) 2013-2022, Vinos de Frutas Tropicales.  All rights reserved.
+// Copyright (C) 2013-2024, Vinos de Frutas Tropicales.  All rights reserved.
 //
-// Last updated: OPC v2.4.2/Bootstrap v3.4.0
+// Last updated: OPC v2.5.0/Bootstrap v3.6.4
 //
 // -----
 // Process the "credit-selection", e.g. coupon-code entry, gift-voucher redeem-code, block(s) for the active
@@ -25,7 +25,9 @@ if ($shipping_module_available) {
 
         if (isset($_GET['credit_class_error_code']) && $_GET['credit_class_error_code'] == $current_selection['id']) {
 ?>
-<div class="messageStackError"><?php echo zen_output_string_protected($_GET['credit_class_error']); ?></div>
+<div class="messageStackError">
+    <?= zen_output_string_protected($_GET['credit_class_error']) ?>
+</div>
 <?php
         }
 
@@ -35,7 +37,7 @@ if ($shipping_module_available) {
         // the class is submitted to the function as part of the to-be-created parameter list.
         //
         $ot_class = str_replace('ot_', '', $current_selection['id']);
-        if (strtolower(IMAGE_USE_CSS_BUTTONS) == 'yes') {
+        if (strtolower(IMAGE_USE_CSS_BUTTONS) === 'yes') {
             $secondary_class = 'opc-cc-submit';
             $additional_parms = '';
         } else {
@@ -45,13 +47,26 @@ if ($shipping_module_available) {
 
         foreach ($current_selection['fields'] as $current_field) {
 ?>
-<div class="checkoutOne<?php echo ucfirst($ot_class); ?> card mb-3">
-    <h4 class="card-header"><?php echo $current_selection['module']; ?></h4>
+<div class="checkoutOne<?= ucfirst($ot_class) ?> card mb-3">
+    <h4 class="card-header"><?= $current_selection['module'] ?></h4>
     <div class="card-body">
-        <?php echo $current_selection['redeem_instructions']; ?>
-        <div class="gvBal larger"><?php echo (!empty($current_selection['checkbox'])) ? $current_selection['checkbox'] : ''; ?></div>
-        <label class="inputLabel"<?php echo (!empty($current_field['tag'])) ? (' for="' . $current_field['tag'] . '"') : ''; ?>><?php echo $current_field['title']; ?></label><?php echo $current_field['field']; ?>
-        <div class="mt-3 text-right"><?php echo zen_image_button(BUTTON_IMAGE_SUBMIT, ALT_TEXT_APPLY_DEDUCTION, $additional_parms, $secondary_class); ?></div>
+        <?= $current_selection['redeem_instructions'] ?>
+        <div class="gvBal larger">
+            <?= (!empty($current_selection['checkbox'])) ? $current_selection['checkbox'] : '' ?>
+        </div>
+        <label class="inputLabel"<?= (!empty($current_field['tag'])) ? (' for="' . $current_field['tag'] . '"') : '' ?>>
+            <?= $current_field['title'] ?>
+        </label>
+        <?= $current_field['field'] ?? '' ?>
+<?php
+            if (!empty($current_selection['checkbox']) || !empty($current_field['field'])) {
+?>
+        <div class="mt-3 text-right">
+            <?= zen_image_button(BUTTON_IMAGE_SUBMIT, ALT_TEXT_APPLY_DEDUCTION, $additional_parms, $secondary_class) ?>
+        </div>
+<?php
+            }
+?>
     </div>
 </div>
 <?php

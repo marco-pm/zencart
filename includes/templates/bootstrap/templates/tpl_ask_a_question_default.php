@@ -1,23 +1,37 @@
 <?php
 /**
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.0
  *
- * @copyright Copyright 2003-2020 Zen Cart Development Team
+ * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: DrByte 2020 Jun 23 Modified in v1.5.7 $
+ * @version $Id: Scott C Wilson 2022 Jan 22 Modified in v1.5.8-alpha $
  */
+// -----
+// zc158b+ creates a new variables in support of a question asked of a "call for price"
+// product.  Since this template supports zc157 and the full zc158 family, honor those
+// variables, if set, but default to the legacy values if not.
+//
+if (!isset($heading_title)) {
+    $heading_title = HEADING_TITLE;
+}
+if (!isset($form_title)) {
+    $form_title = FORM_TITLE;
+}
 ?>
 <div class="centerColumn" id="askAQuestion">
-
-<?php echo zen_draw_form('ask_a_question', zen_href_link(FILENAME_ASK_A_QUESTION, 'action=send&pid=' . (int)$_GET['pid'], 'SSL')); ?>
-
-<?php if (CONTACT_US_STORE_NAME_ADDRESS== '1') { ?>
-    <address><?php echo nl2br(STORE_NAME_ADDRESS); ?></address>
-<?php } ?>
-    <h1><?php echo HEADING_TITLE . $product_details['products_name']; ?></h1>
+    <?php echo zen_draw_form('ask_a_question', zen_href_link(FILENAME_ASK_A_QUESTION, 'action=send&pid=' . (int)$_GET['pid'], 'SSL')); ?>
 
 <?php
-if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
+if (CONTACT_US_STORE_NAME_ADDRESS === '1') {
+?>
+    <address><?php echo nl2br(STORE_NAME_ADDRESS); ?></address>
+<?php
+}
+?>
+    <h1><?php echo $heading_title . $product_details['products_name']; ?></h1>
+
+<?php
+if (isset($_GET['action']) && ($_GET['action'] === 'success')) {
 ?>
     <div class="content"><?php echo TEXT_SUCCESS; ?></div>
 
@@ -28,8 +42,9 @@ if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
 <?php
 } else {
 ?>
-
-<?php echo '<a href="' . zen_href_link(zen_get_info_page((int)$_GET['pid']), 'products_id=' . (int)$_GET['pid'], 'SSL') . '">' . zen_image(DIR_WS_IMAGES . $product_details['products_image'], $product_details['products_name'], IMAGE_PRODUCT_LISTING_WIDTH, IMAGE_PRODUCT_LISTING_HEIGHT) . '</a>'; ?>
+    <a href="<?php echo zen_href_link(zen_get_info_page((int)$_GET['pid']), 'products_id=' . (int)$_GET['pid'], 'SSL'); ?>">
+        <?php echo zen_image(DIR_WS_IMAGES . $product_details['products_image'], $product_details['products_name'], IMAGE_PRODUCT_LISTING_WIDTH, IMAGE_PRODUCT_LISTING_HEIGHT); ?>
+    </a>
 
     <div id="contactUsNoticeContent" class="definecontent">
 <?php
@@ -39,16 +54,18 @@ if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
 require $define_page;
 ?>
     </div>
-
-<?php if ($messageStack->size('contact') > 0) echo $messageStack->output('contact'); ?>
-
+<?php
+if ($messageStack->size('contact') > 0) {
+    echo $messageStack->output('contact');
+}
+?>
     <div id="contactUsForm" class="card">
-        <h2 class="card-header"><?php echo FORM_TITLE; ?></h2>
+        <h2 class="card-header"><?php echo $form_title; ?></h2>
         <div class="card-body">
             <div class="required-info text-right my-3"><?php echo FORM_REQUIRED_INFORMATION; ?></div>
 <?php
 // show dropdown if set
-    if (!empty(CONTACT_US_LIST)) {
+    if (CONTACT_US_LIST !== '') {
 ?>
             <label class="inputLabel" for="send-to"><?php echo SEND_TO_TEXT; ?></label><span class="alert"><?php echo ENTRY_REQUIRED_SYMBOL; ?></span>
             <?php echo zen_draw_pull_down_menu('send_to',  $send_to_array, 0, 'id="send-to"'); ?>
@@ -91,5 +108,5 @@ require $define_page;
 <?php
 }
 ?>
-<?php echo '</form>'; ?>
+    <?php echo '</form>'; ?>
 </div>

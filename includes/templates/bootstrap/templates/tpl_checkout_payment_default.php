@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.5.2
  *
  * Loaded automatically by index.php?main_page=checkout_payment.<br />
  * Displays the allowed payment modules, for selection by customer.
@@ -16,7 +16,7 @@
 <?php echo $payment_modules->javascript_validation(); ?>
 <div id="checkoutPayment" class="centerColumn">
     <div class="progress">
-        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
     </div>
 
     <?php echo zen_draw_form('checkout_payment', zen_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'), 'post'); ?>
@@ -36,40 +36,40 @@ if ($messageStack->size('checkout_payment') > 0) {
 
 // ** BEGIN PAYPAL EXPRESS CHECKOUT **
 if (!$payment_modules->in_special_checkout()) {
-// ** END PAYPAL EXPRESS CHECKOUT ** 
+// ** END PAYPAL EXPRESS CHECKOUT **
 ?>
         <div class="card-columns">
 
             <div id="billingAddress-card" class="card mb-3">
-                <h4 class="card-header"><?php echo TITLE_BILLING_ADDRESS; ?></h4>    
+                <h4 class="card-header"><?php echo TITLE_BILLING_ADDRESS; ?></h4>
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="billToAddress col-sm-5">
-                            <address><?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['billto'], true, ' ', '<br />'); ?></address>    
+                            <address><?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['billto'], true, ' ', '<br />'); ?></address>
                         </div>
                         <div class="col-sm-7">
                             <?php echo TEXT_SELECTED_BILLING_DESTINATION; ?>
-<?php 
-    if (MAX_ADDRESS_BOOK_ENTRIES >= 2) { 
+<?php
+    if (MAX_ADDRESS_BOOK_ENTRIES >= 2) {
 ?>
                             <div class="btn-toolbar justify-content-end mt-3" role="toolbar">
                                 <?php echo zca_button_link(zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), BUTTON_CHANGE_ADDRESS_ALT, 'button_change_address'); ?>
                             </div>
-<?php 
-    } 
+<?php
+    }
 ?>
                         </div>
                     </div>
                 </div>
             </div>
 
-<?php 
+<?php
 // ** BEGIN PAYPAL EXPRESS CHECKOUT **
 }
 // ** END PAYPAL EXPRESS CHECKOUT ** ?>
 
             <div id="yourTotal-card" class="card mb-3">
-                <h4 class="card-header"><?php echo TEXT_YOUR_TOTAL; ?></h4> 
+                <h4 class="card-header"><?php echo TEXT_YOUR_TOTAL; ?></h4>
                 <div class="card-body p-3">
 <?php
     if (MODULE_ORDER_TOTAL_INSTALLED) {
@@ -91,7 +91,7 @@ if (!$payment_modules->in_special_checkout()) {
     }
 ?>
                 </div>
-            </div>  
+            </div>
 
 <?php
     $selection =  $order_total_modules->credit_selection();
@@ -105,12 +105,12 @@ if (!$payment_modules->in_special_checkout()) {
             for ($j = 0, $n2 = (isset($selection[$i]['fields']) ? count($selection[$i]['fields']) : 0); $j < $n2; $j++) {
 ?>
             <div class="card mb-3">
-                <h4 class="card-header"><?php echo $selection[$i]['module']; ?></h4> 
+                <h4 class="card-header"><?php echo $selection[$i]['module']; ?></h4>
                 <div class="card-body p-3">
                     <?php echo $selection[$i]['redeem_instructions']; ?>
 <?php
                 if (isset($selection[$i]['checkbox'])) {
-?> 
+?>
                     <div><?php echo $selection[$i]['checkbox']; ?></div>
 <?php
                 }
@@ -120,14 +120,14 @@ if (!$payment_modules->in_special_checkout()) {
                 if (strpos($selection[$i]['fields'][$j]['field'], 'type="checkbox"') !== false) {   // intercept checkbox selections
 ?>
                     <div class="custom-control custom-checkbox">
-                      <?php echo $selection[$i]['fields'][$j]['field']; ?> 
+                      <?php echo $selection[$i]['fields'][$j]['field']; ?>
                       <label class="custom-control-label"<?php echo isset($selection[$i]['fields'][$j]['tag']) ? ' for="'.$selection[$i]['fields'][$j]['tag'].'"': ''; ?>><?php echo $selection[$i]['fields'][$j]['title']; ?></label>
                     </div>
 <?php
                 } elseif (strpos($selection[$i]['fields'][$j]['field'], 'type="radio"') !== false) {    // intercept radio selections
 ?>
                     <div class="custom-control custom-radio">
-                      <?php echo $selection[$i]['fields'][$j]['field']; ?> 
+                      <?php echo $selection[$i]['fields'][$j]['field']; ?>
                       <label class="custom-control-label"<?php echo isset($selection[$i]['fields'][$j]['tag']) ? ' for="'.$selection[$i]['fields'][$j]['tag'].'"': ''; ?>><?php echo $selection[$i]['fields'][$j]['title']; ?></label>
                     </div>
 <?php
@@ -138,7 +138,7 @@ if (!$payment_modules->in_special_checkout()) {
 <?php
                 }
 ?>
-                </div>  
+                </div>
             </div>
 <?php
             }
@@ -155,7 +155,7 @@ if (!$payment_modules->in_special_checkout()) {
 // ** END PAYPAL EXPRESS CHECKOUT **
 ?>
             <div id="paymentMethod-card" class="card mb-3">
-                <h4 class="card-header"><?php echo $payment_method_heading; ?></h4> 
+                <h4 class="card-header"><?php echo $payment_method_heading; ?></h4>
                 <div class="card-body p-3">
 <?php
         if (SHOW_ACCEPTED_CREDIT_CARDS !== '0') {
@@ -166,8 +166,8 @@ if (!$payment_modules->in_special_checkout()) {
             }
 ?>
                     <div class="p-3"></div>
-<?php 
-        } 
+<?php
+        }
 
         $selection = $payment_modules->selection();
 
@@ -193,7 +193,7 @@ if (!$payment_modules->in_special_checkout()) {
                         <div class="card-header">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <?php echo zen_draw_radio_field('payment', $selection[$i]['id'], $radio_value, 'id="pmt-'.$selection[$i]['id'].'"'); ?>
-<?php   
+<?php
                 }
             } else {
 ?>
@@ -272,7 +272,7 @@ if (!$payment_modules->in_special_checkout()) {
                     <?php echo TEXT_CONDITIONS_DESCRIPTION;?>
 
                     <div class="custom-control custom-checkbox">
-                        <?php echo zen_draw_checkbox_field('conditions', '1', false, 'id="conditions"') . '<label class="custom-control-label checkboxLabel" for="conditions">' . TEXT_CONDITIONS_CONFIRM . '</label>'; ?>
+                        <?php echo zen_draw_checkbox_field('conditions', '1', (isset($_SESSION['conditions']) && ($_SESSION['conditions'] === '1')), 'id="conditions" required oninput="this.setCustomValidity(\'\')" oninvalid="this.setCustomValidity(\'' . ERROR_CONDITIONS_NOT_ACCEPTED . '\')"');?><label class="custom-control-label checkboxLabel" for="conditions"><?php echo TEXT_CONDITIONS_CONFIRM; ?></label>
                     </div>
 
                 </div>
@@ -281,9 +281,16 @@ if (!$payment_modules->in_special_checkout()) {
     }
 ?>
         </div>
-    
+<?php
+    // -----
+    // Starting with the as-delivered Zen Cart 1.5.8a, styling has been removed from various checkout language
+    // constants.  To keep the same 'look' regardless whether the store's value contains a <strong> tag, strip
+    // that tag and its end-tag from the constant and output the tag here.
+    //
+    $title_continue_checkout = str_replace(['<strong>', '</strong>'], '', TITLE_CONTINUE_CHECKOUT_PROCEDURE);
+?>
         <div id="paymentSubmit" class="btn-toolbar justify-content-between" role="toolbar">
-            <?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
+            <?php echo '<strong>' . $title_continue_checkout . '</strong><br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
             <?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT, 'onclick="submitFunction(' . zen_user_has_gv_account($_SESSION['customer_id']) . ',' . $order->info['total'] . ')"'); ?>
         </div>
     <?php echo '</form>'; ?>

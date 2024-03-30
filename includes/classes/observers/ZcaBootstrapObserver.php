@@ -2,21 +2,25 @@
 // -----
 // Part of the ZCA Bootstrap template, @zcadditions, @lat9, @marco-pm
 //
-// BOOTSTRAP 3.5.0.
+// BOOTSTRAP 3.6.3
 //
 class ZcaBootstrapObserver extends base
 {
     protected
+        $products_id,
         $display_sale_price,
         $display_normal_price,
         $display_special_price,
+        $display_wholesale_price,
+        $has_wholesale_price,
         $product_is_free,
         $product_is_call,
         $products_tax_class_id,
         $button_name,
         $sec_class,
         $parameters,
-        $text;
+        $text,
+        $is_product_info_page;
 
     // -----
     // On construction, watch for various notifications ONLY IF the ZCA Bootstrap template
@@ -30,7 +34,7 @@ class ZcaBootstrapObserver extends base
 
         if (zca_bootstrap_active()) {
             $this->attach(
-                $this, 
+                $this,
                 [
                     //- From /includes/functions/functions_prices.php (zen_get_products_display)
                     'NOTIFY_ZEN_GET_PRODUCTS_DISPLAY_PRICE_SALE',
@@ -45,6 +49,9 @@ class ZcaBootstrapObserver extends base
                     'NOTIFY_ZEN_DRAW_SELECTION_FIELD',
                     'NOTIFY_ZEN_DRAW_TEXTAREA_FIELD',
                     'NOTIFY_ZEN_DRAW_PULL_DOWN_MENU',
+
+                    //- From /includes/functions/functions_general.php
+                    'NOTIFY_ZEN_SOLD_OUT_IMAGE',                //- From zen_get_buy_now_button, zc158+
 
                     //- From /includes/classes/order.php
                     'NOTIFY_ORDER_COUPON_LINK',
@@ -66,6 +73,9 @@ class ZcaBootstrapObserver extends base
     {
         switch ($eventID) {
             case 'NOTIFY_ZEN_GET_PRODUCTS_DISPLAY_PRICE_SALE':
+                if ($p2 === true) {
+                    return;
+                }
                 $this->setVariables(
                     $eventID,
                     $p1,
@@ -100,6 +110,9 @@ class ZcaBootstrapObserver extends base
                 break;
 
             case 'NOTIFY_ZEN_GET_PRODUCTS_DISPLAY_PRICE_SPECIAL':
+                if ($p2 === true) {
+                    return;
+                }
                 $this->setVariables(
                     $eventID,
                     $p1,
@@ -135,15 +148,21 @@ class ZcaBootstrapObserver extends base
                 break;
 
             case 'NOTIFY_ZEN_GET_PRODUCTS_DISPLAY_PRICE_NORMAL':
+                if ($p2 === true) {
+                    return;
+                }
                 $this->setVariables(
                     $eventID,
                     $p1,
                     [
+                        'products_id',
                         'display_sale_price',
                         'display_normal_price',
                         'display_special_price',
                         'product_is_free',
                         'products_tax_class_id',
+                        'display_wholesale_price',
+                        'has_wholesale_price',
                     ]
                 );
 
@@ -152,13 +171,17 @@ class ZcaBootstrapObserver extends base
                     $show_special_price = '';
                     $show_sale_price = '<span class="mx-auto w-100 p-1 productSalePrice">' . PRODUCT_PRICE_SALE . $this->displayPrice($this->display_sale_price) . '</span>';
                 } else {
-                    if ($this->product_is_free == '1') {
+                    $show_special_price = '';
+                    $show_sale_price = '';
+                    if ($this->has_wholesale_price === true) {
+                        $show_normal_price = '<span class="mx-auto w-100 p-1 normalprice">' . $this->displayPrice($this->display_normal_price) . '</span>';
+                        $show_sale_price = '<span class="mx-auto w-100 p-1 productSalePrice wholesale-price">' . PRODUCT_PRICE_WHOLESALE . $this->displayPrice($this->display_wholesale_price) . '</span>';
+                    } elseif ($this->product_is_free == '1') {
                         $show_normal_price = '<span class="mx-auto w-100 p-1 productFreePrice"><s>' . $this->displayPrice($this->display_normal_price) . '</s></span>';
                     } else {
                         $show_normal_price = '<span class="mx-auto w-100 p-1 productBasePrice">' . $this->displayPrice($this->display_normal_price) . '</span>';
                     }
-                    $show_special_price = '';
-                    $show_sale_price = '';
+
                 }
                 $p2 = true;
                 $p3 = $show_normal_price;
@@ -167,6 +190,9 @@ class ZcaBootstrapObserver extends base
                 break;
 
             case 'NOTIFY_ZEN_GET_PRODUCTS_DISPLAY_PRICE_FREE_OR_CALL':
+                if ($p2 === true) {
+                    return;
+                }
                 $this->setVariables(
                     $eventID,
                     $p1,
@@ -276,7 +302,21 @@ class ZcaBootstrapObserver extends base
                 $p2 = $field;
                 break;
 
-            case 'NOTIFY_NOTIFY_ORDER_COUPON_LINK':
+            case 'NOTIFY_ZEN_SOLD_OUT_IMAGE':
+                if (!isset($this->is_product_info_page)) {
+                    $this->is_product_info_page = ($_GET['main_page'] === zen_get_info_page($p1['products_id']));
+                }
+                if ($this->is_product_info_page === true) {
+                    $sold_out_button_class = 'button_sold_out';
+                    $sold_out_button_name = BUTTON_SOLD_OUT_ALT;
+                } else {
+                    $sold_out_button_class = 'button_sold_out_sm';
+                    $sold_out_button_name = BUTTON_SOLD_OUT_SMALL_ALT;
+                }
+                $p2 = '<button class="btn ' . $sold_out_button_class . '" type="button" disabled>' . $sold_out_button_name . '</button>';
+                break;
+
+            case 'NOTIFY_ORDER_COUPON_LINK':
                 $zc_coupon_link = '<a data-toggle="modal" data-id="'. $p1['coupon_id']. '" href="#couponHelpModal">';
                 $p2 = $zc_coupon_link;
                 break;
@@ -331,7 +371,7 @@ class ZcaBootstrapObserver extends base
         }
 
         foreach ($variableArray as $key) {
-            $this->$key = $notifyParams[$key];
+            $this->$key = $notifyParams[$key] ?? false;
         }
     }
 

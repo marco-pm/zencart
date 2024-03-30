@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.5.3
  *
  * Loaded automatically by index.php?main_page=checkout_confirmation.
  * Displays final checkout details, cart, payment and shipping info details.
@@ -16,7 +16,7 @@
 <div id="checkoutConfirmationDefault" class="centerColumn">
 
 <div class="progress">
-  <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+  <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
 </div>
 
 <h1 id="checkoutConfirmationDefault-pageHeading" class="pageHeading"><?php echo HEADING_TITLE; ?></h1>
@@ -309,9 +309,16 @@ if (isset ($_SESSION['shipping']['extras']) && is_array ($_SESSION['shipping']['
     }
 }
 ?>
-
+<?php
+    // -----
+    // Starting with the as-delivered Zen Cart 1.5.8a, styling has been removed from various checkout language
+    // constants.  To keep the same 'look' regardless whether the store's value contains a <strong> tag, strip
+    // that tag and its end-tag from the constant and output the tag here.
+    //
+    $title_continue_checkout = str_replace(['<strong>', '</strong>'], '', TITLE_CONTINUE_CHECKOUT_PROCEDURE);
+?>
 <div id="checkoutConfirmationDefault-btn-toolbar" class="btn-toolbar justify-content-between confirm-order" role="toolbar">
-<?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
+<?php echo '<strong>' . $title_continue_checkout . '</strong><br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?>
 <?php echo zen_image_submit(BUTTON_IMAGE_CONFIRM_ORDER, BUTTON_CONFIRM_ORDER_ALT, 'name="btn_submit" id="btn_submit"') ;?>
 </div>
 

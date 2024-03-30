@@ -2,7 +2,7 @@
 /**
  * Module Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.6.4
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -12,40 +12,17 @@
  */
 $zc_show_new_products = false;
 require DIR_WS_MODULES . zen_get_module_directory('centerboxes/' . FILENAME_NEW_PRODUCTS);
+
+if ($zc_show_new_products === false) {
+    return;
+}
+
+$card_main_id = 'whatsNew';
+$card_main_class = 'centerBoxWrapper';
+$card_body_id = 'newCenterbox-card-body';
 ?>
 <!-- bof: whats_new -->
 <?php
-if ($zc_show_new_products === true) {
-?>
-<div id="whatsNew" class="card mb-3 centerBoxWrapper">
-<?php
-    if (!empty($title)) {
-        echo $title;
-    }
-?>
-    <div id="newCenterbox-card-body" class="card-body text-center">
-<?php
-    if (is_array($list_box_contents)) {
-        for ($row = 0, $n = count($list_box_contents); $row < $n; $row++) {
-            $params = '';
-?>
-        <div class="card-deck text-center">
-<?php
-            for ($col = 0, $j = count($list_box_contents[$row]); $col < $j; $col++) {
-                $r_params = $list_box_contents[$row][$col]['params'];
-                if (isset($list_box_contents[$row][$col]['text'])) {
-                    echo '<div' . $r_params . '>' . $list_box_contents[$row][$col]['text'] . '</div>';
-                }
-            }
-?>
-        </div>
-<?php
-        }
-    }
- ?>
-    </div>
-</div>
-<?php
-}
+require $template->get_template_dir('tpl_columnar_display.php', DIR_WS_TEMPLATE, $current_page_base, 'common') . '/tpl_columnar_display.php';
 ?>
 <!-- eof: whats_new -->

@@ -2,7 +2,7 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.5.2
  *
  * Loaded automatically by index.php?main_page=document_general_info.
  * Displays template according to "document-general" product-type needs
@@ -283,8 +283,8 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 ?>
 <?php if ($display_qty != '' or $display_button != '') { ?>
 <!--bof add to cart card-->  
-<div id="addToCart-card" class="card border-success mb-3">
-  <div id="addToCart-card-header" class="card-header text-white bg-success"><?php echo PRODUCTS_ORDER_QTY_TEXT; ?></div>
+<div id="addToCart-card" class="card mb-3">
+  <div id="addToCart-card-header" class="card-header"><?php echo PRODUCTS_ORDER_QTY_TEXT; ?></div>
   <div id="cartAdd" class="card-body text-center">
 <?php
     

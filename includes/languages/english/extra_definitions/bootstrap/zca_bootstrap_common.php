@@ -1,6 +1,6 @@
 <?php
 /*
- * BOOTSTRAP v3.4.2
+ * BOOTSTRAP v3.6.4
  */
 // -----
 // Part of the Bootstrap template, defining commonly-used phrases and phrases unique to the bootstrap template.
@@ -12,6 +12,12 @@ define('BOOTSTRAP_CURRENT_ADDRESS', ' (Currently Selected)');
 // Additional buttons.
 //
 define('BUTTON_BACK_TO_TOP_TITLE', 'Back to top');
+
+// -----
+// Used on the products_all and product listing for the alpha-filter dropdown.
+// Note: Defined in multiple language files for zc158 and zc200!
+//
+define('TEXT_SHOW', 'Filter by:');
 
 // -----
 // Used during checkout and on various address-rendering pages.
@@ -29,9 +35,10 @@ define('TABLE_HEADING_ADDRESS_BOOK_ENTRIES', 'Choose From Your Address Book Entr
 define('TEXT_MULTIPLE_IMAGES', ' Additional Images ');
 define('TEXT_SINGLE_IMAGE', ' Larger Image ');
 define('PREV_NEXT_FROM', ' from ');
-define('IMAGE_BUTTON_PREVIOUS','Previous Item');
-define('IMAGE_BUTTON_NEXT','Next Item');
-define('IMAGE_BUTTON_RETURN_TO_PRODUCT_LIST','Back to Product List');
+define('IMAGE_BUTTON_PREVIOUS', 'Previous Item');
+define('IMAGE_BUTTON_NEXT', 'Next Item');
+define('IMAGE_BUTTON_RETURN_TO_PRODUCT_LIST', 'Back to Product List');
+define('MODAL_ADDL_IMAGE_PLACEHOLDER_ALT', 'Modal Additional Images for %s');   //- %s is filled in with the product's name
 
 // -----
 // Used on the product_music_info page.
@@ -53,7 +60,16 @@ define('SUB_TITLE_TOTAL', 'Total:');
 // -----
 // Used by various product listing pages, e.g. SNAF.
 //
-define('TABLE_HEADING_IMAGE', 'Product Image');
+// -----
+// The two image-heading constants are used when a site chooses to display listings
+// in table-mode (PRODUCT_LISTING_COLUMNS_PER_ROW is set to '1').  If your site wants
+// the image-heading to *always* be displayed, set the TABLE_HEADING_IMAGE value to
+// the text you desire.  If that value is set to an empty string, then a screen-reader-only
+// heading is used along with the TABLE_HEADING_IMAGE_SCREENREADER value.
+//
+define('TABLE_HEADING_IMAGE', '');
+define('TABLE_HEADING_IMAGE_SCREENREADER', 'Product Image');
+
 define('TABLE_HEADING_PRODUCTS', 'Product Name');
 define('TABLE_HEADING_MANUFACTURER', 'Manufacturer');
 define('TABLE_HEADING_PRICE', 'Price');
@@ -88,3 +104,19 @@ define('TEXT_AJAX_SEARCH_VIEW_ALL', 'View All');
 //
 define('TEXT_HEADER_ARIA_LABEL_NAVBAR', 'Navigation Bar');
 define('TEXT_HEADER_ARIA_LABEL_LOGO', 'Site Logo');
+
+// -----
+// ARIA label text, used by /sideboxes/tpl_orders_history.php.
+//
+// NOTE: Not replicated in lang.zca_bootstrap_common.php, since this constant is
+// defined in lang.english.php for zc158 and later.
+//
+define('PAGE_ACCOUNT_HISTORY', 'Order History');
+
+// -----
+// <h1> text for index pages where the 'normal' heading-text isn't provided by a
+// store ... for accessibility.
+//
+// Note: For zc200, this constant will be in /includes/languages/english/lang.index.php.
+//
+define('HEADING_TITLE_SCREENREADER', 'See Additional Content Below');

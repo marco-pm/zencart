@@ -2,7 +2,7 @@
 /**
  * New Modal for popup_image_additional carousel
  * 
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.1
  *
  * @package templateSystem
  * @copyright Copyright 2003-2016 Zen Cart Development Team
@@ -56,8 +56,8 @@ if ($flag_show_product_info_additional_images !== '0' && $num_images > 0) {
 }
 ?>
                                     <div id="carousel-btn-toolbar" class="btn-toolbar justify-content-between p-3" role="toolbar">
-                                        <a class="carousel-control-prev left pt-3" href="#productImagesCarousel" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
-                                        <a class="carousel-control-next right pt-3" href="#productImagesCarousel" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+                                        <a class="carousel-control-prev left pt-3" href="#productImagesCarousel" data-slide="prev"><i class="fas fa-chevron-left" title="<?php echo BUTTON_PREVIOUS_ALT;?>"></i></a>
+                                        <a class="carousel-control-next right pt-3" href="#productImagesCarousel" data-slide="next"><i class="fas fa-chevron-right" title="<?php echo BUTTON_NEXT_ALT;?>"></i></a>
                                     </div>
                                 </div>
                                 <!-- main slider carousel nav controls -->

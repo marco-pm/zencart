@@ -2,7 +2,7 @@
 /**
  * Override Template for common/tpl_main_page.php
  *
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.5.2
  *
  * @package templateSystem
  * @copyright Copyright 2003-2018 Zen Cart Development Team
@@ -61,36 +61,39 @@ if (!empty($coupon->fields['coupon_description'])) {
 }
 
 $coupon_amount = $coupon->fields['coupon_amount'];
+$coupon_info = [];
 switch ($coupon->fields['coupon_type']) {
     case 'F': // amount Off
-        $text_coupon_help .= sprintf(TEXT_COUPON_HELP_FIXED, $currencies->format($coupon_amount));
+        $coupon_info[] = str_replace('<br>', '', sprintf(TEXT_COUPON_HELP_FIXED, $currencies->format($coupon_amount)));
         break;
     case 'P': // percentage
-        $text_coupon_help .= sprintf(TEXT_COUPON_HELP_FIXED, number_format($coupon_amount, 2) . '%');
+        $coupon_info[] = str_replace('<br>', '', sprintf(TEXT_COUPON_HELP_FIXED, number_format($coupon_amount, 2) . '%'));
         break;
     case 'S': // Free Shipping
-        $text_coupon_help .= TEXT_COUPON_HELP_FREESHIP;
+       $coupon_info[] = str_replace('<br>', '', TEXT_COUPON_HELP_FREESHIP);
         break;
     case 'E': // percentage & Free Shipping
-        $text_coupon_help .= TEXT_COUPON_HELP_FREESHIP . sprintf(TEXT_COUPON_HELP_FIXED, number_format($coupon_amount, 2) . '%');
+        $coupon_info[] = str_replace('<br>', '', TEXT_COUPON_HELP_FREESHIP . sprintf(TEXT_COUPON_HELP_FIXED, number_format($coupon_amount, 2) . '%'));
         break;
     case 'O': // amount off & Free Shipping
-        $text_coupon_help .= TEXT_COUPON_HELP_FREESHIP . sprintf(TEXT_COUPON_HELP_FIXED, $currencies->format($coupon_amount));
+        $coupon_info[] = str_replace('<br>', '', TEXT_COUPON_HELP_FREESHIP . sprintf(TEXT_COUPON_HELP_FIXED, $currencies->format($coupon_amount)));
         break;
     default:
         break;
 }
 
 if ($coupon->fields['coupon_is_valid_for_sales'] === '0') {
-    $text_coupon_help .= TEXT_NO_PROD_SALES;
+    $coupon_info[] = str_replace('<br>', '', TEXT_NO_PROD_SALES);
 }
 
 if ($coupon->fields['coupon_minimum_order'] > 0) {
-    $text_coupon_help .= sprintf(TEXT_COUPON_HELP_MINORDER, $currencies->format($coupon->fields['coupon_minimum_order']));
+    $coupon_info[] = str_replace('<br>', '', sprintf(TEXT_COUPON_HELP_MINORDER, $currencies->format($coupon->fields['coupon_minimum_order'])));
 }
 
-$text_coupon_help .= sprintf(TEXT_COUPON_HELP_DATE, zen_date_short($coupon->fields['coupon_start_date']), zen_date_short($coupon->fields['coupon_expire_date']));
-$text_coupon_help .= '<strong>' . TEXT_COUPON_HELP_RESTRICT . '</strong>';
+$coupon_info[] = str_replace('<br>', '', sprintf(TEXT_COUPON_HELP_DATE, zen_date_short($coupon->fields['coupon_start_date']), zen_date_short($coupon->fields['coupon_expire_date'])));
+$text_coupon_help .= '<ul id="couponInfo">' . '<li>' . implode('</li><li>', $coupon_info) . '</li></ul>';
+
+$text_coupon_help .= '<strong>' . str_replace('<br>', '', TEXT_COUPON_HELP_RESTRICT) . '</strong>';
 
 if ($coupon->fields['coupon_zone_restriction'] > 0) {
     $text_coupon_help .= '<br><br>' . TEXT_COUPON_GV_RESTRICTION_ZONES;
@@ -123,12 +126,13 @@ if ($get_result->RecordCount() === 1 && $get_result->fields['category_id'] === '
             $cats[] = $result->fields["categories_name"] . $restrict;
         }
     }
-
-    if (count($cats) === 0) {
-        $cats[] = TEXT_NO_CAT_RESTRICTIONS;
-    }
 }
-sort($cats);
+if (count($cats) === 0) {
+    $cats[] = TEXT_NO_CAT_RESTRICTIONS;
+} else {
+    sort($cats);
+}
+
 $text_coupon_help .= '<ul id="couponCatRestrictions">' . '<li>' . implode('</li><li>', $cats) . '</li></ul>';
 
 $text_coupon_help .= TEXT_COUPON_HELP_PRODUCTS;
@@ -144,7 +148,7 @@ foreach ($get_result as $next_restriction) {
     } else {
         $restrict = TEXT_DENIED;
     }
-    $prods[] = zen_get_products_name($next_restriction['products_id']) . $restrict;
+    $prods[] = zen_get_products_name($next_restriction['product_id']) . $restrict;
 }
 
 if (count($prods) === 0) {

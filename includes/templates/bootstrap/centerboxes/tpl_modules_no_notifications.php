@@ -2,7 +2,7 @@
 /**
  * Side Box Template
  * 
- * BOOTSTRAP v3.4.2
+ * BOOTSTRAP v3.5.2
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -12,7 +12,7 @@
  */
 ?>
 <div id="ProductNotifications-centerBoxContents" class="card mb-3 text-center">
-    <h4 id="ProductNotifications-centerBoxHeading" class="centerBoxHeading card-header"><?php echo BOX_HEADING_NOTIFICATIONS; ?></h4>
+    <h3 id="ProductNotifications-centerBoxHeading" class="centerBoxHeading card-header"><?php echo BOX_HEADING_NOTIFICATIONS; ?></h3>
     <div id="ProductNotifications-card-body" class="card-body p-3 text-center">
         <a href="<?php echo zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=notify', $request_type); ?>" title="<?php echo OTHER_BOX_NOTIFY_YES_ALT; ?>">
             <?php echo zen_image(DIR_WS_TEMPLATE_IMAGES . OTHER_IMAGE_BOX_NOTIFY_YES, OTHER_BOX_NOTIFY_YES_ALT); ?>

@@ -15,7 +15,7 @@
 ?>
 <div id="checkoutShippingDefault" class="centerColumn">
     <div class="progress">
-        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
     </div>
 
     <?php echo zen_draw_form('checkout_address', zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL')) . zen_draw_hidden_field('action', 'process'); ?>
@@ -29,7 +29,7 @@ if ($messageStack->size('checkout_shipping') > 0) {
 ?>
     <div class="card-columns">
         <div id="shippingInformation-card" class="card mb-3">
-            <h4 class="card-header"><?php echo TITLE_SHIPPING_ADDRESS; ?></h4>
+            <h2 class="card-header"><?php echo TITLE_SHIPPING_ADDRESS; ?></h2>
             <div class="card-body p-3">
                 <div class="row">
                     <div class="shipToAddress col-sm-5">
@@ -59,7 +59,7 @@ if (zen_count_shipping_modules() > 0) {
     $shipping_method_heading = defined('HEADING_SHIPPING_METHOD') ? HEADING_SHIPPING_METHOD : TABLE_HEADING_SHIPPING_METHOD;
 ?>
         <div id="shippingMethod-card" class="card mb-3">
-            <h4 class="card-header"><?php echo $shipping_method_heading; ?></h4>
+            <h2 class="card-header"><?php echo $shipping_method_heading; ?></h2>
             <div class="card-body p-3">
 <?php
     if (count($quotes) > 1 && count($quotes[0]) > 1) {
@@ -162,7 +162,7 @@ $comments_heading = defined('HEADING_ORDER_COMMENTS') ? HEADING_ORDER_COMMENTS :
 $comments = (isset($comments)) ? $comments : '';
 ?>
         <div id="orderComments-card" class="card mb-3">
-            <h4 class="card-header"><?php echo $comments_heading; ?></h4>
+            <h2 class="card-header"><?php echo $comments_heading; ?></h2>
             <div class="card-body p-3">
                 <?php echo zen_draw_textarea_field('comments', '45', '3', $comments, 'aria-label="' . $comments_heading . '"'); ?>
             </div>

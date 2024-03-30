@@ -77,6 +77,11 @@ if (DEFINE_CONDITIONS_STATUS <= '1') {
                 <li class="list-group-item"><?php echo '<a href="' . zen_href_link(FILENAME_CONDITIONS) . '">' . BOX_INFORMATION_CONDITIONS . '</a>'; ?></li>
 <?php
 }
+if (defined('FILENAME_ACCESSIBILITY') && (!empty($flag_show_accessibility_sidebox_link))) {
+?>
+                <li class="list-group-item"><?php echo '<a href="' . zen_href_link(FILENAME_ACCESSIBILITY) . '">' . BOX_INFORMATION_ACCESSIBILITY . '</a>'; ?></li>
+<?php
+}
 if (DEFINE_CONTACT_US_STATUS <= '1') {
 ?>
                 <li class="list-group-item"><?php echo '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' . BOX_INFORMATION_CONTACT . '</a>'; ?></li>

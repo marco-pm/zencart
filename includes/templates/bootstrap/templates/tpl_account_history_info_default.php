@@ -2,15 +2,15 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.0
+ * BOOTSTRAP v3.6.2
  *
  * Loaded automatically by index.php?main_page=account_edit.
  * Displays information related to a single specific order
  *
- * @copyright Copyright 2003-2020 Zen Cart Development Team
+ * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: DrByte 2020 Oct 19 Modified in v1.5.7a $
+ * @version $Id: lat9 2022 Jun 12 Modified in v1.5.8-alpha $
  */
 ?>
 <div id="accountHistoryInfoDefault" class="centerColumn">
@@ -23,6 +23,12 @@ if ($current_page_base !== FILENAME_CHECKOUT_SUCCESS) {
             <h4 id="orderHistoryDetailedOrder"><?php echo HEADING_TITLE . ORDER_HEADING_DIVIDER . sprintf(HEADING_ORDER_NUMBER, zen_output_string_protected($_GET['order_id'])); ?></h4>
 <?php
 }
+
+// -----
+// Give a watching observer the ability to add table-column headings.
+//
+$extra_headings = [];
+$zco_notifier->notify('NOTIFY_ACCOUNT_HISTORY_INFO_EXTRA_COLUMN_HEADING', $order, $extra_headings);
 ?>
             <div class="table-responsive">
 <?php
@@ -45,6 +51,16 @@ if ($tax_column_present) {
 }
 ?>
                         <th scope="col" id="orderHistory-totalHeading"><?php echo HEADING_TOTAL; ?></th>
+<?php
+if (is_array($extra_headings)) {
+    foreach ($extra_headings as $heading_info) {
+        $params = empty($heading_info['params']) ? '' : " {$heading_info['params']}";
+?>
+        <th scope="col"<?php echo $params; ?>><?php echo $heading_info['text']; ?></th>
+<?php
+    }
+}
+?>
                     </tr>
 <?php
 // -----
@@ -53,6 +69,12 @@ if ($tax_column_present) {
 //
 $quantity_suffix = (defined('CART_QUANTITY_SUFFIX')) ? CART_QUANTITY_SUFFIX : QUANTITY_SUFFIX;
 foreach ($order->products as $product) {
+    // -----
+    // Give a watching observer the ability to include additional data for the header-columns
+    // it's defined via the 'NOTIFY_ACCOUNT_HISTORY_INFO_EXTRA_COLUMN_HEADING' notification.
+    //
+    $extra_data = [];
+    $zco_notifier->notify('NOTIFY_ACCOUNT_HISTORY_INFO_EXTRA_COLUMN_DATA', ['order' => $order, 'orders_product' => $product], $extra_data);
 ?>
                     <tr>
                         <td class="qtyCell"><?php echo $product['qty'] . $quantity_suffix; ?></td>
@@ -89,6 +111,16 @@ foreach ($order->products as $product) {
     echo $currencies->format($ppt, true, $order->info['currency'], $order->info['currency_value']) . ($product['onetime_charges'] != 0 ? '<br>' . $currencies->format(zen_add_tax($product['onetime_charges'], $product['tax']), true, $order->info['currency'], $order->info['currency_value']) : '');
 ?>
                         </td>
+<?php
+    if (is_array($extra_data)) {
+        foreach ($extra_data as $data_info) {
+            $params = empty($data_info['params']) ? '' : " {$data_info['params']}";
+?>
+                        <td<?php echo $params; ?>><?php echo $data_info['text']; ?></td>
+<?php
+        }
+    }
+?>
                     </tr>
 <?php
 }
@@ -177,9 +209,9 @@ if (!empty($order->info['shipping_method'])) {
                             </div>
                         </div>
 <?php
-} else { // temporary just remove these 4 lines
+} else {
 ?>
-                        <div>WARNING: Missing Shipping Information</div>
+                        <div><?php echo TEXT_MISSING_SHIPPING_INFO; ?></div>
 <?php
 }
 ?>
@@ -205,7 +237,6 @@ if (!empty($order->info['shipping_method'])) {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

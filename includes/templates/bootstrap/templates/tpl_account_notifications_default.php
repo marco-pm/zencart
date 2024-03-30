@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.5.2
  *
  * Loaded automatically by index.php?main_page=account_notifications.<br />
  * Allows customer to manage product notifications
@@ -23,7 +23,7 @@
 
 <!--bof global product notifications card-->
     <div id="globalNotifications-card" class="card mb-3">
-        <h4 id="globalNotifications-card-header" class="card-header"><?php echo GLOBAL_NOTIFICATIONS_TITLE; ?></h4>
+        <h3 id="globalNotifications-card-header" class="card-header"><?php echo GLOBAL_NOTIFICATIONS_TITLE; ?></h3>
         <div id="globalNotifications-card-body" class="card-body p-3">
             <div class="custom-control custom-checkbox">
                 <?php echo zen_draw_checkbox_field('product_global', '1', ($global->fields['global_product_notifications'] === '1'), 'id="globalnotify"'); ?>
@@ -42,7 +42,7 @@ if ($flag_global_notifications !== '1') {
 ?>
 <!--bof product notifications card-->
     <div id="productNotifications-card" class="card mb-3">
-        <h4 id="productNotifications-card-header" class="card-header"><?php echo NOTIFICATIONS_TITLE; ?></h4>
+        <h3 id="productNotifications-card-header" class="card-header"><?php echo NOTIFICATIONS_TITLE; ?></h3>
         <div id="productNotifications-card-body" class="card-body p-3">
 <?php
     if ($flag_products_check) {

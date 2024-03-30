@@ -7,7 +7,7 @@
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: lat9 2019 Jan 06 Modified in v1.5.6b $
  *
- * BOOTSTRAP v3.4.2
+ * BOOTSTRAP v3.6.4
  */
 if (!defined('IS_ADMIN_FLAG')) {
     die('Illegal Access');
@@ -105,9 +105,9 @@ if ($num_products_count > 0) {
     $heading_month_name = sprintf(TABLE_HEADING_SPECIALS_INDEX, zca_get_translated_month_name());
     if (!empty($new_products_category_id)) {
         $category_title = zen_get_category_name((int)$new_products_category_id, $_SESSION['languages_id']);
-        $title = '<h4 id="specialCenterbox-card-header" class="centerBoxHeading card-header">' . $heading_month_name . ($category_title != '' ? ' - ' . $category_title : '' ) . '</h4>';
+        $title = '<p id="specialCenterbox-card-header" class="centerBoxHeading card-header h3">' . $heading_month_name . ($category_title != '' ? ' - ' . $category_title : '' ) . '</p>';
     } else {
-        $title = '<h4 id="specialCenterbox-card-header" class="centerBoxHeading card-header">' . $heading_month_name . '</h4>';
+        $title = '<p id="specialCenterbox-card-header" class="centerBoxHeading card-header h3">' . $heading_month_name . '</p>';
     }
     $zc_show_special_products = true;
 }

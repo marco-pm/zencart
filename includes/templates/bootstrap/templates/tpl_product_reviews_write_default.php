@@ -2,9 +2,9 @@
 /**
  * Page Template
  *
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.2
  *
- * @copyright Copyright 2003-2020 Zen Cart Development Team
+ * @copyright Copyright 2003-2024 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version $Id: DrByte 2019 Jul 15 Modified in v1.5.7 $
@@ -72,11 +72,22 @@ if (!empty($products_model)) {
 <!--bof products review write card-->
     <div id="productsReviewWrite-card" class="card">
         <div id="productsReviewWrite-card-header" class="card-header">
-            <?php echo SUB_TITLE_FROM, zen_output_string_protected($customer->fields['customers_firstname'] . ' ' . $customer->fields['customers_lastname']); ?>
+<?php
+// -----
+// In zc200+, the name of the variable that contains the name of the reviewer has
+// changed from $customer to $reviewer.  Since this template still supports
+// zc157 and later, use $reviewer if present; otherwise, fall back to $customer.
+//
+$reviewer = $reviewer ?? $customer;
+?>
+            <?php echo SUB_TITLE_FROM . ' ' . zen_output_string_protected($reviewer->fields['customers_firstname'] . ' ' . $reviewer->fields['customers_lastname']); ?>
         </div>
         <div id="productsReviewWrite-card-body" class="card-body">
-            <?php if ($messageStack->size('review_text') > 0) echo $messageStack->output('review_text'); ?>
-
+<?php
+if ($messageStack->size('review_text') > 0) {
+    echo $messageStack->output('review_text');
+}
+?>
             <div class="text-center p-3"><?php echo SUB_TITLE_RATING; ?></div>
 
             <div class="custom-control custom-radio custom-control-inline">
@@ -106,7 +117,7 @@ if (!empty($products_model)) {
             <?php echo zen_draw_input_field($antiSpamFieldName, '', ' size="60" id="RAS" style="visibility:hidden; display:none;" autocomplete="off"'); ?>
 
             <div id="productsReviewWrite-reviewsWriteNotice">
-                <?php echo TEXT_NO_HTML . (REVIEWS_APPROVAL == '1' ? '<br>' . TEXT_APPROVAL_REQUIRED: ''); ?>
+                <?php echo TEXT_NO_HTML . (REVIEWS_APPROVAL === '1' ? '<br>' . TEXT_APPROVAL_REQUIRED: ''); ?>
             </div>
 
             <div id="productsReviewWrite-btn-toolbar" class="btn-toolbar justify-content-end my-3" role="toolbar">

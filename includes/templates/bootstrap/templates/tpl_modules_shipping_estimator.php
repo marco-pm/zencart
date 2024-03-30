@@ -2,7 +2,7 @@
 /**
  * Module Template - for shipping-estimator display
  *
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.5.1
  *
  * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -92,7 +92,7 @@ if ($_SESSION['cart']->count_contents() !== 0) {
             }
 ?>
     <label class="inputLabel" for="state" id="stateLabel"><?php echo $state_field_label; ?></label>
-    <?php echo zen_draw_input_field('state', $selectedState, zen_set_field_length(TABLE_ADDRESS_BOOK, 'entry_state', '40') . 'id="state"'); ?>
+    <?php echo zen_draw_input_field('state', $selectedState, zen_set_field_length(TABLE_ADDRESS_BOOK, 'entry_state', '40') . ' id="state"'); ?>
     <div class="p-2"></div>
 <?php
             if (CART_SHIPPING_METHOD_ZIP_REQUIRED === 'true') {

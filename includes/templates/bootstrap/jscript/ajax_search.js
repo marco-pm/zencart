@@ -1,7 +1,7 @@
 // -----
 // AJAX search for the Zen Cart Bootstrap template.
 //
-// Bootstrap v3.2.0.
+// Bootstrap v3.6.0
 //
 jQuery(document).ready(function() {
     // -----
@@ -37,17 +37,12 @@ jQuery(document).ready(function() {
         }
 
         zcJS.ajax({
-            url: "ajax.php?act=ajaxBootstrapSearch&method=searchProducts",
+            url: 'ajax.php?act=ajaxBootstrapSearch&method=searchProducts',
             data: {
                 keywords: keyword
             },
             cache: false,
-            headers: { "cache-control": "no-cache" },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (textStatus == 'timeout') {
-                    alert(ajaxTimeoutErrorMessage);
-                }
-            },
+            headers: { 'cache-control': 'no-cache' },
         }).done(function(response) {
             jQuery('#search-content').html(response.searchHtml);
             jQuery('#search-content .sugg-button').attr('href', searchLink);

@@ -3,7 +3,7 @@
 // Part of the One-Page Checkout plugin, provided under GPL 2.0 license by lat9
 // Copyright (C) 2017-2022, Vinos de Frutas Tropicales.  All rights reserved.
 //
-// Last updated: OPC v2.4.2/Bootstrap v3.4.0
+// Last updated: OPC v2.4.2/Bootstrap v3.5.2
 //
 ?>
 <div class="centerColumn" id="registerDefault">
@@ -18,8 +18,7 @@ if ($messageStack->size('create_account') > 0) {
     echo $messageStack->output('create_account');
 }
 ?>
-    <div class="alert forward"><?php echo FORM_REQUIRED_INFORMATION; ?></div>
-    <div class="clearfix"></div>
+    <div class="required-info text-right"><?php echo FORM_REQUIRED_INFORMATION; ?></div>
 <?php
 if (DISPLAY_PRIVACY_CONDITIONS === 'true') {
 ?>

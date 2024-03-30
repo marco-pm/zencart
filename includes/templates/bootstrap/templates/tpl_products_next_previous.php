@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.1
  *
  * @package templateSystem
  * @copyright Copyright 2003-2005 Zen Cart Development Team
@@ -40,13 +40,13 @@ if ($products_found_count > 1) {
 
     <div class="btn-group d-block d-sm-none" role="group">
         <a class="p-2" href="<?php echo zen_href_link(zen_get_info_page($previous), "cPath=$cPath&products_id=$previous"); ?>">
-            <span class="btn btn-primary"><i class="fas fa-angle-left"></i></span>
+            <span class="btn btn-primary"><i class="fas fa-angle-left" title="<?php echo BUTTON_PREVIOUS_ALT;?>"></i></span>
         </a>
         <a class="p-2 btn button_return_to_product_list" href="<?php echo zen_href_link(FILENAME_DEFAULT, "cPath=$cPath"); ?>">
             <?php echo BUTTON_RETURN_TO_PROD_LIST_ALT; ?>
         </a>
         <a class="p-2" href="<?php echo zen_href_link(zen_get_info_page($next_item), "cPath=$cPath&products_id=$next_item"); ?>">
-            <span class="btn btn-primary"><i class="fas fa-angle-right"></i></span>
+            <span class="btn btn-primary"><i class="fas fa-angle-right" title="<?php echo BUTTON_NEXT_ALT;?>"></i></span>
         </a>
     </div>
 <?php

@@ -2,10 +2,10 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.4.1
+ * BOOTSTRAP v3.6.1
  *
- * Loaded by main_page=index<br />
- * Displays category/sub-category listing<br />
+ * Loaded by main_page=index
+ * Displays category/sub-category listing
  * Uses tpl_index_category_row.php to render individual items
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
@@ -22,12 +22,22 @@ if ($show_welcome === true) {
     // otherwise fall-back to the legacy title.
     //
     $heading_title = (defined('HEADING_TITLE_NESTED')) ? HEADING_TITLE_NESTED : HEADING_TITLE;
+
+    // -----
+    // For accessibility, an <h1> tag can't contain an empty string.  If that's the case, use
+    // generic wording for the title and render the <h1> tag for screen-readers only.
+    //
+    $screen_reader_only = '';
+    if ($heading_title === '') {
+        $heading_title = HEADING_TITLE_SCREENREADER;
+        $screen_reader_only = ' sr-only';
+    }
 ?>
-    <h1 id="indexCategories-pageHeading" class="pageHeading"><?php echo $heading_title; ?></h1>
+    <h1 id="indexCategories-pageHeading" class="pageHeading<?php echo $screen_reader_only; ?>"><?php echo $heading_title; ?></h1>
 <?php
     if (SHOW_CUSTOMER_GREETING === '1') {
 ?>
-    <h3 id="indexCategories-greeting" class="greeting"><?php echo zen_customer_greeting(); ?></h3>
+    <h2 id="indexCategories-greeting" class="greeting"><?php echo zen_customer_greeting(); ?></h2>
 <?php
     }
 

@@ -1,6 +1,6 @@
 <?php
 /*
- * BOOTSTRAP v3.4.2
+ * BOOTSTRAP v3.6.1
  */
 // -----
 // Part of the Bootstrap template, defining commonly-used phrases and phrases unique to the bootstrap template.
@@ -33,6 +33,7 @@ $define = [
     'IMAGE_BUTTON_PREVIOUS' => 'Previous Item',
     'IMAGE_BUTTON_NEXT' => 'Next Item',
     'IMAGE_BUTTON_RETURN_TO_PRODUCT_LIST' => 'Back to Product List',
+    'MODAL_ADDL_IMAGE_PLACEHOLDER_ALT' => 'Modal Additional Images for %s',   //- %s is filled in with the product's name
 
 // -----
 // Used on the product_music_info page.
@@ -54,7 +55,16 @@ $define = [
 // -----
 // Used by various product listing pages, e.g. SNAF.
 //
-    'TABLE_HEADING_IMAGE' => 'Product Image',
+    // -----
+    // The two image-heading constants are used when a site chooses to display listings
+    // in table-mode (PRODUCT_LISTING_COLUMNS_PER_ROW is set to '1').  If your site wants
+    // the image-heading to *always* be displayed, set the TABLE_HEADING_IMAGE value to
+    // the text you desire.  If that value is set to an empty string, then a screen-reader-only
+    // heading is used along with the TABLE_HEADING_IMAGE_SCREENREADER value.
+    //
+    'TABLE_HEADING_IMAGE' => '',
+    'TABLE_HEADING_IMAGE_SCREENREADER' => 'Product Image',
+
     'TABLE_HEADING_PRODUCTS' => 'Product Name',
     'TABLE_HEADING_MANUFACTURER' => 'Manufacturer',
     'TABLE_HEADING_PRICE' => 'Price',
@@ -89,5 +99,13 @@ $define = [
 //
     'TEXT_HEADER_ARIA_LABEL_NAVBAR' =>'Navigation Bar',
     'TEXT_HEADER_ARIA_LABEL_LOGO' => 'Site Logo',
+
+// -----
+// <h1> text for index pages where the 'normal' heading-text isn't used by a
+// store ... for accessibility.
+//
+// Note: For zc200, this constant will be in /includes/languages/english/lang.index.php.
+//
+    'HEADING_TITLE_SCREENREADER' => 'See Additional Content Below',
 ];
 return $define;

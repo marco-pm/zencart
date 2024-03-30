@@ -3,7 +3,7 @@
 // Part of the One-Page Checkout plugin, provided under GPL 2.0 license by lat9 (cindy@vinosdefrutastropicales.com).
 // Copyright (C) 2017-2022, Vinos de Frutas Tropicales.  All rights reserved.
 //
-// Last updated: OPC v2.4.2/Bootstrap v3.5.0
+// Last updated: OPC v2.4.2/Bootstrap v3.5.2
 //
 ?>
 <div class="centerColumn" id="loginOpcDefault">
@@ -39,18 +39,18 @@ foreach ($column_blocks as $display_blocks) {
                 case 'L':
 ?>
             <div class="card mb-2">
-                <h4 class="card-header"><?php echo HEADING_RETURNING_CUSTOMER_OPC; ?></h4>
+                <h2 class="card-header"><?php echo HEADING_RETURNING_CUSTOMER_OPC; ?></h2>
                 <div class="card-body">
                     <div class="card-text"><?php echo TEXT_RETURNING_CUSTOMER_OPC; ?>
 <?php 
                     echo zen_draw_form($login_formname, zen_href_link(FILENAME_LOGIN, 'action=process' . (isset($_GET['gv_no']) ? '&gv_no=' . preg_replace('/[^0-9.,%]/', '', $_GET['gv_no']) : ''), 'SSL'), 'post', 'id="loginForm"'); 
 ?>
-                    <div class="opc-label"><?php echo ENTRY_EMAIL_ADDRESS; ?></div>
+                    <div class="opc-label"><label for="login-email-address"><?php echo ENTRY_EMAIL_ADDRESS; ?></label></div>
 <?php 
                     echo zen_draw_input_field('email_address', '', 'size="18" id="login-email-address" autofocus placeholder="' . ENTRY_EMAIL_ADDRESS_TEXT . '"' . ((int)ENTRY_EMAIL_ADDRESS_MIN_LENGTH > 0 ? ' required' : ''), 'email'); 
 ?>
 
-                        <div class="opc-label"><?php echo ENTRY_PASSWORD; ?></div>
+                        <div class="opc-label"><label for="login-password"><?php echo ENTRY_PASSWORD; ?></label></div>
 <?php 
                     echo zen_draw_password_field('password', '', 'size="18" id="login-password" autocomplete="off" placeholder="' . ENTRY_REQUIRED_SYMBOL . '"' . ((int)ENTRY_PASSWORD_MIN_LENGTH > 0 ? ' required' : '')); 
 ?>
@@ -99,7 +99,7 @@ foreach ($column_blocks as $display_blocks) {
                 case 'G':
 ?>
             <div class="card mb-2">
-                <h4 class="card-header"><?php echo HEADING_GUEST_OPC; ?></h4>
+                <h2 class="card-header"><?php echo HEADING_GUEST_OPC; ?></h2>
                 <div class="card-body">
                     <div class="card-text"><?php echo TEXT_GUEST_OPC; ?>
 <?php
@@ -129,7 +129,7 @@ foreach ($column_blocks as $display_blocks) {
                 case 'C':
 ?>
             <div class="card mb-2">
-                <h4 class="card-header"><?php echo HEADING_NEW_CUSTOMER_OPC; ?></h4>
+                <h2 class="card-header"><?php echo HEADING_NEW_CUSTOMER_OPC; ?></h2>
                 <div class="card-body">
                     <div class="card-text"><?php echo TEXT_NEW_CUSTOMER_OPC; ?>
 <?php 
@@ -151,7 +151,7 @@ foreach ($column_blocks as $display_blocks) {
                 case 'B':
 ?>
             <div class="card mb-2">
-                <h4 class="card-header"><?php echo HEADING_ACCOUNT_BENEFITS_OPC; ?></h4>
+                <h2 class="card-header"><?php echo HEADING_ACCOUNT_BENEFITS_OPC; ?></h2>
                 <div class="card-body">
                     <div class="card-text"><?php echo TEXT_ACCOUNT_BENEFITS_OPC; ?></div>
 <?php

@@ -2,7 +2,7 @@
 /**
  * Side Box Template
  *
- * BOOTSTRAP v3.0.0
+ * BOOTSTRAP v3.5.2
  *
  * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -18,7 +18,7 @@ foreach ($customer_orders as $row) {
     $content .= '<li class="list-group-item d-flex justify-content-between align-items-center">';
     $content .= '<a href="' . zen_href_link(zen_get_info_page($row['id']), 'products_id=' . $row['id']) . '">' . $row['name'] . '</a>';
     $content .= '&nbsp;&nbsp;';
-    $content .= '<a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=cust_order&pid=' . $row['id']) . '"><i class="fas fa-cart-plus"></i></a>';
+    $content .= '<a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(['action']) . 'action=cust_order&pid=' . $row['id']) . '"><i class="fas fa-cart-plus" aria-label="' . PAGE_ACCOUNT_HISTORY . '"></i></a>';
     $content .= '</li>' . "\n" ;
 }
 $content .= '</ul>' . "\n" ;

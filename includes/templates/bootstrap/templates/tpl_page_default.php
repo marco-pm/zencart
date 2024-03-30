@@ -2,7 +2,7 @@
 /**
  * Page Template
  * 
- * BOOTSTRAP v3.5.0
+ * BOOTSTRAP v3.6.1
  *
  * This is the template used for EZ-Pages content display.  It is named "tpl_page_default" instead of ezpage for friendlier appearance
  *
@@ -25,9 +25,9 @@ if (EZPAGES_SHOW_PREV_NEXT_BUTTONS === '2' && $counter > 1) {
     </div>
 
     <div id="pageDefault-btn-group2" class="btn-group my-3 text-center d-block d-sm-none" role="group">
-        <a href="<?php echo $prev_link; ?>"><span class="btn btn-primary"><?php echo '<i class="fas fa-angle-left"></i>'; ?></span></a>
+        <a href="<?php echo $prev_link; ?>"><span class="btn btn-primary"><?php echo '<i class="fas fa-angle-left" title="' . BUTTON_PREVIOUS_ALT . '"></i>'; ?></span></a>
         <?php echo zen_back_link() . $home_button; ?></a>
-        <a href="<?php echo $next_link; ?>"><span class="btn btn-primary"><?php echo '<i class="fas fa-angle-right"></i>'; ?></span></a>
+        <a href="<?php echo $next_link; ?>"><span class="btn btn-primary"><?php echo '<i class="fas fa-angle-right" title="' . BUTTON_NEXT_ALT . '"></i>'; ?></span></a>
     </div>
 <?php
 } elseif (EZPAGES_SHOW_PREV_NEXT_BUTTONS === '1') {
