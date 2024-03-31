@@ -228,6 +228,9 @@ admin/includes/*.config.save
 #release process
 modified_files.txt
 
+/.php-cs-fixer.cache
+/node_modules
+
 # ddev
 
 .ddev
